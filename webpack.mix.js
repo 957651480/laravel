@@ -13,5 +13,5 @@ require('laravel-mix-alias');
 mix.alias('@', '/resources/js');
 mix.alias('~', '/resources/sass');
 
-mix.js('resources/js/app.js', 'public/js')
+mix.react('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
