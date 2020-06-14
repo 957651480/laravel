@@ -1,5 +1,15 @@
 const mix = require('laravel-mix');
+
 require('laravel-mix-alias');
+
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            'BE': path.resolve(__dirname, 'resources/backend'),
+        },
+    },
+})
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -55,6 +65,8 @@ require('laravel-mix-alias');
 
 mix.alias('@', '/resources/js');
 mix.alias('~', '/resources/sass');
+
+mix.js('resources/backend/admin.js', 'public/backend/js');
 
 mix.js('resources/js/app.js', 'public/js')
     .extract(['bootstrap'],'public/vendor/bootstrap.js')
