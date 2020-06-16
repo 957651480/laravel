@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require('laravel-mix-alias');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -10,6 +10,8 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.alias('@', '/resources/js');
+mix.alias('~', '/resources/sass');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
