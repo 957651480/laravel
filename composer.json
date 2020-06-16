@@ -15,7 +15,9 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "yangtaihua/laravel-platform": "dev-master",
-        "yangtaihua/streams-composer-plugin": "dev-master"
+        "yangtaihua/streams-composer-plugin": "dev-master",
+        "nwidart/laravel-modules": "^7.1",
+        "wikimedia/composer-merge-plugin": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -69,12 +71,12 @@
     },
     "repositories": [
         {
-            "type":"git",
-            "url":"https://github.com/yangtaihua/laravel-platform.git"
+            "type": "git",
+            "url": "https://github.com/yangtaihua/laravel-platform.git"
         },
         {
-            "type":"git",
-            "url":"https://gitee.com/yangtaihua/streams-composer-plugin.git"
+            "type": "git",
+            "url": "https://gitee.com/yangtaihua/streams-composer-plugin.git"
         },
         {
             "type": "composer",
