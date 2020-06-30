@@ -10,6 +10,15 @@ mix.webpackConfig({
         },
     },
 })
+
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            'BE': path.resolve(__dirname, 'resources/backend'),
+        },
+    },
+})
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -65,6 +74,8 @@ mix.webpackConfig({
 
 mix.alias('@', '/resources/js');
 mix.alias('~', '/resources/sass');
+
+mix.js('resources/backend/admin.js', 'public/backend/js');
 
 mix.js('resources/backend/admin.js', 'public/backend/js');
 
