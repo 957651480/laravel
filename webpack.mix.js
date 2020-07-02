@@ -1,15 +1,10 @@
 const mix = require('laravel-mix');
-
+const config = require('./webpack.config');
 require('laravel-mix-alias');
+require('laravel-mix-eslint');
 
 
-mix.webpackConfig({
-    resolve: {
-        alias: {
-            'BE': path.resolve(__dirname, 'resources/backend'),
-        },
-    },
-})
+mix.webpackConfig(config);
 
 
 /*
@@ -65,14 +60,23 @@ mix.webpackConfig({
 //   postCss: [] // Post-CSS options: https://github.com/postcss/postcss/blob/master/docs/plugins.md
 // });
 
-mix.alias('@', '/resources/js');
-mix.alias('~', '/resources/sass');
 
-mix.js('resources/backend/admin.js', 'public/backend/js');
-
-mix.js('resources/backend/admin.js', 'public/backend/js');
+mix.js('resources/backend/main.js', 'public/backend/js');
 
 mix.js('resources/js/app.js', 'public/js')
-    .extract(['bootstrap'],'public/vendor/bootstrap.js')
-    .extract(['axios'],'public/vendor/axios.js')
     .sass('resources/sass/app.scss', 'public/css');
+
+
+if (mix.inProduction()) {
+    mix.version();
+} else {
+
+        //mix.eslint();
+
+    // Development settings
+    mix
+        .sourceMaps()
+        .webpackConfig({
+            devtool: 'cheap-eval-source-map', // Fastest for development
+        });
+}
