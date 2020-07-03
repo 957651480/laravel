@@ -14,10 +14,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "yangtaihua/laravel-platform": "dev-master",
-        "yangtaihua/streams-composer-plugin": "dev-master",
         "nwidart/laravel-modules": "^7.1",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "spatie/laravel-permission": "^3.13"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -73,6 +71,10 @@
         ]
     },
     "repositories": [
+        {
+            "type": "git",
+            "url": "https://gitee.com/yangtaihua/users-module.git"
+        },
         {
             "type": "git",
             "url": "https://github.com/yangtaihua/laravel-platform.git"
