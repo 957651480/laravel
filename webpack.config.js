@@ -5,7 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 function resolve(dir) {
   return path.join(
     __dirname,
-    '/resources/js',
+    '/resources/backend',
     dir
   );
 }

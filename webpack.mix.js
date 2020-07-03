@@ -3,6 +3,23 @@ const config = require('./webpack.config');
 require('laravel-mix-alias');
 require('laravel-mix-eslint');
 
+function resolve(dir) {
+    return path.join(
+        __dirname,
+        '/resources/backend',
+        dir
+    );
+}
+
+Mix.listen('configReady', webpackConfig => {
+    // Add "svg" to image loader test
+    const imageLoaderConfig = webpackConfig.module.rules.find(
+        rule =>
+            String(rule.test) ===
+            String(/(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/)
+    );
+    imageLoaderConfig.exclude = resolve('icons');
+});
 
 mix.webpackConfig(config);
 
@@ -60,7 +77,10 @@ mix.webpackConfig(config);
 //   postCss: [] // Post-CSS options: https://github.com/postcss/postcss/blob/master/docs/plugins.md
 // });
 
-
+mix.options({
+    //extractVueStyles: true,
+    //globalVueStyles: __dirname+'/resources/backend/styles/element-variables.scss',
+})
 mix.js('resources/backend/main.js', 'public/backend/js');
 
 mix.js('resources/js/app.js', 'public/js')
