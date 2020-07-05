@@ -57,6 +57,8 @@ Route::namespace('Api')->group(function (){
             ];
             return response()->json($data);
         });
+
+        Route::get('file/list','FileController@index');
     });
 });
 

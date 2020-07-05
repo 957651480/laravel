@@ -24,4 +24,8 @@ class FileRepository extends EloquentRepository implements FileRepositoryInterfa
         $this->model = $model;
     }
 
+    public function list()
+    {
+        return $this->model->all();
+    }
 }

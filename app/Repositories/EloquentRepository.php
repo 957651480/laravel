@@ -15,14 +15,5 @@ class EloquentRepository implements EloquentRepositoryInterface
      */
     protected $model;
 
-    /**
-     * EloquentRepository constructor.
-     * @param Eloquent $model
-     */
-    public function __construct(Eloquent $model)
-    {
-        $this->model = $model;
-    }
-
 
 }
