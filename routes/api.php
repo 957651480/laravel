@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Faker\Generator as Faker;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,6 +21,42 @@ Route::namespace('Api')->group(function (){
         Route::post('user/login','UserController@login');
         Route::get('user/logout','UserController@logout');
         Route::get('user/info','UserController@info');
+
+        Route::get('/article/list', function (Faker $faker) {
+            $rowsNumber = 10;
+            $list = [];
+            for ($rowIndex = 0; $rowIndex < $rowsNumber; $rowIndex++) {
+                $row = [
+                    'id' => mt_rand(100, 10000),
+
+                    'display_time' => $faker->dateTime()->format('Y-m-d H:i:s'),
+                    'title' => Str::random(),
+                    'author' => Str::random(5),
+                    'comment_disabled' => boolval(mt_rand(0,1)),
+                    'content' => Str::random(100),
+                    'content_short' => Str::random(50),
+                    'status' => Arr::random(['deleted', 'published', 'draft']),
+                    'forecast' => mt_rand(100, 9999) / 100,
+                    'image_uri' => 'https://via.placeholder.com/400x300',
+                    'importance' => mt_rand(1, 3),
+                    'pageviews' => mt_rand(10000, 999999),
+                    'reviewer' => Str::random(5),
+                    'timestamp' => $faker->dateTime()->getTimestamp(),
+                    'type' => Arr::random(['US', 'VI', 'JA']),
+
+                ];
+
+                $list[] = $row;
+            }
+            $data =[
+                'code'=>20000,
+                'data'=>[
+                    'items'=>$list,
+                    'total'=>count($list)
+                ]
+            ];
+            return response()->json($data);
+        });
     });
 });
 

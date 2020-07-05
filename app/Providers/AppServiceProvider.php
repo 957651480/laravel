@@ -2,10 +2,27 @@
 
 namespace App\Providers;
 
+use App\Contracts\EloquentRepositoryInterface;
+use App\Contracts\FileRepositoryInterface;
+use App\Repositories\EloquentRepository;
+use App\Repositories\FileRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+
+    public $bindings = [
+        EloquentRepositoryInterface::class=>EloquentRepository::class,
+        FileRepositoryInterface::class=>FileRepository::class
+    ];
+
+    /**
+     * @var array
+     */
+    public $singletons = [
+    ];
+
     /**
      * Register any application services.
      *
