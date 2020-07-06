@@ -87,6 +87,7 @@ mix.js('resources/backend/main.js', 'public/backend/js')
         'vue',
         'axios',
         'vuex',
+        'echarts'
     ]);
 
 mix.js('resources/js/app.js', 'public/js')

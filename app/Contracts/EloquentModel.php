@@ -4,7 +4,7 @@
 namespace App\Contracts;
 
 
-interface Eloquent
+interface EloquentModel
 {
 
 }

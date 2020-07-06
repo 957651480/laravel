@@ -180,7 +180,6 @@ export const asyncRoutes = [
   nestedRouter,
   tableRouter,
   fileRouter,
-
   {
     path: '/example',
     component: Layout,

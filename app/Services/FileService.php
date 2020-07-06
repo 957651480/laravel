@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Contracts\FileRepositoryInterface;
+use Illuminate\Http\UploadedFile;
 
 class FileService
 {
@@ -26,6 +27,22 @@ class FileService
 
     public function list()
     {
-        return $this->repository->list();
+        return $this->repository->all();
+    }
+
+
+
+
+    public function upload(UploadedFile $uploadedFile)
+    {
+        $path = $uploadedFile->storePublicly(date('Y/m/d'));
+        $file = $this->repository->create([
+           'path'=>$path,
+           'extension'=>$uploadedFile->extension(),
+           'mime_type'=>$uploadedFile->getMimeType(),
+           'name'=>$uploadedFile->getClientOriginalName(),
+           'size'=>$uploadedFile->getSize(),
+        ]);
+        return $file;
     }
 }

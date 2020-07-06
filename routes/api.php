@@ -59,6 +59,7 @@ Route::namespace('Api')->group(function (){
         });
 
         Route::get('file/list','FileController@index');
+        Route::post('file/upload','FileController@upload');
     });
 });
 

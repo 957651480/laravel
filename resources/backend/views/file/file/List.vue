@@ -18,15 +18,22 @@
                 <el-button type="primary" icon="el-icon-delete">删除</el-button>
             </el-col>
             <el-col :span="9" style="float: right">
-                <el-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+                <el-upload
+                    action="/api/admin/file/upload"
+                    :show-file-list="false"
+                    :on-success="handSuccess"
+                    >
+                    <el-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+                </el-upload>
+
             </el-col>
         </el-row>
         <el-row class="padding-content">
-            <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-                <el-card :body-style="{ padding: '0px' }">
-                    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+            <el-col :span="8" v-for="(item, index) in list" :key="item.id" >
+                <el-card>
+                    <img :src="item.url" class="image">
                     <div style="padding: 14px;">
-                        <span>好吃的汉堡</span>
+                        <span>{{item.name}}</span>
                         <div class="bottom clearfix">
                             <time class="time">{{ currentDate }}</time>
                             <el-button type="text" class="button">操作按钮</el-button>
@@ -70,8 +77,8 @@ export default {
         getList() {
             this.listLoading = true
             fetchList(this.listQuery).then(response => {
-                this.list = response.data.items
-                this.total = response.data.total
+                this.list = response.data
+                this.total = response.total
                 this.listLoading = false
             })
         },

@@ -30,8 +30,28 @@ class FileController extends BackendApiController
         $data =[
             'code'=>20000,
             'msg'=>'获取成功',
-            'data'=>[]
+            'data'=>$list
         ];
         return response()->json($data);
+    }
+
+
+    public function upload(Request $request)
+    {
+        if (!$request->hasFile('file')) {
+            //
+        }
+        if (!$request->file('file')->isValid()) {
+            //
+        }
+
+        $file = $this->service->upload($request->file('file'));
+
+        $data=[
+            'code'=>20000,
+            'data'=>$file
+        ];
+        return response()->json($data);
+
     }
 }
