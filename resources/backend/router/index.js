@@ -225,6 +225,18 @@ export const asyncRoutes = [
       }
     ]
   },
+    {
+        path: '/formmaker',
+        component: Layout,
+        children: [
+            {
+                path: 'index',
+                component: () => import('@/views/formmaker/index'),
+                name: 'Tab',
+                meta: { title: 'Tab', icon: 'tab' }
+            }
+        ]
+    },
 
   {
     path: '/error',

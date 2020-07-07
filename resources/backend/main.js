@@ -32,6 +32,9 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
+import FormMaking from 'form-making'
+import 'form-making/dist/FormMaking.css'
+Vue.use(FormMaking)
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
