@@ -81,14 +81,7 @@ mix.options({
     //extractVueStyles: true,
     //globalVueStyles: __dirname+'/resources/backend/styles/element-variables.scss',
 })
-mix.js('resources/backend/main.js', 'public/backend/js')
-    .extract([
-        'element-ui',
-        'vue',
-        'axios',
-        'vuex',
-        'echarts'
-    ]);
+mix.js('resources/backend/main.js', 'public/backend/js');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
@@ -104,6 +97,6 @@ if (mix.inProduction()) {
     mix
         .sourceMaps()
         .webpackConfig({
-            devtool: 'eval-source-map', // Fastest for development
+            devtool: 'cheap-eval-source-map', // Fastest for development
         });
 }

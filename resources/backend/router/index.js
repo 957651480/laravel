@@ -12,6 +12,7 @@ import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 import fileRouter from "@/router/modules/file";
+import settingRouter from "@/router/modules/setting";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -180,6 +181,7 @@ export const asyncRoutes = [
   nestedRouter,
   tableRouter,
   fileRouter,
+  settingRouter,
   {
     path: '/example',
     component: Layout,
