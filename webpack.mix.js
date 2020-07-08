@@ -1,7 +1,7 @@
 const mix = require('laravel-mix');
 const config = require('./webpack.config');
 require('laravel-mix-alias');
-require('laravel-mix-eslint');
+//require('laravel-mix-eslint');
 
 function resolve(dir) {
     return path.join(
@@ -104,6 +104,6 @@ if (mix.inProduction()) {
     mix
         .sourceMaps()
         .webpackConfig({
-            devtool: 'cheap-eval-source-map', // Fastest for development
+            devtool: 'eval-source-map', // Fastest for development
         });
 }
