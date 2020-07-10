@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
+const mix = require('laravel-mix');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function resolve(dir) {
@@ -11,7 +11,6 @@ function resolve(dir) {
 }
 
 const rawArgv = process.argv.slice(2);
-const args = rawArgv.join(' ');
 const report = rawArgv.includes('--report');
 let plugins = [];
 if (report) {
