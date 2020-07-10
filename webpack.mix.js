@@ -83,11 +83,11 @@ mix.options({
 })
 mix.js('resources/backend/main.js', 'public/backend/js')
     .extract([
-        'element-ui',
-        'vue',
         'axios',
+        'vue',
+        'vue-router',
         'vuex',
-        'echarts'
+        'element-ui',
     ]);
 
 mix.js('resources/js/app.js', 'public/js')
