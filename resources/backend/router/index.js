@@ -11,8 +11,6 @@ import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
-import fileRouter from "@/router/modules/file";
-import settingRouter from "@/router/modules/setting";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -81,7 +79,32 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '仪表盘', icon: 'dashboard', affix: true }
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/documentation',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/documentation/index'),
+        name: 'Documentation',
+        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/guide',
+    component: Layout,
+    redirect: '/guide/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/guide/index'),
+        name: 'Guide',
+        meta: { title: 'Guide', icon: 'guide', noCache: true }
       }
     ]
   },
@@ -163,11 +186,10 @@ export const asyncRoutes = [
 
   /** when your routing map is too long, you can split it into small modules **/
   componentsRouter,
-  //chartsRouter,
+  chartsRouter,
   nestedRouter,
   tableRouter,
-  fileRouter,
-  settingRouter,
+
   {
     path: '/example',
     component: Layout,
@@ -203,7 +225,6 @@ export const asyncRoutes = [
   {
     path: '/tab',
     component: Layout,
-      hidden: true,
     children: [
       {
         path: 'index',
@@ -213,12 +234,12 @@ export const asyncRoutes = [
       }
     ]
   },
+
   {
     path: '/error',
     component: Layout,
     redirect: 'noRedirect',
     name: 'ErrorPages',
-      hidden: true,
     meta: {
       title: 'Error Pages',
       icon: '404'
@@ -242,7 +263,6 @@ export const asyncRoutes = [
   {
     path: '/error-log',
     component: Layout,
-      hidden: true,
     children: [
       {
         path: 'log',
@@ -258,7 +278,6 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/excel/export-excel',
     name: 'Excel',
-    hidden: true,
     meta: {
       title: 'Excel',
       icon: 'excel'
@@ -296,7 +315,6 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/zip/download',
     alwaysShow: true,
-    hidden: true,
     name: 'Zip',
     meta: { title: 'Zip', icon: 'zip' },
     children: [
@@ -310,9 +328,27 @@ export const asyncRoutes = [
   },
 
   {
+    path: '/pdf',
+    component: Layout,
+    redirect: '/pdf/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/pdf/index'),
+        name: 'PDF',
+        meta: { title: 'PDF', icon: 'pdf' }
+      }
+    ]
+  },
+  {
+    path: '/pdf/download',
+    component: () => import('@/views/pdf/download'),
+    hidden: true
+  },
+
+  {
     path: '/theme',
     component: Layout,
-    hidden: true,
     children: [
       {
         path: 'index',
@@ -322,6 +358,31 @@ export const asyncRoutes = [
       }
     ]
   },
+
+  {
+    path: '/clipboard',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/clipboard/index'),
+        name: 'ClipboardDemo',
+        meta: { title: 'Clipboard', icon: 'clipboard' }
+      }
+    ]
+  },
+
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://github.com/PanJiaChen/vue-element-admin',
+        meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -67,9 +67,6 @@
           <Tinymce ref="editor" v-model="postForm.content" :height="400" />
         </el-form-item>
 
-        <el-form-item label="dsfds">
-            <single-upload v-model="postForm.file_id"></single-upload>
-        </el-form-item>
         <el-form-item prop="image_uri" style="margin-bottom: 30px;">
           <Upload v-model="postForm.image_uri" />
         </el-form-item>
@@ -88,7 +85,6 @@ import { fetchArticle } from '@/api/article'
 import { searchUser } from '@/api/remote-search'
 import Warning from './Warning'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
-import SingleUpload from "@/components/Upload/SingleUpload";
 
 const defaultForm = {
   status: 'draft',
@@ -101,13 +97,12 @@ const defaultForm = {
   id: undefined,
   platforms: ['a-platform'],
   comment_disabled: false,
-  importance: 0,
-  file_id:null
+  importance: 0
 }
 
 export default {
   name: 'ArticleDetail',
-  components: {SingleUpload, Tinymce, MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
+  components: { Tinymce, MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
   props: {
     isEdit: {
       type: Boolean,
