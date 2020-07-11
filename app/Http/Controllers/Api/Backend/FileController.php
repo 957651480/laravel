@@ -30,13 +30,7 @@ class FileController extends BackendApiController
             'limit'=>$request->get('limit'),
             'columns'=>['id','path']
         ]);
-        $data =[
-            'code'=>20000,
-            'msg'=>'获取成功',
-            'total'=>$paginate->total(),
-            'data'=>$paginate->items()
-        ];
-        return response()->json($data);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$paginate->items()]);
     }
 
 
@@ -48,14 +42,8 @@ class FileController extends BackendApiController
         if (!$request->file('file')->isValid()) {
             //
         }
-
         $file = $this->service->upload($request->file('file'));
-
-        $data=[
-            'code'=>20000,
-            'data'=>$file
-        ];
-        return response()->json($data);
+        return api_response()->success(['data'=>$file]);
 
     }
 }

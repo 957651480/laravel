@@ -13,6 +13,6 @@ class RoleController extends BackendApiController
         $data=[
             'roles'=>['admin']
         ];
-        return response()->json($data);
+        return api_response()->success(['data'=>$data]);
     }
 }
