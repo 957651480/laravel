@@ -115,26 +115,26 @@ class ApiResponse
         return $this;
     }
 
-    public function success($response=array())
+    public function success($response=array(),$status = 200, array $headers = [], $options = 0)
     {
         $response = $this->dataFill($response);
-        return $this->response->json($response);
+        return $this->response->json($response,$status, $headers, $options);
     }
 
-    public function fail($response)
+    public function fail($response,$status = 200, array $headers = [], $options = 0)
     {
         $response = $this->dataFill($response,false);
-        return $this->response->json($response);
+        return $this->response->json($response,$status, $headers, $options);
     }
 
     /**
      * @param $response
      * @return \Illuminate\Http\JsonResponse
      */
-    public function json($response)
+    public function json($response,$status = 200, array $headers = [], $options = 0)
     {
         $response = $this->dataFill($response,data_get($response,'code'));
-        return $this->response->json($response);
+        return $this->response->json($response,$status, $headers, $options);
     }
 
     public function dataFill($response,$result=true)

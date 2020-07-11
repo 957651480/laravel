@@ -19,22 +19,18 @@ class BannerController extends BackendApiController
     }
 
 
-    public function upload(Request $request)
+    public function create(Request $request)
     {
-        if (!$request->hasFile('file')) {
-            //
+        Banner::create($request->all());
+   }
+
+
+    protected function validateBanner($form)
+    {
+        $validator = validator($form);
+        if($validator->fails()){
+            return api_response()->fail(['msg'=>$validator->messages()->first()]);
         }
-        if (!$request->file('file')->isValid()) {
-            //
-        }
-
-        $file = $this->service->upload($request->file('file'));
-
-        $data=[
-            'code'=>20000,
-            'data'=>$file
-        ];
-        return response()->json($data);
-
-    }
+        return $validator->validated();
+   }
 }

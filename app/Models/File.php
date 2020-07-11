@@ -39,10 +39,8 @@ class File extends EloquentModel
 {
     //
     protected $table='file';
-    protected $fillable=['path','name','extension','mime_type','size'];
-    protected $appends=[
-        'url'
-    ];
+
+    protected $guarded=[];
 
 
     public function getUrlAttribute()

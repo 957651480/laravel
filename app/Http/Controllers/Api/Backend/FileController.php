@@ -43,6 +43,7 @@ class FileController extends BackendApiController
             //
         }
         $file = $this->service->upload($request->file('file'));
+        $file->append('url');
         return api_response()->success(['data'=>$file]);
 
     }
