@@ -36,16 +36,10 @@
                 <el-col :span="8" v-for="(item, index) in list" :key="item.id" >
                     <el-card>
                         <img :src="item.url" class="image">
-                        <div style="padding: 14px;">
-                            <span>{{item.name}}</span>
-                            <div class="bottom clearfix">
-                                <time class="time"></time>
-                                <el-button type="text" class="button">操作按钮</el-button>
-                            </div>
-                        </div>
                     </el-card>
                 </el-col>
             </el-row>
+            <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
         </el-col>
     </el-row>
     <el-dialog title="收货地址" :visible.sync="groupDialogFormVisible">
@@ -82,7 +76,7 @@ export default {
             listLoading: true,
             listQuery: {
                 page: 1,
-                limit: 20
+                limit: 5
             },
             groupDialogFormVisible:false,
             groupForm:{
@@ -121,7 +115,9 @@ export default {
 
         },
         handSuccess(response, file, fileList){
-
+            let {data}=response
+            this.list.push(data)
+            this.total++;
         }
     }
 }

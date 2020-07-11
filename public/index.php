@@ -6,7 +6,6 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
-declare(strict_types=1);
 define('LARAVEL_START', microtime(true));
 
 /*

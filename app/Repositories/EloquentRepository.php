@@ -3,8 +3,10 @@
 
 namespace App\Repositories;
 
-use App\Contracts\EloquentModel;
 use App\Contracts\EloquentRepositoryInterface;
+use App\Models\EloquentModel;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class EloquentRepository
@@ -133,5 +135,20 @@ class EloquentRepository implements EloquentRepositoryInterface
         return clone $this->model;
     }
 
+    public function newQuery()
+    {
+        return $this->model->newQuery();
+    }
 
+
+    /**
+     * @param Builder $query
+     * @param int $page
+     * @param int $limit
+     * @return Builder
+     */
+    public function apiPaginate(Builder $query,int $page=1,int $limit=10)
+    {
+        return $query->skip(($page - 1) * $limit)->take($limit+1);
+    }
 }

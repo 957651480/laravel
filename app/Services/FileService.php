@@ -4,39 +4,39 @@
 namespace App\Services;
 
 
-use App\Contracts\FileRepositoryInterface;
+use App\Models\File;
+use Arr;
 use Illuminate\Http\UploadedFile;
 
-class FileService
+class FileService extends EloquentService
 {
 
     /**
-     * @var FileRepositoryInterface
+     * @var File
      */
-   protected $repository;
+   protected $model;
 
     /**
      * FileService constructor.
-     * @param FileRepositoryInterface $repository
+     * @param File $model
      */
-    public function __construct(FileRepositoryInterface $repository)
+    public function __construct(File $model)
     {
-        $this->repository = $repository;
+        $this->model = $model;
     }
 
 
-    public function list()
+    public function list(array $parameters = [])
     {
-        return $this->repository->all();
+        return $this->model->paginate(Arr::get($parameters,'limit'),Arr::get($parameters,'columns',['*']));
     }
-
 
 
 
     public function upload(UploadedFile $uploadedFile)
     {
         $path = $uploadedFile->storePublicly(date('Y/m/d'));
-        $file = $this->repository->create([
+        $file = $this->model->create([
            'path'=>$path,
            'extension'=>$uploadedFile->extension(),
            'mime_type'=>$uploadedFile->getMimeType(),

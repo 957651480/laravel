@@ -5,8 +5,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
- * App\Models\Eloquent
+ * App\Models\EloquentModel
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel newQuery()
@@ -15,5 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EloquentModel extends Model
 {
+
 
 }

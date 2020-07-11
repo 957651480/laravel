@@ -32,6 +32,8 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\File whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read mixed $url
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel apiPaginate($limit = 10)
  */
 class File extends EloquentModel
 {

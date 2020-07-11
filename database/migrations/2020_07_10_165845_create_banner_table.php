@@ -15,9 +15,11 @@ class CreateBannerTable extends Migration
     {
         Schema::create('banner', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('sort')->comment('排序');
             $table->string('title');
             $table->unsignedInteger('file_id');
             $table->string('link');
+            $table->softDeletes()->comment('删除时间');
             $table->timestamps();
         });
     }

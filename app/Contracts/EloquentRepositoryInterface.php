@@ -3,6 +3,8 @@
 
 namespace App\Contracts;
 
+use App\Models\EloquentModel;
+use App\Collection\EloquentCollection;
 
 interface EloquentRepositoryInterface
 {
@@ -74,4 +76,6 @@ interface EloquentRepositoryInterface
     public function setModel(EloquentModel $model): void;
 
     public function newModel();
+
+    public function newQuery();
 }

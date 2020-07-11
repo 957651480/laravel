@@ -26,11 +26,15 @@ class FileController extends BackendApiController
 
     public function index(Request $request)
     {
-        $list = $this->service->list();
+        $paginate = $this->service->list([
+            'limit'=>$request->get('limit'),
+            'columns'=>['id','path']
+        ]);
         $data =[
             'code'=>20000,
             'msg'=>'获取成功',
-            'data'=>$list
+            'total'=>$paginate->total(),
+            'data'=>$paginate->items()
         ];
         return response()->json($data);
     }
