@@ -66,6 +66,7 @@ Route::namespace('Api')->group(function (){
         Route::any('banner/detail/{id}','BannerController@detail');
         Route::any('banner/update/{id}','BannerController@update');
         Route::any('banner/delete/{id}','BannerController@delete');
+        Route::any('banner/batch/delete','BannerController@batchDelete');
     });
 });
 

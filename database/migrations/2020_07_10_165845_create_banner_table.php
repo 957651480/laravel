@@ -19,6 +19,7 @@ class CreateBannerTable extends Migration
             $table->string('title');
             $table->unsignedInteger('file_id');
             $table->string('link');
+            $table->unsignedTinyInteger('show')->comment('是否显示：1显示,0隐藏');
             $table->softDeletes()->comment('删除时间');
             $table->timestamps();
         });

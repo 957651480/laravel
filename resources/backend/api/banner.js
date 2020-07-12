@@ -34,3 +34,12 @@ export function deleteBanner(id) {
         method: 'get',
     })
 }
+
+export function batchDeleteBanner(data) {
+
+    return request({
+        url: '/admin/banner/batch/delete',
+        method: 'post',
+        data
+    })
+}

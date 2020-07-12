@@ -33,6 +33,11 @@ class EloquentService
         return $model->delete();
     }
 
+    public function batchDelete(array $ids)
+    {
+        return $this->model->whereIn('id',$ids)->delete();
+    }
+
     public function firstModelByIdOrFail(int $id,$columns = ['*'],$with=[])
     {
         $model = $this->firstModelById($id,$columns,$with);

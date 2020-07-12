@@ -4,43 +4,51 @@
             <el-form-item label="轮播标题:">
                 <el-input v-model="query.title" placeholder="请输入轮播标题" clearable style="width: 200px;" @change="handleFilter" class="filter-item" @keyup.enter.native="handleFilter" />
             </el-form-item>
-            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+            <el-button v-waves type="primary" icon="el-icon-search" @click="handleFilter">
                 搜索
             </el-button>
-            <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
+            <el-button type="primary" icon="el-icon-plus" @click="handleCreate">
                 添加
             </el-button>
-            <!--<el-button v-waves :loading="downloading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-              {{ $t('table.export') }}
-            </el-button>-->
+            <el-button v-waves :loading="downloading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+              导出
+            </el-button>
         </el-form>
 
-        <el-table v-loading="tableLoading" :data="list" border fit highlight-current-row style="width: 100%">
+        <el-table ref="table" v-loading="tableLoading" :data="list" border fit highlight-current-row style="width: 100%"
+                  @selection-change="handleSelectionChange"
+        >
+            <el-table-column
+                type="selection"
+                width="55">
+            </el-table-column>
             <el-table-column align="center" label="ID" width="80">
                 <template slot-scope="scope">
                     <span>{{ scope.row.id }}</span>
                 </template>
             </el-table-column>
-
+            <el-table-column align="center" label="排序">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.sort }}</span>
+                </template>
+            </el-table-column>
             <el-table-column align="center" label="标题">
                 <template slot-scope="scope">
                     <span>{{ scope.row.title }}</span>
                 </template>
             </el-table-column>
-            <el-table-column width="180px" align="center" label="所属城市">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.city_name }}</span>
-                </template>
-            </el-table-column>
 
-            <el-table-column align="center" label="状态">
+            <el-table-column align="center" label="显示">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.show===10?'显示':'隐藏' }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column width="180px" align="center" label="作者">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.author_name }}</span>
+                    <el-switch
+                        v-model="scope.row.show"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949"
+                        :active-value="1"
+                        :inactive-value="0"
+                        @change="handleChange(scope.row)"
+                    >
+                    </el-switch>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="创建时间">
@@ -54,15 +62,30 @@
                     <el-button type="primary" size="small" icon="el-icon-edit" @click="handleEdit(scope.row)">
                         编辑
                     </el-button>
+                    <el-button type="primary" size="small" icon="el-icon-copy-document" @click="handleCopy(scope.row)">
+                        复制
+                    </el-button>
                     <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id)">
                         删除
                     </el-button>
                 </template>
             </el-table-column>
         </el-table>
+        <el-row >
+            <el-col :span="12" style="float: left;padding-top: 20px">
 
+                <el-button type="primary" size="small"  @click="toggleSelection(true)">
+                    全选
+                </el-button>
+                <el-button type="primary" size="small"  @click="toggleSelection(false)">
+                    取消
+                </el-button>
+                <el-button type="danger" size="small" icon="el-icon-delete" :disabled="batchDisabled" @click="handleBatchDelete()">
+                    批量删除
+                </el-button>
+            </el-col>
+        </el-row>
         <pagination v-show="total>0" :total="total" :page.sync="query.page" :limit.sync="query.limit" @pagination="getList" />
-
         <el-dialog v-model="isEdit" :title="isEdit?'编辑':'添加'" :visible.sync="dialogFormVisible" @close='closeDialog'>
             <div v-loading="BannerCreating" class="form-container">
                 <el-form ref="userForm" :rules="rules" :model="newBanner" label-position="left" label-width="150px" style="max-width: 500px;">
@@ -70,12 +93,24 @@
                         <el-input v-model="newBanner.title" show-word-limit maxlength="25"/>
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
-                        <el-radio v-model="newBanner.show" :label="10">显示</el-radio>
-                        <el-radio v-model="newBanner.show" :label="20">隐藏</el-radio>
+                        <el-switch
+                            v-model="newBanner.show"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949"
+                            :active-value="1"
+                            :inactive-value="0"
+                        >
+                        </el-switch>
                     </el-form-item>
                     <el-form-item label="排序:" prop="sort">
-                        <el-input-number v-model="newBanner.sort"></el-input-number>
-                        <span>排序越大越靠前</span>
+                        <el-input-number
+                            v-model="newBanner.sort"
+                            controls-position="right"
+                            :min="0" :max="100000"
+                            placeholder="排序越大越靠前"
+                        >
+                        </el-input-number>
+                        <span>(排序越大越靠前)</span>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
@@ -94,7 +129,7 @@
 <script>
     import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
     import waves from '@/directive/waves'; // Waves directive
-    import { fetchList, updateBanner, createBanner, deleteBanner } from '@/api/banner';
+    import { fetchList, updateBanner, createBanner, deleteBanner,batchDeleteBanner } from '@/api/banner';
 
     export default {
         name: 'BannerList',
@@ -105,6 +140,7 @@
                 list: null,
                 total: 0,
                 tableLoading: true,
+                downloading: false,
                 BannerCreating: false,
                 query: {
                     page: 1,
@@ -119,11 +155,13 @@
                     images: [{ required: true, message: '图片必填', trigger: 'blur' }],
                 },
                 isEdit: false,
-                //
-                types:[{type_id:10,name:'首页'},{type_id:20,name:'楼盘'}],
+                multipleSelection: [],
             };
         },
         computed: {
+            batchDisabled:function() {
+                return this.multipleSelection.length === 0
+            }
         },
         created() {
             this.resetNewBanner();
@@ -157,6 +195,10 @@
                 this.isEdit = true;
                 this.dialogFormVisible = true;
             },
+            handleCopy(data){
+                this.newBanner = data;
+                this.createBanner();
+            },
             handleDelete(id) {
                 this.$confirm('确定删除吗?', 'Warning', {
                     confirmButtonText: '确定',
@@ -183,7 +225,6 @@
                             type: 'success',
                             duration: 5 * 1000,
                         });
-                        this.resetNewBanner();
                         this.dialogFormVisible = false;
                         this.handleFilter();
                     })
@@ -203,9 +244,7 @@
                             type: 'success',
                             duration: 5 * 1000,
                         });
-                        this.resetNewBanner();
                         this.dialogFormVisible = false;
-                        this.handleFilter();
                     })
                     .catch(error => {
                         console.log(error);
@@ -229,10 +268,9 @@
 
                 this.newBanner = {
                     title: '',
-                    type_id:10,
-                    images:[],
-                    show: 10,
-                    sort: 100,
+                    file_id:null,
+                    show: 1,
+                    sort: 0,
                 };
             },
             showImageList(imageList){
@@ -242,8 +280,45 @@
                 }
                 return tmpList;
             },
+            handleDownload(){
+
+            },
             closeDialog(){
                 this.isEdit=false;
+            },
+            handleBatchDelete(){
+
+                let ids=[];
+                this.multipleSelection.forEach(row=>{
+                    ids.push(row.id)
+                });
+                batchDeleteBanner({ids:ids}).then(response => {
+                    this.$message({
+                        type: 'success',
+                        message: '已删除',
+                    });
+                    this.handleFilter();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+
+            toggleSelection(check)
+            {
+                if (check) {
+                    this.list.forEach(row => {
+                        this.$refs.table.toggleRowSelection(row);
+                    });
+                } else {
+                    this.$refs.table.clearSelection();
+                }
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            handleChange(data){
+                this.newBanner = data;
+                this.updateBanner();
             }
         },
     };

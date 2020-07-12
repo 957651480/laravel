@@ -67,11 +67,18 @@ class BannerController extends BackendApiController
    }
 
 
+    public function batchDelete(Request $request)
+    {
+        $banner = $this->service->batchDelete($request->get('ids'));
+        return api_response()->success();
+   }
 
     protected function validateBanner(Request $request)
     {
         return $request->validate([
-            'title'=>'required'
+            'title'=>'required',
+            'show'=>'sometimes',
+            'sort'=>'sometimes',
         ],[
             'title.required'=>'标题必须'
         ]);
