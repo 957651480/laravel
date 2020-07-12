@@ -9,7 +9,7 @@ export function fetchList(query) {
     })
 }
 
-export function bannerCreate(data) {
+export function createBanner(data) {
 
     return request({
         url: '/admin/banner/create',
@@ -18,11 +18,19 @@ export function bannerCreate(data) {
     })
 }
 
-export function bannerUpdate(id,data) {
+export function updateBanner(id,data) {
 
     return request({
         url: '/admin/banner/update/'+id,
         method: 'post',
         data
+    })
+}
+
+export function deleteBanner(id) {
+
+    return request({
+        url: '/admin/banner/delete/'+id,
+        method: 'get',
     })
 }

@@ -24,4 +24,14 @@ class BannerService extends EloquentService
     }
 
 
+    public function detail(int $id)
+    {
+        return $this->firstModelByIdOrFail($id);
+    }
+
+    public function update()
+    {
+        
+    }
+
 }

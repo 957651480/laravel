@@ -1,86 +1,254 @@
 <template>
-<div class="app-container">
-    <el-form :inline="true">
-        <el-form-item label="关键词:">
-            <el-input v-model="listQuery.keywords"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
-            <el-button type="primary" icon="el-icon-plus" @click="handleCreate">添加</el-button>
-        </el-form-item>
-    </el-form>
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row >
-        <el-table-column label="id">
-            <template slot-scope="scope">
-                <span>{{ scope.row.id }}</span>
-            </template>
-        </el-table-column>
+    <div class="app-container">
+        <el-form :inline="true" >
+            <el-form-item label="轮播标题:">
+                <el-input v-model="query.title" placeholder="请输入轮播标题" clearable style="width: 200px;" @change="handleFilter" class="filter-item" @keyup.enter.native="handleFilter" />
+            </el-form-item>
+            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+                搜索
+            </el-button>
+            <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="handleCreate">
+                添加
+            </el-button>
+            <!--<el-button v-waves :loading="downloading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+              {{ $t('table.export') }}
+            </el-button>-->
+        </el-form>
 
-        <el-table-column label="操作">
-            <template slot-scope="scope">
-                <el-button type="primary" icon="el-icon-edit" @click="handleEdit">编辑</el-button>
-                <el-button type="primary" icon="el-icon-delete" @click="handleDelete">删除</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
-    <pagination v-show="total>0" :total="total" :limit="listQuery.limit" :page="listQuery.page" @pagination="getList"></pagination>
-    <el-dialog :visible.sync="showForm">
-        <banner-form :is-edit="editForm"></banner-form>
-    </el-dialog>
-</div>
+        <el-table v-loading="tableLoading" :data="list" border fit highlight-current-row style="width: 100%">
+            <el-table-column align="center" label="ID" width="80">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.id }}</span>
+                </template>
+            </el-table-column>
 
+            <el-table-column align="center" label="标题">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.title }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column width="180px" align="center" label="所属城市">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.city_name }}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column align="center" label="状态">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.show===10?'显示':'隐藏' }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column width="180px" align="center" label="作者">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.author_name }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="创建时间">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.created_at }}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column align="center" label="操作" width="350">
+                <template slot-scope="scope">
+                    <el-button type="primary" size="small" icon="el-icon-edit" @click="handleEdit(scope.row)">
+                        编辑
+                    </el-button>
+                    <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id)">
+                        删除
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <pagination v-show="total>0" :total="total" :page.sync="query.page" :limit.sync="query.limit" @pagination="getList" />
+
+        <el-dialog v-model="isEdit" :title="isEdit?'编辑':'添加'" :visible.sync="dialogFormVisible" @close='closeDialog'>
+            <div v-loading="BannerCreating" class="form-container">
+                <el-form ref="userForm" :rules="rules" :model="newBanner" label-position="left" label-width="150px" style="max-width: 500px;">
+                    <el-form-item label="标题:" prop="title">
+                        <el-input v-model="newBanner.title" />
+                    </el-form-item>
+                    <el-form-item label="状态:" prop="show">
+                        <el-radio v-model="newBanner.show" :label="10">显示</el-radio>
+                        <el-radio v-model="newBanner.show" :label="20">隐藏</el-radio>
+                    </el-form-item>
+                    <el-form-item label="排序:" prop="sort">
+                        <el-input-number v-model="newBanner.sort"></el-input-number>
+                        <span>排序越大越靠前</span>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="saveBanner()">
+                        保存
+                    </el-button>
+                    <el-button @click="dialogFormVisible = false;isEdit=false">
+                        取消
+                    </el-button>
+                </div>
+            </div>
+        </el-dialog>
+    </div>
 </template>
 
 <script>
-import Pagination from "@/components/Pagination/index";
-import {fetchList} from "@/api/banner";
-import BannerForm from "@/views/banner/components/Form";
+    import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
+    import waves from '@/directive/waves'; // Waves directive
+    import { fetchList, updateBanner, createBanner, deleteBanner } from '@/api/banner';
 
-export default {
-    name: "BannerList",
-    components: { BannerForm, Pagination},
-    data(){
-        return {
-            total:0,
-            list:[],
-            showForm:false,
-            editForm:false,
-            listLoading:false,
-            listQuery:{
-                page:1,
-                limit:2,
-                keywords:''
-            },
-        }
-    },
-    created() {
-        this.getList();
-    },
-    methods:{
-
-        handleFilter(){
+    export default {
+        name: 'BannerList',
+        components: {  Pagination },
+        directives: { waves },
+        data() {
+            return {
+                list: null,
+                total: 0,
+                tableLoading: true,
+                BannerCreating: false,
+                query: {
+                    page: 1,
+                    limit: 15,
+                    title: '',
+                },
+                newBanner: {},
+                dialogFormVisible: false,
+                rules: {
+                    title: [{ required: true, message: '标题必须', trigger: 'blur' }],
+                    /*type_id: [{ required: true, message: '类型必须', trigger: 'blur' }],*/
+                    images: [{ required: true, message: '图片必填', trigger: 'blur' }],
+                },
+                isEdit: false,
+                //
+                types:[{type_id:10,name:'首页'},{type_id:20,name:'楼盘'}],
+            };
+        },
+        computed: {
+        },
+        created() {
+            this.resetNewBanner();
             this.getList();
         },
-        getList(){
-            fetchList(this.listQuery).then(response=>{
-                let {data} =response
-                this.list=data;
-            })
-        },
-        handleCreate(){
-            this.showForm=true;
-        },
-        handleEdit(){
+        methods: {
+            async getList() {
+                const { limit, page } = this.query;
+                this.tableLoading = true;
+                const { total,data } = await fetchList(this.query);
+                this.list = data;
+                this.list.forEach((element, index) => {
+                    element['index'] = (page - 1) * limit + index + 1;
+                });
+                this.total = total;
+                this.tableLoading = false;
+            },
+            handleFilter() {
+                this.query.page = 1;
+                this.getList();
+            },
+            handleCreate() {
+                this.resetNewBanner();
+                this.dialogFormVisible = true;
+                this.$nextTick(() => {
+                    this.$refs['userForm'].clearValidate();
+                });
+            },
+            handleEdit(data){
+                this.newBanner = data;
+                this.isEdit = true;
+                this.dialogFormVisible = true;
+            },
+            handleDelete(id) {
+                this.$confirm('确定删除吗?', 'Warning', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                }).then(() => {
+                    deleteBanner(id).then(response => {
+                        this.$message({
+                            type: 'success',
+                            message: '已删除',
+                        });
+                        this.handleFilter();
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }).catch(() => {
+                });
+            },
+            createBanner(){
+                createBanner(this.newBanner)
+                    .then(response => {
+                        this.$message({
+                            message: '成功',
+                            type: 'success',
+                            duration: 5 * 1000,
+                        });
+                        this.resetNewBanner();
+                        this.dialogFormVisible = false;
+                        this.handleFilter();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.BannerCreating = false;
+                    });
+            },
+            updateBanner(){
+                let  id = this.newBanner.id;
+                updateBanner(id,this.newBanner)
+                    .then(response => {
+                        this.$message({
+                            message: '成功',
+                            type: 'success',
+                            duration: 5 * 1000,
+                        });
+                        this.resetNewBanner();
+                        this.dialogFormVisible = false;
+                        this.handleFilter();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.BannerCreating = false;
+                    });
+            },
+            saveBanner() {
+                this.$refs['userForm'].validate((valid) => {
+                    if (valid) {
+                        this.BannerCreating = true;
+                        this.isEdit?this.updateBanner():this.createBanner()
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            resetNewBanner() {
 
+                this.newBanner = {
+                    title: '',
+                    type_id:10,
+                    images:[],
+                    show: 10,
+                    sort: 100,
+                };
+            },
+            showImageList(imageList){
+                let tmpList = [];
+                for (let i = 0;i < imageList.length;i++){
+                    tmpList[i]=imageList[i].url;
+                }
+                return tmpList;
+            },
+            closeDialog(){
+                this.isEdit=false;
+            }
         },
-        handleDelete(){
-
-        }
-    }
-
-}
+    };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

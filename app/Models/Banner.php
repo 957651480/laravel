@@ -17,5 +17,6 @@ class Banner extends EloquentModel
 {
     //
     protected $table='banner';
+    protected $guarded=[];
 
 }

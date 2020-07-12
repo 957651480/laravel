@@ -35,7 +35,7 @@ class BannerController extends BackendApiController
     public function index(Request $request)
     {
         $paginate = Banner::paginate($request->get('limit'));
-        return api_response()->success(['data'=>$paginate->items()]);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$paginate->items()]);
     }
 
 
@@ -48,7 +48,7 @@ class BannerController extends BackendApiController
 
     public function detail(Request $request,int $id)
     {
-        $banner = $this->service->firstModelByIdOrFail($id);
+        $banner = $this->service->detail($id);
         return api_response()->success(['data'=>$banner]);
    }
 
