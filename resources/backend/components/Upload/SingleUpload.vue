@@ -30,20 +30,23 @@ export default {
             type: Number,
             default: 0
         },
+        img_url:{
+            type: Number,
+            default: 0
+        }
     },
     data() {
         return {
             imageUrl: ''
         };
     },
+
     methods: {
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.$emit('input',res.data.id)
         },
         beforeAvatarUpload(file) {
-            debugger
-
             let length = this.extension.length;
             if (length) {
                 let allow_extension = this.extension.some(item=>{
@@ -69,7 +72,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    @import "~@/styles/mixin.scss";
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;

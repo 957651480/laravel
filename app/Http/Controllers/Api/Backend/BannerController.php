@@ -4,11 +4,9 @@
 namespace App\Http\Controllers\Api\Backend;
 
 
-use App\Http\Response\ApiResponse;
+use App\Http\Resources\Backend\BannerResource;
 use App\Models\Banner;
 use App\Services\BannerService;
-use App\Services\FileService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
@@ -34,8 +32,9 @@ class BannerController extends BackendApiController
 
     public function index(Request $request)
     {
-        $paginate = Banner::paginate($request->get('limit'));
-        return api_response()->success(['total'=>$paginate->total(),'data'=>$paginate->items()]);
+        $paginate = Banner::with('file')->paginate($request->get('limit'));
+        $data = BannerResource::collection($paginate);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
 
@@ -62,14 +61,14 @@ class BannerController extends BackendApiController
 
     public function delete(Request $request, int $id)
     {
-        $banner = $this->service->delete($id);
+        $this->service->delete($id);
         return api_response()->success();
    }
 
 
     public function batchDelete(Request $request)
     {
-        $banner = $this->service->batchDelete($request->get('ids'));
+        $this->service->batchDelete($request->get('ids'));
         return api_response()->success();
    }
 
@@ -77,10 +76,12 @@ class BannerController extends BackendApiController
     {
         return $request->validate([
             'title'=>'required',
+            'file_id'=>'required',
             'show'=>'sometimes',
             'sort'=>'sometimes',
         ],[
-            'title.required'=>'标题必须'
+            'title.required'=>'标题必须',
+            'file_id.required'=>'图片必须',
         ]);
     }
 

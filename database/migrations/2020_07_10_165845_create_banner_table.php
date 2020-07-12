@@ -15,11 +15,11 @@ class CreateBannerTable extends Migration
     {
         Schema::create('banner', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('sort')->comment('排序');
-            $table->string('title');
-            $table->unsignedInteger('file_id');
-            $table->string('link');
-            $table->unsignedTinyInteger('show')->comment('是否显示：1显示,0隐藏');
+            $table->unsignedInteger('sort')->default(0)->comment('排序');
+            $table->string('title')->default('')->comment('标题');
+            $table->unsignedInteger('file_id')->default(0)->comment('文件id');
+            $table->string('link')->default('')->comment('链接');
+            $table->unsignedTinyInteger('show')->default(10)->comment('是否显示：10显示,20隐藏');
             $table->softDeletes()->comment('删除时间');
             $table->timestamps();
         });

@@ -27,7 +27,7 @@
                     <span>{{ scope.row.id }}</span>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="排序">
+            <el-table-column align="center" label="排序" width="80">
                 <template slot-scope="scope">
                     <span>{{ scope.row.sort }}</span>
                 </template>
@@ -37,15 +37,23 @@
                     <span>{{ scope.row.title }}</span>
                 </template>
             </el-table-column>
-
+            <el-table-column align="center" label="图片">
+                <template slot-scope="scope">
+                    <el-image
+                        style="width: 80px; height: 80px"
+                        :src="scope.row.img_url"
+                        :preview-src-list="[scope.row.img_url]"
+                    ></el-image>
+                </template>
+            </el-table-column>
             <el-table-column align="center" label="显示">
                 <template slot-scope="scope">
                     <el-switch
                         v-model="scope.row.show"
                         active-color="#13ce66"
                         inactive-color="#ff4949"
-                        :active-value="1"
-                        :inactive-value="0"
+                        :active-value="10"
+                        :inactive-value="20"
                         @change="handleChange(scope.row)"
                     >
                     </el-switch>
@@ -92,13 +100,16 @@
                     <el-form-item label="标题:" prop="title">
                         <el-input v-model="newBanner.title" show-word-limit maxlength="25"/>
                     </el-form-item>
+                    <el-form-item label="图片:" prop="file_id">
+                        <single-upload v-model="newBanner.file_id" :img_url="newBanner.img_url"></single-upload>
+                    </el-form-item>
                     <el-form-item label="状态:" prop="show">
                         <el-switch
                             v-model="newBanner.show"
                             active-color="#13ce66"
                             inactive-color="#ff4949"
-                            :active-value="1"
-                            :inactive-value="0"
+                            :active-value="10"
+                            :inactive-value="20"
                         >
                         </el-switch>
                     </el-form-item>
@@ -130,10 +141,11 @@
     import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
     import waves from '@/directive/waves'; // Waves directive
     import { fetchList, updateBanner, createBanner, deleteBanner,batchDeleteBanner } from '@/api/banner';
+    import SingleUpload from "@/components/Upload/SingleUpload";
 
     export default {
         name: 'BannerList',
-        components: {  Pagination },
+        components: {SingleUpload,  Pagination },
         directives: { waves },
         data() {
             return {
@@ -151,8 +163,7 @@
                 dialogFormVisible: false,
                 rules: {
                     title: [{ required: true, message: '标题必须', trigger: 'blur' }],
-                    /*type_id: [{ required: true, message: '类型必须', trigger: 'blur' }],*/
-                    images: [{ required: true, message: '图片必填', trigger: 'blur' }],
+                    file_id: [{ required: true, message: '图片必须', trigger: 'blur' }],
                 },
                 isEdit: false,
                 multipleSelection: [],
@@ -269,7 +280,8 @@
                 this.newBanner = {
                     title: '',
                     file_id:null,
-                    show: 1,
+                    img_url:null,
+                    show: 10,
                     sort: 0,
                 };
             },

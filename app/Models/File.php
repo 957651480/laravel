@@ -42,6 +42,10 @@ class File extends EloquentModel
 
     protected $guarded=[];
 
+    protected $appends=[
+        'url'
+    ];
+
 
     public function getUrlAttribute()
     {

@@ -19,4 +19,9 @@ class Banner extends EloquentModel
     protected $table='banner';
     protected $guarded=[];
 
+
+    public function file()
+    {
+        return $this->belongsTo(File::class,'file_id');
+    }
 }
