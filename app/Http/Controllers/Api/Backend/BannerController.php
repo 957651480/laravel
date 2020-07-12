@@ -41,7 +41,7 @@ class BannerController extends BackendApiController
 
     public function create(Request $request)
     {
-        $data = $this->validateCreateBanner($request);
+        $data = $this->validateBanner($request);
         $this->service->create($data);
         return api_response()->success();
    }
@@ -55,7 +55,8 @@ class BannerController extends BackendApiController
     public function update(Request $request,int $id)
     {
         $banner = $this->service->firstModelByIdOrFail($id);
-        $banner->setRawAttributes($request->all());
+        $banner->setRawAttributes($this->validateBanner($request));
+        $banner->save();
         return api_response()->success();
    }
 
@@ -67,12 +68,13 @@ class BannerController extends BackendApiController
 
 
 
-    protected function validateCreateBanner(Request $request)
+    protected function validateBanner(Request $request)
     {
         return $request->validate([
             'title'=>'required'
         ],[
             'title.required'=>'标题必须'
         ]);
-   }
+    }
+
 }

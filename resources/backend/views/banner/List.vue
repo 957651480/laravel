@@ -67,7 +67,7 @@
             <div v-loading="BannerCreating" class="form-container">
                 <el-form ref="userForm" :rules="rules" :model="newBanner" label-position="left" label-width="150px" style="max-width: 500px;">
                     <el-form-item label="标题:" prop="title">
-                        <el-input v-model="newBanner.title" />
+                        <el-input v-model="newBanner.title" show-word-limit maxlength="25"/>
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
                         <el-radio v-model="newBanner.show" :label="10">显示</el-radio>
