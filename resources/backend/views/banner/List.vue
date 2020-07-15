@@ -266,13 +266,9 @@
             },
             saveBanner() {
                 this.$refs['userForm'].validate((valid) => {
-                    if (valid) {
-                        this.BannerCreating = true;
-                        this.isEdit?this.updateBanner():this.createBanner()
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
+                    if (!valid) return false;
+                    this.BannerCreating = true;
+                    this.isEdit?this.updateBanner():this.createBanner()
                 });
             },
             resetNewBanner() {

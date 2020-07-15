@@ -16,7 +16,7 @@ const bannerRouter = {
             path: 'banner',
             component: () => import('@/views/banner/List'),
             name: 'BannerList',
-            meta: { title: 'banner列表', icon: 'list',noCache: true }
+            meta: { title: '轮播列表', icon: 'list',noCache: true }
         },
     ]
 }
