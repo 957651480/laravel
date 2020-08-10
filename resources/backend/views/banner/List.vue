@@ -143,6 +143,7 @@
     import { fetchList, updateBanner, createBanner, deleteBanner,batchDeleteBanner } from '@/api/banner';
     import SingleUpload from "@/components/Upload/SingleUpload";
     import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
+    import {success} from "@/utils/message";
 
     export default {
         name: 'BannerList',
@@ -232,11 +233,7 @@
             createBanner(){
                 createBanner(this.newBanner)
                     .then(response => {
-                        this.$message({
-                            message: '成功',
-                            type: 'success',
-                            duration: 5 * 1000,
-                        });
+                        success(response);
                         this.dialogFormVisible = false;
                         this.handleFilter();
                     })
@@ -251,11 +248,7 @@
                 let  id = this.newBanner.id;
                 updateBanner(id,this.newBanner)
                     .then(response => {
-                        this.$message({
-                            message: '成功',
-                            type: 'success',
-                            duration: 5 * 1000,
-                        });
+                        success(response);
                         this.dialogFormVisible = false;
                     })
                     .catch(error => {
@@ -302,10 +295,7 @@
                     ids.push(row.id)
                 });
                 batchDeleteBanner({ids:ids}).then(response => {
-                    this.$message({
-                        type: 'success',
-                        message: '已删除',
-                    });
+                    success(response);
                     this.handleFilter();
                 }).catch(error => {
                     console.log(error);
