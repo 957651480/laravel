@@ -143,7 +143,7 @@
     import { fetchList, updateBanner, createBanner, deleteBanner,batchDeleteBanner } from '@/api/banner';
     import SingleUpload from "@/components/Upload/SingleUpload";
     import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
-    import {success} from "@/utils/message";
+    import {httpSuccess,confirmMessage} from "@/utils/message";
 
     export default {
         name: 'BannerList',
@@ -213,16 +213,9 @@
                 this.createBanner();
             },
             handleDelete(id) {
-                this.$confirm('确定删除吗?', 'Warning', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning',
-                }).then(() => {
+                confirmMessage('确定删除吗?').then(() => {
                     deleteBanner(id).then(response => {
-                        this.$message({
-                            type: 'success',
-                            message: '已删除',
-                        });
+                        httpSuccess(response);
                         this.handleFilter();
                     }).catch(error => {
                         console.log(error);
@@ -233,7 +226,7 @@
             createBanner(){
                 createBanner(this.newBanner)
                     .then(response => {
-                        success(response);
+                        httpSuccess(response);
                         this.dialogFormVisible = false;
                         this.handleFilter();
                     })
@@ -248,7 +241,7 @@
                 let  id = this.newBanner.id;
                 updateBanner(id,this.newBanner)
                     .then(response => {
-                        success(response);
+                        httpSuccess(response);
                         this.dialogFormVisible = false;
                     })
                     .catch(error => {

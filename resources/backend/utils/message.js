@@ -3,25 +3,19 @@ import Vue from "vue";
 export function message(options) {
     Vue.prototype.$message(options)
 }
-export function success(options={
-    message: '成功',
-    type: 'success',
-    duration: 5 * 1000,
-}) {
-    message(options)
+export function httpSuccess(response={}) {
+    Vue.prototype.$message({
+        message: response.msg,
+        type: 'success',
+        duration: 1500
+    })
 }
 
-export function fail(options={
-    message: '失败',
-    type: 'error',
-    duration: 5 * 1000,
-}) {
-    message(options)
-}
-export function warning(options={
-    message: '警告',
-    type: 'warning',
-    duration: 5 * 1000,
-}) {
-    message(options)
+export function confirmMessage(message,title='提示',...args) {
+    let _default = {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+    }
+    return Vue.prototype.$confirm(message, title, Object.assign(_default,args))
 }
