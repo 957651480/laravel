@@ -142,12 +142,11 @@
     import waves from '@/directive/waves'; // Waves directive
     import { fetchList, updateBanner, createBanner, deleteBanner,batchDeleteBanner } from '@/api/banner';
     import SingleUpload from "@/components/Upload/SingleUpload";
-    import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
     import {httpSuccess,confirmMessage} from "@/utils/message";
 
     export default {
         name: 'BannerList',
-        components: {CustomElementSwitch, SingleUpload,  Pagination },
+        components: { SingleUpload,  Pagination },
         directives: { waves },
         data() {
             return {
