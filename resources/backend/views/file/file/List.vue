@@ -59,7 +59,9 @@
 
 <script>
 import Pagination from "@/components/Pagination";
-import {fetchList, fetchFile} from "@/api/file";
+import {fetchList as fetchFileList, fetchFile} from "@/api/file";
+import {fetchList as fetchGroupList } from "@/api/file-group";
+import {fetchList} from "@/api/banner";
 
 export default {
     name: "FileList",
@@ -90,22 +92,143 @@ export default {
                 {
                     id:3,
                     name:'lllll'
-                }
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
+                {
+                    id:3,
+                    name:'lllll'
+                },
             ]
 
         }
     },
     created() {
         this.getList();
+        this.getGroupList();
     },
     methods: {
         getList() {
             this.listLoading = true
-            fetchList(this.listQuery).then(response => {
+            fetchFileList(this.listQuery).then(response => {
                 this.list = response.data
                 this.total = response.total
                 this.listLoading = false
             })
+        },
+        async getGroupList() {
+            const {data } = await fetchGroupList({limit:10});
+            this.list = data;
         },
         editGroup(item){
             this.groupDialogFormVisible=true;

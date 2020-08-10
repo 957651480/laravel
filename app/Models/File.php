@@ -51,4 +51,9 @@ class File extends EloquentModel
     {
         return sprintf("%s/%s",url('storage'),$this->path);
     }
+
+    public function group()
+    {
+        return $this->belongsTo(FileGroup::class,'group_id');
+    }
 }
