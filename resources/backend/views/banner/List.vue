@@ -288,7 +288,7 @@
                     ids.push(row.id)
                 });
                 batchDeleteBanner({ids:ids}).then(response => {
-                    success(response);
+                    httpSuccess(response);
                     this.handleFilter();
                 }).catch(error => {
                     console.log(error);
