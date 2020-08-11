@@ -43,8 +43,8 @@
                 <template slot-scope="scope">
                     <el-image
                         style="width: 80px; height: 80px"
-                        :src="scope.row.img_url"
-                        :preview-src-list="[scope.row.img_url]"
+                        :src="scope.row.image_url"
+                        :preview-src-list="[scope.row.image_url]"
                     ></el-image>
                 </template>
             </el-table-column>
@@ -102,8 +102,8 @@
                     <el-form-item label="标题:" prop="title">
                         <el-input v-model="newBanner.title" show-word-limit maxlength="25"/>
                     </el-form-item>
-                    <el-form-item label="图片:" prop="file_id">
-                        <single-upload v-model="newBanner.file_id" :img_url="newBanner.img_url"></single-upload>
+                    <el-form-item label="图片:" prop="image_id">
+                        <single-upload v-model="newBanner.image_id" :image_url="newBanner.image_url"></single-upload>
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
                         <el-switch
@@ -167,7 +167,7 @@
                 dialogFormVisible: false,
                 rules: {
                     title: [{ required: true, message: '标题必须', trigger: 'blur' }],
-                    file_id: [{ required: true, message: '图片必须', trigger: 'blur' }],
+                    image_id: [{ required: true, message: '图片必须', trigger: 'blur' }],
                 },
                 isEdit: false,
                 multipleSelection: [],
@@ -264,8 +264,8 @@
 
                 this.newBanner = {
                     title: '',
-                    file_id:null,
-                    img_url:null,
+                    image_id:null,
+                    image_url:null,
                     show: 10,
                     sort: 0,
                 };
