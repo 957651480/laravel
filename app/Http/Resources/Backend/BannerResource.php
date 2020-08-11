@@ -14,13 +14,13 @@ class BannerResource extends JsonResource
      */
     public function toArray($request)
     {
-        $file = $this->file?:optional();
+        $image = $this->image?:optional();
         return [
             'id'=>$this->id,
             'sort'=>$this->sort,
             'title'=>$this->title,
             'image_id'=>$this->image_id,
-            'image_url'=>$file->url,
+            'image_url'=>$image->url,
             'show'=>$this->show,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),

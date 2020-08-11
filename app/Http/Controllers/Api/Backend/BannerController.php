@@ -32,7 +32,7 @@ class BannerController extends BackendApiController
 
     public function index(Request $request)
     {
-        $paginate = Banner::with('file')->paginate($request->get('limit'));
+        $paginate = Banner::with('image')->paginate($request->get('limit'));
         $data = BannerResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
@@ -76,12 +76,12 @@ class BannerController extends BackendApiController
     {
         return $request->validate([
             'title'=>'required',
-            'file_id'=>'required',
+            'image_id'=>'required',
             'show'=>'sometimes',
             'sort'=>'sometimes',
         ],[
             'title.required'=>'标题必须',
-            'file_id.required'=>'图片必须',
+            'image_id.required'=>'图片必须',
         ]);
     }
 
