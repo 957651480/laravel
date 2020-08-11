@@ -20,8 +20,8 @@ class Banner extends EloquentModel
     protected $guarded=[];
 
 
-    public function file()
+    public function image()
     {
-        return $this->belongsTo(File::class,'file_id');
+        return $this->belongsTo(File::class,'image_id');
     }
 }
