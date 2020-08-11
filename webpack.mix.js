@@ -23,7 +23,10 @@ Mix.listen('configReady', webpackConfig => {
 
 mix.webpackConfig(config);
 
-
+mix.autoload({
+    jquery: ['$', 'window.jQuery'],
+    vue: ['vue', 'window.vue']
+});
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -82,14 +85,8 @@ mix.options({
     //globalVueStyles: __dirname+'/resources/backend/styles/element-variables.scss',
 })
 mix.js('resources/backend/main.js', 'public/backend/js')
-    .extract([
-        'axios',
-        'vue',
-        'vue-router',
-        'vuex',
-        'element-ui',
-    ]);
 
+//todo 不要提取,否则npm run prod css 打包出来是空文件
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
