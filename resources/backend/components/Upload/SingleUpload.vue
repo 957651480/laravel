@@ -37,10 +37,17 @@ export default {
     },
     data() {
         return {
-            tempUrl:this.img_url
+            tempUrl:''
         };
     },
-    mounted() {
+    watch: {
+        img_url(val) {
+
+            this.$nextTick(() =>
+                this.tempUrl=this.img_url)
+        }
+    },
+   mounted() {
         if(this.img_url){
             this.tempUrl=this.img_url;
         }

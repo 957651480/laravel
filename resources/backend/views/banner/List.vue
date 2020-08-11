@@ -131,7 +131,7 @@
                     <el-button type="primary" @click="saveBanner()">
                         保存
                     </el-button>
-                    <el-button @click="dialogFormVisible = false;isEdit=false">
+                    <el-button @click="closeDialog()">
                         取消
                     </el-button>
                 </div>
@@ -282,6 +282,7 @@
             },
             closeDialog(){
                 this.isEdit=false;
+                this.dialogFormVisible = false;
             },
             handleBatchDelete(){
 
@@ -314,15 +315,6 @@
                 this.newBanner = data;
                 this.updateBanner();
             },
-            cancelEdit(row) {
-                row.title = row.originalTitle
-                row.edit = false
-
-            },
-            confirmEdit(row) {
-                row.edit = false
-                row.originalTitle = row.title
-            }
         },
     };
 </script>
