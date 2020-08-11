@@ -28,3 +28,4 @@ modules_statuses.json
 /public/vendor/*.js
 /public/backend/js/*.js
 /public/frontend/js/js/*.js
+/public/backend/js/*.txt

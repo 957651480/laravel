@@ -11,14 +11,14 @@
 
     <!-- Scripts -->
 
-    <script src="{{ asset('js/app.js') }}" ></script>
+    <script src="{{ asset('js/frontend.js') }}" ></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">

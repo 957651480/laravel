@@ -25,7 +25,6 @@ mix.webpackConfig(config);
 
 mix.autoload({
     jquery: ['$', 'window.jQuery'],
-    vue: ['vue', 'window.vue']
 });
 /*
  |--------------------------------------------------------------------------
@@ -87,8 +86,8 @@ mix.options({
 mix.js('resources/backend/main.js', 'public/backend/js')
 
 //todo 不要提取,否则npm run prod css 打包出来是空文件
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/frontend/frontend.js', 'public/js')
+    .sass('resources/frontend/sass/frontend.scss', 'public/css');
 
 
 if (mix.inProduction()) {
