@@ -15,6 +15,7 @@ import settingRouter from "@/router/modules/setting";
 import permissionRouter from "@/router/modules/permision";
 import fileRouter from "@/router/modules/file";
 import bannerRouter from "@/router/modules/banner";
+import informationRouter from "@/router/modules/information";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -192,6 +193,7 @@ export const asyncRoutes = [
   settingRouter,
     fileRouter,
     bannerRouter,
+    informationRouter,
   componentsRouter,
   chartsRouter,
   nestedRouter,

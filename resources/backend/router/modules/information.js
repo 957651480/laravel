@@ -1,9 +1,9 @@
 import Layout from '@/layout'
 
-const articleRouter= {
-    path: '/article',
+const informationRouter= {
+    path: '/information',
         component: Layout,
-    redirect: '/article/list',
+    redirect: '/information/list',
     name: 'Example',
     meta: {
     title: '新闻资讯管理',
@@ -12,24 +12,24 @@ const articleRouter= {
     children: [
         {
             path: 'create',
-            component: () => import('@/views/example/create'),
-            name: 'CreateArticle',
+            component: () => import('@/views/information/create'),
+            name: 'CreateInformation',
             meta: { title: '创建新闻资讯', icon: 'edit' }
         },
         {
             path: 'edit/:id(\\d+)',
-            component: () => import('@/views/example/edit'),
-            name: 'EditArticle',
-            meta: { title: '编辑新闻资讯', noCache: true, activeMenu: '/example/list' },
+            component: () => import('@/views/information/edit'),
+            name: 'EditInformation',
+            meta: { title: '编辑新闻资讯', noCache: true, activeMenu: '/information/list' },
             hidden: true
         },
         {
             path: 'list',
-            component: () => import('@/views/example/list'),
-            name: 'ArticleList',
-            meta: { title: '文章列表', icon: 'list' }
+            component: () => import('@/views/information/list'),
+            name: 'InformationList',
+            meta: { title: '新闻资讯列表', icon: 'list' }
         }
     ]
 }
 
-export default articleRouter;
+export default informationRouter;
