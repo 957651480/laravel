@@ -33,8 +33,10 @@
                 </template>
             </el-table-column>
             <el-table-column align="center" label="标题">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.title }}</span>
+
+                <template slot-scope="{row}">
+
+                    <span >{{ row.title }}</span>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="图片">
@@ -113,6 +115,7 @@
                         >
                         </el-switch>
                     </el-form-item>
+
                     <el-form-item label="排序:" prop="sort">
                         <el-input-number
                             v-model="newBanner.sort"
@@ -310,6 +313,15 @@
             handleChange(data){
                 this.newBanner = data;
                 this.updateBanner();
+            },
+            cancelEdit(row) {
+                row.title = row.originalTitle
+                row.edit = false
+
+            },
+            confirmEdit(row) {
+                row.edit = false
+                row.originalTitle = row.title
             }
         },
     };
