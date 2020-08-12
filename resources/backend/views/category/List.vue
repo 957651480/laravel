@@ -85,17 +85,17 @@
         </el-row>
         <pagination v-show="total>0" :total="total" :page.sync="query.page" :limit.sync="query.limit" @pagination="getList" />
         <el-dialog v-model="isEdit" :title="isEdit?'编辑':'添加'" :visible.sync="dialogFormVisible" @close='closeDialog'>
-            <div v-loading="BannerCreating" class="form-container">
-                <el-form ref="userForm" :rules="rules" :model="newBanner" label-position="left" label-width="150px" style="max-width: 500px;">
+            <div v-loading="formCreating" class="form-container">
+                <el-form ref="userForm" :rules="rules" :model="form" label-position="left" label-width="150px" style="max-width: 500px;">
                     <el-form-item label="标题:" prop="title">
-                        <el-input v-model="newBanner.title" show-word-limit maxlength="25"/>
+                        <el-input v-model="form.title" show-word-limit maxlength="25"/>
                     </el-form-item>
                     <el-form-item  label="简介:">
-                        <el-input v-model="newBanner.desc"  type="textarea"  placeholder="请输入简介" />
+                        <el-input v-model="form.desc"  type="textarea"  placeholder="请输入简介" />
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
                         <el-switch
-                            v-model="newBanner.show"
+                            v-model="form.show"
                             active-color="#13ce66"
                             inactive-color="#ff4949"
                             :active-value="10"
@@ -106,7 +106,7 @@
 
                     <el-form-item label="排序:" prop="sort">
                         <el-input-number
-                            v-model="newBanner.sort"
+                            v-model="form.sort"
                             controls-position="right"
                             :min="0" :max="100000"
                             placeholder="排序越大越靠前"
@@ -144,13 +144,13 @@
                 total: 0,
                 tableLoading: true,
                 downloading: false,
-                BannerCreating: false,
+                formCreating: false,
                 query: {
                     page: 1,
                     limit: 15,
                     title: '',
                 },
-                newBanner: {},
+                form: {},
                 dialogFormVisible: false,
                 rules: {
                     title: [{ required: true, message: '标题必须', trigger: 'blur' }],
@@ -166,7 +166,7 @@
             },
         },
         created() {
-            this.resetNewBanner();
+            this.resetForm();
             this.getList();
         },
         methods: {
@@ -186,19 +186,19 @@
                 this.getList();
             },
             handleCreate() {
-                this.resetNewBanner();
+                this.resetform();
                 this.dialogFormVisible = true;
                 this.$nextTick(() => {
                     this.$refs['userForm'].clearValidate();
                 });
             },
             handleEdit(data){
-                this.newBanner = data;
+                this.form = data;
                 this.isEdit = true;
                 this.dialogFormVisible = true;
             },
             handleCopy(data){
-                this.newBanner = data;
+                this.form = data;
                 this.create();
             },
             handleDelete(id) {
@@ -213,7 +213,7 @@
                 });
             },
             create(){
-                create(this.newBanner)
+                create(this.form)
                     .then(response => {
                         httpSuccess(response);
                         this.dialogFormVisible = false;
@@ -223,12 +223,12 @@
                         console.log(error);
                     })
                     .finally(() => {
-                        this.BannerCreating = false;
+                        this.formCreating = false;
                     });
             },
             update(){
-                let  id = this.newBanner.id;
-                update(id,this.newBanner)
+                let  id = this.form.id;
+                update(id,this.form)
                     .then(response => {
                         httpSuccess(response);
                         this.dialogFormVisible = false;
@@ -237,19 +237,19 @@
                         console.log(error);
                     })
                     .finally(() => {
-                        this.BannerCreating = false;
+                        this.formCreating = false;
                     });
             },
             save() {
                 this.$refs['userForm'].validate((valid) => {
                     if (!valid) return false;
-                    this.BannerCreating = true;
+                    this.formCreating = true;
                     this.isEdit?this.update():this.create()
                 });
             },
-            resetNewBanner() {
+            resetForm() {
 
-                this.newBanner = {
+                this.form = {
                     title: '',
                     desc: '',
                     image_id:null,
@@ -300,7 +300,7 @@
                 this.multipleSelection = val;
             },
             handleChange(data){
-                this.newBanner = data;
+                this.form = data;
                 this.update();
             },
         },
