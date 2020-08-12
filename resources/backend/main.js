@@ -32,6 +32,8 @@ import * as filters from './filters' // global filters
   const { mockXHR } = require('../mock')
   mockXHR()
 }*/
+var ElTreeGrid = require('element-tree-grid');
+Vue.component(ElTreeGrid.name,ElTreeGrid);
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size

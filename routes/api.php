@@ -67,6 +67,14 @@ Route::namespace('Api')->group(function (){
         Route::any('banner/update/{id}','BannerController@update');
         Route::any('banner/delete/{id}','BannerController@delete');
         Route::any('banner/batch/delete','BannerController@batchDelete');
+
+        Route::any('category/list','CategoryController@index');
+        Route::any('category/list/top','CategoryController@topList');
+        Route::any('category/create','CategoryController@create');
+        Route::any('category/detail/{id}','CategoryController@detail');
+        Route::any('category/update/{id}','CategoryController@update');
+        Route::any('category/delete/{id}','CategoryController@delete');
+        Route::any('category/batch/delete','CategoryController@batchDelete');
     });
 });
 
