@@ -109,7 +109,7 @@
                         <el-input v-model="newBanner.desc"  type="textarea"  placeholder="请输入简介" />
                     </el-form-item>
                     <el-form-item label="图片:" prop="image_id">
-                        <single-upload v-model="newBanner.image_id" :image_url="newBanner.image_url"></single-upload>
+                        <single-upload v-model="newBanner.image_id" :img_url.sync="newBanner.image_url"></single-upload>
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
                         <el-switch

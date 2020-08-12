@@ -6,7 +6,7 @@
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload">
-        <img v-if="tempUrl" :src.sync="tempUrl" class="avatar">
+        <img v-if="elFileUrl" :src.sync="elFileUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
 
@@ -37,26 +37,20 @@ export default {
     },
     data() {
         return {
-            tempUrl:''
+            elFileUrl:this.img_url
         };
     },
-    watch: {
-        img_url(val) {
-
-            this.$nextTick(() =>
-                this.tempUrl=this.img_url)
-        }
-    },
-   mounted() {
-        if(this.img_url){
-            this.tempUrl=this.img_url;
+    watch:{
+        img_url(val){
+            this.elFileUrl=this.img_url;
         }
     },
     methods: {
         handleAvatarSuccess(res, file) {
             let {data}=res;
-            this.tempUrl = data.url;
+            this.elFileUrl = data.url;
             this.$emit('input',data.id);
+            this.$emit('update:img_url',data.url);
 
         },
         beforeAvatarUpload(file) {
