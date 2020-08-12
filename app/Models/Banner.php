@@ -26,11 +26,24 @@ class Banner extends EloquentModel
     }
 
     /**
+     *
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShow($query, $show=true)
+    {
+        return $query->where('show', $show?10:20);
+    }
+
+
+    /**
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public function bannerList()
     {
-        return $this->with('image')->orderByDesc('sort')->limit(3)->get([
+        return $this->with('image')->show()->orderByDesc('sort')->limit(3)->get([
             'title','desc','image_id'
         ]);
     }
