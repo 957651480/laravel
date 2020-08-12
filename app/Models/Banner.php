@@ -24,4 +24,14 @@ class Banner extends EloquentModel
     {
         return $this->belongsTo(File::class,'image_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function bannerList()
+    {
+        return $this->with('image')->orderByDesc('sort')->limit(3)->get([
+            'title','desc','image_id'
+        ]);
+    }
 }

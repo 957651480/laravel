@@ -1,31 +1,21 @@
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
-        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+        @foreach($banners as $banner)
+            <li data-target="#carouselExampleCaptions" data-slide-to="{{$loop->index}}"
+                @if($loop->first) class="active" @endif
+            ></li>
+        @endforeach
     </ol>
     <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="http://mylaravel.com/storage/2020/08/11/imlRsDj5Qbjdeh5hRkRNDuc4OOlHHNREyL7i7WTg.jpeg" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>First slide label</h5>
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        @foreach($banners as $banner)
+            <div class="carousel-item @if($loop->first) active @endif">
+                <img src="{{$banner->image->url}}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{$banner->title}}</h5>
+                    <p>{{$banner->desc}}</p>
+                </div>
             </div>
-        </div>
-        <div class="carousel-item">
-            <img src="http://mylaravel.com/storage/2020/08/11/z9Wb32ExGGNjtqnvhlBVYZJo7TrkQ96uDXu9VQQc.jpeg" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="http://mylaravel.com/storage/2020/08/11/jQEIeQ2CE2DaxZrTJDOVVxOSC0SDaqwgzVdhvJ2x.jpeg" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </div>
-        </div>
+        @endforeach
     </div>
     <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

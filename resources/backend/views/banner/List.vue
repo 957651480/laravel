@@ -33,10 +33,13 @@
                 </template>
             </el-table-column>
             <el-table-column align="center" label="标题">
-
                 <template slot-scope="{row}">
-
                     <span >{{ row.title }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column align="center" label="简介">
+                <template slot-scope="{row}">
+                    <span >{{ row.desc }}</span>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="图片">
@@ -101,6 +104,9 @@
                 <el-form ref="userForm" :rules="rules" :model="newBanner" label-position="left" label-width="150px" style="max-width: 500px;">
                     <el-form-item label="标题:" prop="title">
                         <el-input v-model="newBanner.title" show-word-limit maxlength="25"/>
+                    </el-form-item>
+                    <el-form-item  label="简介:">
+                        <el-input v-model="newBanner.desc"  type="textarea"  placeholder="请输入简介" />
                     </el-form-item>
                     <el-form-item label="图片:" prop="image_id">
                         <single-upload v-model="newBanner.image_id" :image_url="newBanner.image_url"></single-upload>
@@ -176,7 +182,7 @@
         computed: {
             batchDisabled:function() {
                 return this.multipleSelection.length === 0
-            }
+            },
         },
         created() {
             this.resetNewBanner();
@@ -264,6 +270,7 @@
 
                 this.newBanner = {
                     title: '',
+                    desc: '',
                     image_id:null,
                     image_url:null,
                     show: 10,

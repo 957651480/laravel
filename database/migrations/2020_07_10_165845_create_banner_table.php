@@ -17,6 +17,7 @@ class CreateBannerTable extends Migration
             $table->id();
             $table->unsignedInteger('sort')->default(0)->comment('排序');
             $table->string('title')->default('')->comment('标题');
+            $table->string('desc')->default('')->comment('简介');
             $table->unsignedInteger('image_id')->default(0)->comment('图片id');
             $table->string('link')->default('')->comment('链接');
             $table->unsignedTinyInteger('show')->default(10)->comment('是否显示：10显示,20隐藏');

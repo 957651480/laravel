@@ -7,7 +7,6 @@
         </el-form-item>
 
         <el-form-item  label="描述:">
-
             <el-input v-model="postForm.content_short" :rows="5" type="textarea" class="article-textarea" autosize placeholder="请输入简介" />
             <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>

@@ -76,6 +76,7 @@ class BannerController extends BackendApiController
     {
         return $request->validate([
             'title'=>'required',
+            'desc'=>'sometimes',
             'image_id'=>'required',
             'show'=>'sometimes',
             'sort'=>'sometimes',
