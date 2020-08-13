@@ -29,7 +29,7 @@ class CategorySeeder extends Seeder
         $this->categories->insert([
            [
                'name'=>'首页',
-               'parent_id'=>0
+               'parent_id'=>0,
            ],
             [
                 'name'=>'客户案列',

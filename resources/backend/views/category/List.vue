@@ -68,26 +68,44 @@
         <el-dialog v-model="isEdit" :title="isEdit?'编辑':'添加'" :visible.sync="dialogFormVisible" @close='closeDialog'>
             <div v-loading="formCreating" class="form-container">
                 <el-form ref="form" :rules="rules" :model="form" label-position="left" label-width="150px" style="max-width: 500px;">
-                    <el-form-item label="标题:" prop="name">
-                        <el-input v-model="form.name" show-word-limit maxlength="25"/>
-                    </el-form-item>
-                    <el-form-item  label="简介:">
-                        <el-input v-model="form.desc"  type="textarea"  placeholder="请输入简介" />
-                    </el-form-item>
-                    <el-form-item label="状态:" prop="show">
-                        <custom-element-switch v-model="form.show"></custom-element-switch>
-                    </el-form-item>
 
-                    <el-form-item label="排序:" prop="sort">
-                        <el-input-number
-                            v-model="form.sort"
-                            controls-position="right"
-                            :min="0" :max="100000"
-                            placeholder="排序越大越靠前"
-                        >
-                        </el-input-number>
-                        <span>(排序越大越靠前)</span>
-                    </el-form-item>
+                    <el-tabs v-model="tabActiveIndex">
+                        <el-tab-pane label="基本设置" name="first">
+                            <el-form-item label="分类名:" prop="name">
+                                <el-input v-model="form.name" show-word-limit maxlength="25"/>
+                            </el-form-item>
+                            <el-form-item  label="简介:">
+                                <el-input v-model="form.desc"  type="textarea"  placeholder="请输入简介" />
+                            </el-form-item>
+                            <el-form-item label="状态:" prop="show">
+                                <custom-element-switch v-model="form.show"></custom-element-switch>
+                            </el-form-item>
+
+                            <el-form-item label="排序:" prop="sort">
+                                <el-input-number
+                                        v-model="form.sort"
+                                        controls-position="right"
+                                        :min="0" :max="100000"
+                                        placeholder="排序越大越靠前"
+                                >
+                                </el-input-number>
+                                <span>(排序越大越靠前)</span>
+                            </el-form-item>
+                        </el-tab-pane>
+                        <el-tab-pane label="SEO设置" name="second">
+                            <el-form-item  label="简介:">
+                                <el-input v-model="form.seo_title"    placeholder="请输入简介" />
+                            </el-form-item>
+                            <el-form-item  label="简介:">
+                                <el-input v-model="form.seo_keyword"    placeholder="请输入简介" />
+                            </el-form-item>
+                            <el-form-item  label="简介:">
+                                <el-input v-model="form.seo_description"  type="textarea"  placeholder="请输入简介" />
+                            </el-form-item>
+                        </el-tab-pane>
+
+                    </el-tabs>
+
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="save()">
@@ -120,6 +138,7 @@
                 tableLoading: false,
                 downloading: false,
                 formCreating: false,
+                tabActiveIndex:'first',
                 query: {
                     page: 1,
                     limit: 15,
@@ -234,10 +253,10 @@
                 this.form = {
                     name: '',
                     desc: '',
-                    image_id: null,
-                    image_url: null,
+                    seo_title:'',
+                    seo_keyword:'',
+                    seo_description:'',
                     show: 10,
-                    sort: 0,
                 };
             },
             showImageList(imageList) {
