@@ -40,15 +40,15 @@ class CategoryController extends BackendApiController
 
     public function topList(Request $request){
 
-        $paginate = $this->categories->paginate($request->get('limit'));
+        $paginate = $this->categories->top()->paginate($request->get('limit'));
         $data = CategoryResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
     public function tree($parent_id=0){
 
-        $tree = $this->categories->tree()->find($parent_id);
-        return api_response()->success(['data'=>$tree]);
+        $list = $this->categories->fetchAll();
+        return api_response()->success(['data'=>List_to_tree_recursive($list)]);
     }
 
     public function create(Request $request)
