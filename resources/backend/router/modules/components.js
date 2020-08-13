@@ -19,24 +19,6 @@ const componentsRouter = {
       meta: { title: 'Tinymce' }
     },
     {
-      path: 'markdown',
-      component: () => import('@/views/components-demo/markdown'),
-      name: 'MarkdownDemo',
-      meta: { title: 'Markdown' }
-    },
-    {
-      path: 'json-editor',
-      component: () => import('@/views/components-demo/json-editor'),
-      name: 'JsonEditorDemo',
-      meta: { title: 'JSON Editor' }
-    },
-    {
-      path: 'split-pane',
-      component: () => import('@/views/components-demo/split-pane'),
-      name: 'SplitpaneDemo',
-      meta: { title: 'SplitPane' }
-    },
-    {
       path: 'avatar-upload',
       component: () => import('@/views/components-demo/avatar-upload'),
       name: 'AvatarUploadDemo',
@@ -53,12 +35,6 @@ const componentsRouter = {
       component: () => import('@/views/components-demo/sticky'),
       name: 'StickyDemo',
       meta: { title: 'Sticky' }
-    },
-    {
-      path: 'count-to',
-      component: () => import('@/views/components-demo/count-to'),
-      name: 'CountToDemo',
-      meta: { title: 'Count To' }
     },
     {
       path: 'mixin',
@@ -90,12 +66,6 @@ const componentsRouter = {
       name: 'DndListDemo',
       meta: { title: 'Dnd List' }
     },
-    {
-      path: 'drag-kanban',
-      component: () => import('@/views/components-demo/drag-kanban'),
-      name: 'DragKanbanDemo',
-      meta: { title: 'Drag Kanban' }
-    }
   ]
 }
 
