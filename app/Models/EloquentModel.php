@@ -37,4 +37,9 @@ class EloquentModel extends Model
     {
         return get_called_class();
     }
+
+    public static function flushCacheKey()
+    {
+        cache()->forget(self::getCacheKey());
+    }
 }

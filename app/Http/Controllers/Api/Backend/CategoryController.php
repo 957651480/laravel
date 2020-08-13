@@ -48,7 +48,7 @@ class CategoryController extends BackendApiController
     public function tree($parent_id=0){
 
         $list = $this->categories->fetchAll();
-        return api_response()->success(['data'=>List_to_tree_recursive($list)]);
+        return api_response()->success(['data'=>arr_to_tree_recursive($list)]);
     }
 
     public function create(Request $request)
@@ -93,7 +93,7 @@ class CategoryController extends BackendApiController
             'seo_title'=>'sometimes',
             'seo_keyword'=>'sometimes',
             'seo_description'=>'sometimes',
-            'show'=>'sometimes',
+            'show'=>'sometimes|in:10,20',
             //'sort'=>'sometimes',
         ],[
             'title.required'=>'名称必须',

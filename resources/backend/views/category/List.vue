@@ -13,40 +13,20 @@
 
         </el-form>
 
-        <el-table ref="table" v-loading="tableLoading" :data="list" border fit highlight-current-row style="width: 100%"
-                  @selection-change="handleSelectionChange"
-        >
-            <el-table-column
-                type="selection"
-                width="55">
-            </el-table-column>
-            <el-table-column align="center" label="ID" width="80">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.id }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="排序" width="80">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.sort }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="标题">
-                <template slot-scope="{row}">
-                    <span >{{ row.title }}</span>
-                </template>
-            </el-table-column>
+        <el-table
+                ref="table" v-loading="tableLoading" :data="list"
+                :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+                border
+                row-key="id"
+                style="width: 100%">
+            <el-table-column  label="标题" prop="name"></el-table-column>
 
             <el-table-column align="center" label="显示">
                 <template slot-scope="scope">
-                    <el-switch
-                        v-model="scope.row.show"
-                        active-color="#13ce66"
-                        inactive-color="#ff4949"
-                        :active-value="10"
-                        :inactive-value="20"
-                        @change="handleChange(scope.row)"
-                    >
-                    </el-switch>
+                    <custom-element-switch
+                            v-model="scope.row.show"
+                            @change="handleChange(scope.row)"
+                    ></custom-element-switch>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="创建时间">
@@ -94,14 +74,7 @@
                         <el-input v-model="form.desc"  type="textarea"  placeholder="请输入简介" />
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
-                        <el-switch
-                            v-model="form.show"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                            :active-value="10"
-                            :inactive-value="20"
-                        >
-                        </el-switch>
+                        <custom-element-switch v-model="form.show"></custom-element-switch>
                     </el-form-item>
 
                     <el-form-item label="排序:" prop="sort">
@@ -133,16 +106,17 @@
     import waves from '@/directive/waves'; // Waves directive
     import {batchDelete, create, destroy, fetchTopList, fetchTree, update} from '@/api/category';
     import {confirmMessage, httpSuccess} from "@/utils/message";
+    import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
 
     export default {
-        name: 'BannerList',
-        components: {   Pagination },
+        name: 'CategoryList',
+        components: {CustomElementSwitch,   Pagination },
         directives: { waves },
         data() {
             return {
-                list: null,
+                list: [],
                 total: 0,
-                tableLoading: true,
+                tableLoading: false,
                 downloading: false,
                 formCreating: false,
                 query: {
@@ -158,6 +132,7 @@
                 },
                 isEdit: false,
                 multipleSelection: [],
+                maps:new Map()
             };
         },
         computed: {
@@ -166,16 +141,14 @@
             },
         },
         created() {
-            this.resetForm();
-            this.getList();
-
             this.getTree();
+            this.resetForm();
         },
         methods: {
             async getList() {
-                const { limit, page } = this.query;
+                const {limit, page} = this.query;
                 this.tableLoading = true;
-                const { total,data } = await fetchTopList(this.query);
+                const {total, data} = await fetchTopList(this.query);
                 this.list = data;
                 this.list.forEach((element, index) => {
                     element['index'] = (page - 1) * limit + index + 1;
@@ -184,8 +157,10 @@
                 this.tableLoading = false;
             },
             async getTree() {
-                const { data } = await fetchTree({parent_id:0});
-                this.tree = data;
+                this.tableLoading = true;
+                const {data} = await fetchTree({parent_id: 0});
+                this.list = data;
+                this.tableLoading = false;
             },
             handleFilter() {
                 this.query.page = 1;
@@ -198,12 +173,12 @@
                     this.$refs['form'].clearValidate();
                 });
             },
-            handleEdit(data){
+            handleEdit(data) {
                 this.form = data;
                 this.isEdit = true;
                 this.dialogFormVisible = true;
             },
-            handleCopy(data){
+            handleCopy(data) {
                 this.form = data;
                 this.create();
             },
@@ -218,7 +193,7 @@
                 }).catch(() => {
                 });
             },
-            create(){
+            create() {
                 create(this.form)
                     .then(response => {
                         httpSuccess(response);
@@ -232,9 +207,9 @@
                         this.formCreating = false;
                     });
             },
-            update(){
-                let  id = this.form.id;
-                update(id,this.form)
+            update() {
+                let id = this.form.id;
+                update(id, this.form)
                     .then(response => {
                         httpSuccess(response);
                         this.dialogFormVisible = false;
@@ -250,7 +225,7 @@
                 this.$refs['form'].validate((valid) => {
                     if (!valid) return false;
                     this.formCreating = true;
-                    this.isEdit?this.update():this.create()
+                    this.isEdit ? this.update() : this.create()
                 });
             },
             resetForm() {
@@ -258,33 +233,33 @@
                 this.form = {
                     name: '',
                     desc: '',
-                    image_id:null,
-                    image_url:null,
+                    image_id: null,
+                    image_url: null,
                     show: 10,
                     sort: 0,
                 };
             },
-            showImageList(imageList){
+            showImageList(imageList) {
                 let tmpList = [];
-                for (let i = 0;i < imageList.length;i++){
-                    tmpList[i]=imageList[i].url;
+                for (let i = 0; i < imageList.length; i++) {
+                    tmpList[i] = imageList[i].url;
                 }
                 return tmpList;
             },
-            handleDownload(){
+            handleDownload() {
 
             },
-            closeDialog(){
-                this.isEdit=false;
+            closeDialog() {
+                this.isEdit = false;
                 this.dialogFormVisible = false;
             },
-            handleBatchDelete(){
+            handleBatchDelete() {
 
-                let ids=[];
-                this.multipleSelection.forEach(row=>{
+                let ids = [];
+                this.multipleSelection.forEach(row => {
                     ids.push(row.id)
                 });
-                batchDelete({ids:ids}).then(response => {
+                batchDelete({ids: ids}).then(response => {
                     httpSuccess(response);
                     this.handleFilter();
                 }).catch(error => {
@@ -292,8 +267,7 @@
                 });
             },
 
-            toggleSelection(check)
-            {
+            toggleSelection(check) {
                 if (check) {
                     this.list.forEach(row => {
                         this.$refs.table.toggleRowSelection(row);
@@ -305,11 +279,23 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            handleChange(data){
+            handleChange(data) {
+                debugger
                 this.form = data;
                 this.update();
             },
-        },
+
+            //加载子角色列表
+             loadChild(tree, treeNode, resolve){
+                debugger
+                const id = tree.id;
+                this.maps.set(id,{tree,treeNode,resolve});
+                fetchTopList({parent_id:id})
+                .then(response =>{
+                    resolve(response.data)
+                })
+            }
+        }
     };
 </script>
 

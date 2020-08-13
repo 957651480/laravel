@@ -28,17 +28,34 @@ class CategorySeeder extends Seeder
         //
         $this->categories->insert([
            [
-               'name'=>'产品',
+               'name'=>'首页',
                'parent_id'=>0
            ],
             [
-                'name'=>'产品一级',
-                'parent_id'=>1
+                'name'=>'客户案列',
+                'parent_id'=>0
             ],
 
             [
-                'name'=>'产品二级',
+                'name'=>'客户案列一',
                 'parent_id'=>2
+            ],
+            [
+                'name'=>'客户案列一',
+                'parent_id'=>3
+            ],
+            [
+                'name'=>'产品介绍',
+                'parent_id'=>0
+            ],
+
+            [
+                'name'=>'产品介绍一',
+                'parent_id'=>5
+            ],
+            [
+                'name'=>'产品介绍一',
+                'parent_id'=>6
             ]
         ]);
     }

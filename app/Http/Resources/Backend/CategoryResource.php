@@ -15,11 +15,11 @@ class CategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'parent_id'=>$this->parent_id,
-            'desc'=>$this->desc,
-            'show'=>$this->show,
+            'id'=>(integer)$this->id,
+            'name'=>(string)$this->name,
+            'parent_id'=>(integer)$this->parent_id,
+            'desc'=>(string)$this->desc,
+            'show'=>(integer)$this->show,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
         ];
