@@ -86,9 +86,9 @@
         <pagination v-show="total>0" :total="total" :page.sync="query.page" :limit.sync="query.limit" @pagination="getList" />
         <el-dialog v-model="isEdit" :title="isEdit?'编辑':'添加'" :visible.sync="dialogFormVisible" @close='closeDialog'>
             <div v-loading="formCreating" class="form-container">
-                <el-form ref="userForm" :rules="rules" :model="form" label-position="left" label-width="150px" style="max-width: 500px;">
-                    <el-form-item label="标题:" prop="title">
-                        <el-input v-model="form.title" show-word-limit maxlength="25"/>
+                <el-form ref="form" :rules="rules" :model="form" label-position="left" label-width="150px" style="max-width: 500px;">
+                    <el-form-item label="标题:" prop="name">
+                        <el-input v-model="form.name" show-word-limit maxlength="25"/>
                     </el-form-item>
                     <el-form-item  label="简介:">
                         <el-input v-model="form.desc"  type="textarea"  placeholder="请输入简介" />
@@ -148,12 +148,12 @@
                 query: {
                     page: 1,
                     limit: 15,
-                    title: '',
+                    name: '',
                 },
                 form: {},
                 dialogFormVisible: false,
                 rules: {
-                    title: [{ required: true, message: '标题必须', trigger: 'blur' }],
+                    name: [{ required: true, message: '标题必须', trigger: 'blur' }],
                     image_id: [{ required: true, message: '图片必须', trigger: 'blur' }],
                 },
                 isEdit: false,
@@ -192,10 +192,10 @@
                 this.getList();
             },
             handleCreate() {
-                this.resetform();
+                this.resetForm();
                 this.dialogFormVisible = true;
                 this.$nextTick(() => {
-                    this.$refs['userForm'].clearValidate();
+                    this.$refs['form'].clearValidate();
                 });
             },
             handleEdit(data){
@@ -247,7 +247,7 @@
                     });
             },
             save() {
-                this.$refs['userForm'].validate((valid) => {
+                this.$refs['form'].validate((valid) => {
                     if (!valid) return false;
                     this.formCreating = true;
                     this.isEdit?this.update():this.create()
@@ -256,7 +256,7 @@
             resetForm() {
 
                 this.form = {
-                    title: '',
+                    name: '',
                     desc: '',
                     image_id:null,
                     image_url:null,

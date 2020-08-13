@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Api\Backend;
 
 
-use App\Http\Resources\Backend\BannerResource;
+use App\Http\Resources\Backend\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -33,7 +33,7 @@ class CategoryController extends BackendApiController
     public function index(Request $request)
     {
         $paginate = $this->categories->paginate($request->get('limit'));
-        $data = BannerResource::collection($paginate);
+        $data = CategoryResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
@@ -41,7 +41,7 @@ class CategoryController extends BackendApiController
     public function topList(Request $request){
 
         $paginate = $this->categories->paginate($request->get('limit'));
-        $data = BannerResource::collection($paginate);
+        $data = CategoryResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
@@ -89,14 +89,14 @@ class CategoryController extends BackendApiController
     protected function validateCategory(Request $request)
     {
         return $request->validate([
-            'title'=>'required',
+            'name'=>'required',
             'seo_title'=>'sometimes',
             'seo_keyword'=>'sometimes',
             'seo_description'=>'sometimes',
             'show'=>'sometimes',
-            'sort'=>'sometimes',
+            //'sort'=>'sometimes',
         ],[
-            'title.required'=>'标题必须',
+            'title.required'=>'名称必须',
         ]);
     }
 
