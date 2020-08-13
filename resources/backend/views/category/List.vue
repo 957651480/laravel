@@ -17,6 +17,7 @@
                 ref="table" v-loading="tableLoading" :data="list"
                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
                 border
+                default-expand-all
                 row-key="id"
                 style="width: 100%">
             <el-table-column  label="标题" prop="name"></el-table-column>
