@@ -5,7 +5,6 @@ import Layout from '@/layout'
 /* Router Modules */
 import componentsRouter from './modules/components'
 import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
 import settingRouter from "@/router/modules/setting";
 import fileRouter from "@/router/modules/file";
 import bannerRouter from "@/router/modules/banner";
@@ -168,7 +167,6 @@ export const asyncRoutes = [
     bannerRouter,
     informationRouter,
   componentsRouter,
-  nestedRouter,
   tableRouter,
 
   {
@@ -199,30 +197,6 @@ export const asyncRoutes = [
         component: () => import('@/views/example/list'),
         name: 'ArticleList',
         meta: { title: 'Article List', icon: 'list' }
-      }
-    ]
-  },
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'ErrorPages',
-    meta: {
-      title: 'Error Pages',
-      icon: '404'
-    },
-    children: [
-      {
-        path: '401',
-        component: () => import('@/views/error-page/401'),
-        name: 'Page401',
-        meta: { title: '401', noCache: true }
-      },
-      {
-        path: '404',
-        component: () => import('@/views/error-page/404'),
-        name: 'Page404',
-        meta: { title: '404', noCache: true }
       }
     ]
   },
