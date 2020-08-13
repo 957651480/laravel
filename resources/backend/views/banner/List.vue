@@ -53,15 +53,7 @@
             </el-table-column>
             <el-table-column align="center" label="显示">
                 <template slot-scope="scope">
-                    <el-switch
-                        v-model="scope.row.show"
-                        active-color="#13ce66"
-                        inactive-color="#ff4949"
-                        :active-value="10"
-                        :inactive-value="20"
-                        @change="handleChange(scope.row)"
-                    >
-                    </el-switch>
+                    <custom-element-switch v-model="scope.row.show" @change="handleChange(scope.row)"></custom-element-switch>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="创建时间">
@@ -112,14 +104,7 @@
                         <single-upload v-model="newBanner.image_id" :img_url.sync="newBanner.image_url"></single-upload>
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
-                        <el-switch
-                            v-model="newBanner.show"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                            :active-value="10"
-                            :inactive-value="20"
-                        >
-                        </el-switch>
+                        <custom-element-switch v-model="newBanner.show" ></custom-element-switch>
                     </el-form-item>
 
                     <el-form-item label="排序:" prop="sort">
@@ -149,13 +134,14 @@
 <script>
     import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
     import waves from '@/directive/waves'; // Waves directive
-    import { fetchList, updateBanner, createBanner, deleteBanner,batchDeleteBanner } from '@/api/banner';
+    import {batchDeleteBanner, createBanner, deleteBanner, fetchList, updateBanner} from '@/api/banner';
     import SingleUpload from "@/components/Upload/SingleUpload";
-    import {httpSuccess,confirmMessage} from "@/utils/message";
+    import {confirmMessage, httpSuccess} from "@/utils/message";
+    import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
 
     export default {
         name: 'BannerList',
-        components: { SingleUpload,  Pagination },
+        components: {CustomElementSwitch, SingleUpload,  Pagination },
         directives: { waves },
         data() {
             return {
