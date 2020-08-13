@@ -1,8 +1,9 @@
 <?php
 
+use Faker\Generator as Faker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Faker\Generator as Faker;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -70,6 +71,7 @@ Route::namespace('Api')->group(function (){
 
         Route::any('category/list','CategoryController@index');
         Route::any('category/list/top','CategoryController@topList');
+        Route::any('category/tree','CategoryController@tree');
         Route::any('category/create','CategoryController@create');
         Route::any('category/detail/{id}','CategoryController@detail');
         Route::any('category/update/{id}','CategoryController@update');

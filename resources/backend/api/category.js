@@ -17,6 +17,15 @@ export function fetchTopList(query) {
     })
 }
 
+export function fetchTree(query) {
+
+    return request({
+        url: '/admin/category/tree',
+        method: 'get',
+        params: query
+    })
+}
+
 export function fetch(id) {
     return request({
         url: '/admin/category/detail/'+id,

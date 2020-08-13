@@ -34,6 +34,7 @@ namespace App\Models;
  * @mixin \Eloquent
  * @property-read mixed $url
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel apiPaginate($limit = 10)
+ * @property-read \App\Models\FileGroup $group
  */
 class File extends EloquentModel
 {

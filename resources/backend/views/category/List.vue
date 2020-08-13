@@ -131,8 +131,8 @@
 <script>
     import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
     import waves from '@/directive/waves'; // Waves directive
-    import { fetchTopList, update, create, destroy,batchDelete } from '@/api/category';
-    import {httpSuccess,confirmMessage} from "@/utils/message";
+    import {batchDelete, create, destroy, fetchTopList, fetchTree, update} from '@/api/category';
+    import {confirmMessage, httpSuccess} from "@/utils/message";
 
     export default {
         name: 'BannerList',
@@ -168,6 +168,8 @@
         created() {
             this.resetForm();
             this.getList();
+
+            this.getTree();
         },
         methods: {
             async getList() {
@@ -180,6 +182,10 @@
                 });
                 this.total = total;
                 this.tableLoading = false;
+            },
+            async getTree() {
+                const { data } = await fetchTree({parent_id:0});
+                this.tree = data;
             },
             handleFilter() {
                 this.query.page = 1;

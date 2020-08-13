@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel query()
- * @mixin \Eloquent
+ * @mixin Builder
  */
 class EloquentModel extends Model
 {
