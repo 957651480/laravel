@@ -153,7 +153,7 @@ export default {
             dialog:defaultDialog,
             rules: {
                 name: [{ required: true, message: '标题必须', trigger: 'blur' }],
-                image_id: [{ required: true, message: '图片必须', trigger: 'blur' }],
+                parent_id: [{ required: true, message: '父栏目必须', trigger: 'blur' }],
             },
             parentRootOptions: {
                 id:"0",
@@ -219,6 +219,7 @@ export default {
             });
         },
         closeDialog() {
+            this.initForm();
             this.setDialog();
         },
         enterDialog() {
@@ -232,6 +233,7 @@ export default {
                         createCategory(this.form).then(response =>
                         {
                             httpSuccess(response);
+                            this.initForm();
                             this.setDialog();
                             this.handleFilter();
                         }).catch(error => {
@@ -246,6 +248,7 @@ export default {
                         updateCategory(id,this.form)
                             .then(response => {
                                 httpSuccess(response);
+                                this.initForm();
                                 this.setDialog();
                                 this.handleFilter();
                             })

@@ -99,6 +99,7 @@ class CategoryController extends BackendApiController
     {
         return $request->validate([
             'name'=>'required',
+            'parent_id'=>'required',
             'seo_title'=>'sometimes',
             'seo_keyword'=>'sometimes',
             'seo_description'=>'sometimes',
@@ -106,6 +107,7 @@ class CategoryController extends BackendApiController
             //'sort'=>'sometimes',
         ],[
             'title.required'=>'名称必须',
+            'parent_id.required'=>'父栏目必须',
         ]);
     }
 
