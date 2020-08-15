@@ -26,14 +26,14 @@ export function fetchTree(query) {
     })
 }
 
-export function fetch(id) {
+export function fetchCategory(id) {
     return request({
         url: '/admin/category/detail/'+id,
         method: 'get',
         params: { id }
     })
 }
-export function create(data) {
+export function createCategory(data) {
 
     return request({
         url: '/admin/category/create',
@@ -42,7 +42,7 @@ export function create(data) {
     })
 }
 
-export function update(id,data) {
+export function updateCategory(id,data) {
 
     return request({
         url: '/admin/category/update/'+id,
@@ -51,7 +51,7 @@ export function update(id,data) {
     })
 }
 
-export function destroy(id) {
+export function deleteCategory(id) {
 
     return request({
         url: '/admin/category/delete/'+id,

@@ -48,7 +48,16 @@ class CategoryController extends BackendApiController
     public function tree($parent_id=0){
 
         $list = $this->categories->fetchAll();
-        return api_response()->success(['data'=>arr_to_tree_recursive($list)]);
+        $data=arr_to_tree_recursive($list);
+        array_walk_recursive($data,function (&$item, $key){
+            if(in_array($key,['id','parent_id'])){
+                $item=(string)$item;
+            }
+            return $item;
+        });
+        //深度递归
+
+        return api_response()->success(['data'=>$data]);
     }
 
     public function create(Request $request)
