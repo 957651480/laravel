@@ -20,7 +20,7 @@
                 default-expand-all
                 row-key="id"
                 style="width: 100%">
-            <el-table-column  label="标题" prop="name"></el-table-column>
+            <el-table-column  label="分类名" prop="name"></el-table-column>
 
             <el-table-column align="center" label="显示">
                 <template slot-scope="scope">
@@ -52,7 +52,7 @@
         </el-table>
         <el-dialog :title="dialog.title" :visible.sync="dialog.visible" @close='closeDialog'>
             <div v-loading="formCreating" class="form-container">
-                <el-form ref="form" :rules="rules" :model="form" label-position="left" label-width="150px" style="max-width: 500px;">
+                <el-form ref="form" :rules="rules" :model="form" label-position="left" label-width="80px" style="max-width: 500px;">
                     <el-tabs v-model="tabActiveIndex">
                         <el-tab-pane label="基本设置" name="first">
                             <el-form-item label="分类名:" prop="name">
