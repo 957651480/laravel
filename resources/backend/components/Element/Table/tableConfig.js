@@ -64,10 +64,3 @@ export const defaultColumn = {
     "filtered-value": null
 };
 
-export const defaultPagination = {
-    pageSize: 10,
-    currentPage: 1,
-    total: 0,
-    layout: "total, sizes, prev, pager, next, jumper"
-};
-

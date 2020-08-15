@@ -8,9 +8,6 @@
                 v-bind="tableAttrs"
                 v-on="$listeners"
         >
-            <el-table-column v-if="options.select" type="selection" style="width: 55px;">
-            </el-table-column>
-
             <!--region 数据列-->
             <template v-for="(column, index) in columns">
 
@@ -42,21 +39,11 @@
             </template>
             <!--endregion-->
         </el-table>
-        <el-pagination
-                v-if="paginationAttrs.isPagination"
-                v-bind="paginationAttrs"
-                class="pagination-container"
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-        />
     </div>
 </template>
 <script>
-    import {
-        defaultTableAttrs,
-        defaultColumn,
-        defaultPagination
-    } from './tableConfig'
+    import {defaultColumn, defaultTableAttrs} from './tableConfig'
+
     export default {
         name: 'BaseTable',
         components: {
@@ -94,33 +81,12 @@
                     return []
                 }
             },
-            // eslint-disable-next-line vue/require-default-prop
-            pagination: {
-                type: [Object, Boolean]
-            },
-            options:{
-                type: Object,
-                default() {
-                    return {
-                        select:false
-                    }
-                },
-            }
 
         },
         data() {
             return {
                 tableAttrs: {},
                 columnAttrs: [],
-                paginationAttrs: {}
-            }
-        },
-        watch: {
-            pagination: {
-                handler(val) {
-                    this.getPagination()
-                },
-                deep: true
             }
         },
         created() {
@@ -145,37 +111,6 @@
                     return obj
                 })
             },
-            getPagination() {
-                // 获取element 分页属性
-                const pagination = this.pagination
-                let paginationAttrs = {}
-                if (pagination) {
-                    if (typeof pagination === 'object') {
-                        paginationAttrs = {
-                            ...defaultPagination,
-                            ...pagination,
-                            isPagination: true
-                        }
-                    } else {
-                        paginationAttrs = {
-                            ...defaultPagination,
-                            isPagination: true
-                        }
-                    }
-                }
-                Object.keys(paginationAttrs).forEach(key => {
-                    if (this.$attrs[key] !== undefined && key !== 'pagination') {
-                        paginationAttrs[key] = this.$attrs[key]
-                    }
-                })
-                this.paginationAttrs = paginationAttrs
-            },
-            handleSizeChange(pageSize) {
-                this.$emit('size-change', pageSize)
-            },
-            handleCurrentChange(page) {
-                this.$emit('current-change', page)
-            }
         }
     }
 </script>
