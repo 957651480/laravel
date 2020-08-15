@@ -15,54 +15,27 @@
             </el-button>
         </el-form>
 
-        <el-table ref="table" v-loading="tableLoading" :data="list" border fit highlight-current-row style="width: 100%"
-                  @selection-change="handleSelectionChange"
-        >
-            <el-table-column
-                type="selection"
-                width="55">
+        <base-table :data="list" :columns="columns" ref="table" v-loading="tableLoading"  border fit highlight-current-row style="width: 100%"
+                    @selection-change="handleSelectionChange">
+
+            <el-table-column  type="selection" style="width: 55px;" slot="select">
             </el-table-column>
-            <el-table-column align="center" label="ID" width="80">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.id }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="排序" width="80">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.sort }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="标题">
-                <template slot-scope="{row}">
-                    <span >{{ row.title }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="简介">
-                <template slot-scope="{row}">
-                    <span >{{ row.desc }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column align="center" label="图片">
+            <el-table-column align="center" label="图片" slot="image_url" >
                 <template slot-scope="scope">
                     <el-image
-                        style="width: 80px; height: 80px"
-                        :src="scope.row.image_url"
-                        :preview-src-list="[scope.row.image_url]"
+                            style="width: 80px; height: 80px"
+                            :src="scope.row.image_url"
+                            :preview-src-list="[scope.row.image_url]"
                     ></el-image>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="显示">
+            <el-table-column align="center" label="显示" slot="image_url">
                 <template slot-scope="scope">
                     <custom-element-switch v-model="scope.row.show" @change="handleChange(scope.row)"></custom-element-switch>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="创建时间">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.created_at }}</span>
-                </template>
-            </el-table-column>
 
-            <el-table-column align="center" label="操作" width="350">
+            <el-table-column align="center" label="操作" width="350" slot="oprate">
                 <template slot-scope="scope">
                     <el-button type="primary" size="small" icon="el-icon-edit" @click="handleEdit(scope.row)">
                         编辑
@@ -75,7 +48,8 @@
                     </el-button>
                 </template>
             </el-table-column>
-        </el-table>
+
+        </base-table>
         <el-row >
             <el-col :span="12" style="float: left;padding-top: 20px">
 
@@ -138,10 +112,11 @@
     import SingleUpload from "@/components/Upload/SingleUpload";
     import {confirmMessage, httpSuccess} from "@/utils/message";
     import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
+    import BaseTable from "@/components/Element/Table/BaseTable";
 
     export default {
         name: 'BannerList',
-        components: {CustomElementSwitch, SingleUpload,  Pagination },
+        components: {BaseTable, CustomElementSwitch, SingleUpload,  Pagination },
         directives: { waves },
         data() {
             return {
@@ -163,6 +138,39 @@
                 },
                 isEdit: false,
                 multipleSelection: [],
+                columns:[
+                    {slot: 'select'},
+                    {
+                        prop: "id",
+                        label: "ID"
+                    },
+                    {
+                        prop: "sort",
+                        label: "排序"
+                    },
+                    {
+                        prop: "title",
+                        label: "标题"
+                    },
+                    {
+                        prop: "desc",
+                        label: "简介"
+                    },
+                    {
+                        slot:'image_url'
+                    },
+                    {
+                        slot:'show'
+                    },
+                    {
+                        prop: "created_at",
+                        label: "创建时间"
+                    },
+                    {
+                        slot:'oprate'
+                    }
+                ],
+
             };
         },
         computed: {

@@ -355,3 +355,17 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+export function emptyArrayToUndefinedRecursive(data,name) {
+  for(var i=0;i<data.length;i++)
+  {
+    if(data[i][name].length<1){
+      // children若为空数组，则将children设为undefined
+      data[i][name]=undefined;
+    }else {
+      // children若不为空数组，则继续 递归调用 本方法
+      emptyArrayToUndefinedRecursive(data[i][name],name);
+    }
+  }
+  return data;
+}
