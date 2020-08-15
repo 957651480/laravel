@@ -221,6 +221,7 @@ export default {
         closeDialog() {
             this.initForm();
             this.setDialog();
+            this.tabActiveIndex='first';
         },
         enterDialog() {
             this.$refs['form'].validate((valid) =>
