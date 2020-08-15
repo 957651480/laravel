@@ -35,15 +35,15 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="操作" width="350" slot="oprate">
+            <el-table-column align="center" label="操作" width="350" slot="operate">
                 <template slot-scope="scope">
-                    <el-button type="primary" size="small" icon="el-icon-edit" @click="handleEdit(scope.row)">
+                    <el-button type="primary" size="small" icon="el-icon-edit" @click="handleEdit(scope.$index,scope.row)">
                         编辑
                     </el-button>
-                    <el-button type="primary" size="small" icon="el-icon-copy-document" @click="handleCopy(scope.row)">
+                    <el-button type="primary" size="small" icon="el-icon-copy-document" @click="handleCopy(scope.$index,scope.row)">
                         复制
                     </el-button>
-                    <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.row.id)">
+                    <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(scope.$index,scope.row)">
                         删除
                     </el-button>
                 </template>
@@ -167,7 +167,7 @@
                         label: "创建时间"
                     },
                     {
-                        slot:'oprate'
+                        slot:'operate'
                     }
                 ],
 
@@ -188,9 +188,9 @@
                 this.tableLoading = true;
                 const { total,data } = await fetchList(this.query);
                 this.list = data;
-                this.list.forEach((element, index) => {
+                /*this.list.forEach((element, index) => {
                     element['index'] = (page - 1) * limit + index + 1;
-                });
+                });*/
                 this.total = total;
                 this.tableLoading = false;
             },
@@ -205,18 +205,19 @@
                     this.$refs['userForm'].clearValidate();
                 });
             },
-            handleEdit(data){
-                this.newBanner = data;
+            handleEdit(index,row){
+                debugger
+                this.newBanner = row;
                 this.isEdit = true;
                 this.dialogFormVisible = true;
             },
-            handleCopy(data){
-                this.newBanner = data;
+            handleCopy(index,row){
+                this.newBanner = row;
                 this.createBanner();
             },
-            handleDelete(id) {
+            handleDelete(index,row) {
                 confirmMessage('确定删除吗?').then(() => {
-                    deleteBanner(id).then(response => {
+                    deleteBanner(row.id).then(response => {
                         httpSuccess(response);
                         this.handleFilter();
                     }).catch(error => {

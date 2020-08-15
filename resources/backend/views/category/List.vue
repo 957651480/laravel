@@ -26,7 +26,7 @@
                 <template slot-scope="scope">
                     <custom-element-switch
                             v-model="scope.row.show"
-                            @change="handleChange(scope.row)"
+                            @change="handleChange(scope.$index,scope.row)"
                     ></custom-element-switch>
                 </template>
             </el-table-column>
@@ -50,20 +50,6 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-row >
-            <el-col :span="12" style="float: left;padding-top: 20px">
-
-                <el-button type="primary" size="small"  @click="toggleSelection(true)">
-                    全选
-                </el-button>
-                <el-button type="primary" size="small"  @click="toggleSelection(false)">
-                    取消
-                </el-button>
-                <el-button type="danger" size="small" icon="el-icon-delete" :disabled="batchDisabled" @click="handleBatchDelete()">
-                    批量删除
-                </el-button>
-            </el-col>
-        </el-row>
         <el-dialog v-model="isEdit" :title="isEdit?'编辑':'添加'" :visible.sync="dialogFormVisible" @close='closeDialog'>
             <div v-loading="formCreating" class="form-container">
                 <div slot="footer" class="dialog-footer">
@@ -81,7 +67,7 @@
 
 <script>
     import waves from '@/directive/waves'; // Waves directive
-    import {batchDelete, create, destroy, fetchTopList, fetchTree, update} from '@/api/category';
+    import {batchDelete, destroy, fetchTree} from '@/api/category';
     import {confirmMessage, httpSuccess} from "@/utils/message";
     import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
     import {emptyArrayToUndefinedRecursive} from "@/utils";
@@ -109,7 +95,6 @@
                     image_id: [{ required: true, message: '图片必须', trigger: 'blur' }],
                 },
                 isEdit: false,
-                multipleSelection: [],
                 parentOptions:[],
                 parentIdProps:{
                     value:'id',
@@ -119,11 +104,7 @@
                 }
             };
         },
-        computed: {
-            batchDisabled:function() {
-                return this.multipleSelection.length === 0
-            },
-        },
+
         created() {
             this.getTree();
             this.resetForm();
@@ -219,19 +200,6 @@
                 }).catch(error => {
                     console.log(error);
                 });
-            },
-
-            toggleSelection(check) {
-                if (check) {
-                    this.list.forEach(row => {
-                        this.$refs.table.toggleRowSelection(row);
-                    });
-                } else {
-                    this.$refs.table.clearSelection();
-                }
-            },
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
             },
             handleChange(data) {
                 debugger

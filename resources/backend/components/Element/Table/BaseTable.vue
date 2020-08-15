@@ -1,7 +1,5 @@
 <template>
     <div v-bind="$attrs" class="base-table">
-        <slot name="title"/>
-        <slot/>
         <el-table
                 :data="data"
                 :ref="$attrs.ref"
