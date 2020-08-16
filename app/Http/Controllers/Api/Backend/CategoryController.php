@@ -104,7 +104,7 @@ class CategoryController extends BackendApiController
             'seo_keyword'=>'sometimes',
             'seo_description'=>'sometimes',
             'show'=>'sometimes|in:10,20',
-            //'sort'=>'sometimes',
+            'link'=>'sometimes',
         ],[
             'title.required'=>'名称必须',
             'parent_id.required'=>'父栏目必须',

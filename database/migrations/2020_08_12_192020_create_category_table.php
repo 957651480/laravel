@@ -20,6 +20,7 @@ class CreateCategoryTable extends Migration
             $table->string('seo_title')->default('')->comment('seo标题');
             $table->string('seo_keyword')->default('')->comment('seo关键词');
             $table->string('seo_description')->default('')->comment('seo描述');
+            $table->string('link')->default('')->comment('链接');
             $table->unsignedTinyInteger('show')->default(10)->comment('是否显示：10显示,20隐藏');
             $table->softDeletes()->comment('删除时间');
             $table->timestamps();

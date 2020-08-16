@@ -68,6 +68,24 @@
                             <el-form-item  label="简介:">
                                 <el-input v-model="form.desc"  type="textarea"  placeholder="请输入简介" />
                             </el-form-item>
+
+                        </el-tab-pane>
+                        <el-tab-pane label="SEO设置" name="second">
+                            <el-form-item  label="简介:">
+                                <el-input v-model="form.seo_title"    placeholder="请输入简介" />
+                            </el-form-item>
+                            <el-form-item  label="简介:">
+                                <el-input v-model="form.seo_keyword"    placeholder="请输入简介" />
+                            </el-form-item>
+                            <el-form-item  label="简介:">
+                                <el-input v-model="form.seo_description"  type="textarea"  placeholder="请输入简介" />
+                            </el-form-item>
+                        </el-tab-pane>
+                        <el-tab-pane label="其他设置" name="three">
+
+                            <el-form-item label="链接:" prop="link">
+                                <el-input v-model="form.link"></el-input>
+                            </el-form-item>
                             <el-form-item label="状态:" prop="show">
                                 <custom-element-switch v-model="form.show"></custom-element-switch>
                             </el-form-item>
@@ -83,18 +101,6 @@
                                 <span>(排序越大越靠前)</span>
                             </el-form-item>
                         </el-tab-pane>
-                        <el-tab-pane label="SEO设置" name="second">
-                            <el-form-item  label="简介:">
-                                <el-input v-model="form.seo_title"    placeholder="请输入简介" />
-                            </el-form-item>
-                            <el-form-item  label="简介:">
-                                <el-input v-model="form.seo_keyword"    placeholder="请输入简介" />
-                            </el-form-item>
-                            <el-form-item  label="简介:">
-                                <el-input v-model="form.seo_description"  type="textarea"  placeholder="请输入简介" />
-                            </el-form-item>
-                        </el-tab-pane>
-
                     </el-tabs>
 
                 </el-form>
@@ -117,19 +123,16 @@
     import {confirmMessage, httpSuccess} from "@/utils/message";
     import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
     import {deepClone, emptyArrayToUndefinedRecursive} from "@/utils";
+    import defaultDialog from "@/utils/dialog";
 
-    const defaultDialog ={
-    title:'',
-    type:'',
-    visible:false,
-};
-const defaultForm ={
+    const defaultForm ={
     name: '',
     parent_id:null,
     desc: '',
     seo_title:'',
     seo_keyword:'',
     seo_description:'',
+    link:'',
     show: 10,
 }
 export default {
@@ -144,6 +147,7 @@ export default {
             downloading: false,
             formCreating: false,
             tabActiveIndex:'first',
+            isAllSelect:false,
             query: {
                 page: 1,
                 limit: 15,
@@ -167,7 +171,7 @@ export default {
                 disabled:'disabled',
                 emitPath:false,
                 checkStrictly: true
-            }
+            },
         };
     },
 
@@ -180,8 +184,9 @@ export default {
             parentOptions = emptyArrayToUndefinedRecursive(parentOptions,'children')
             parentOptions.unshift(this.parentRootOptions);
             return parentOptions;
-        }
+        },
     },
+
     methods: {
         async getTree() {
             this.tableLoading = true;
@@ -237,8 +242,6 @@ export default {
                             this.initForm();
                             this.setDialog();
                             this.handleFilter();
-                        }).catch(error => {
-                            console.log(error);
                         })
                         .finally(() => {
                             this.formCreating = false;
@@ -252,9 +255,6 @@ export default {
                                 this.initForm();
                                 this.setDialog();
                                 this.handleFilter();
-                            })
-                            .catch(error => {
-                                console.log(error);
                             })
                             .finally(() => {
                                 this.formCreating = false;
@@ -279,8 +279,6 @@ export default {
             batchDelete({ids: ids}).then(response => {
                 httpSuccess(response);
                 this.handleFilter();
-            }).catch(error => {
-                console.log(error);
             });
         },
         handleChange(index,data) {
@@ -292,7 +290,7 @@ export default {
         setDialog(options)
         {
             this.dialog=options?options:defaultDialog;
-        }
+        },
     }
 };
 </script>
