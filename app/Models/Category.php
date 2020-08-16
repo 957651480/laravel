@@ -48,14 +48,23 @@ class Category extends EloquentModel
         static::observe(CategoryObserver::class);
     }
 
+
+    public function node() {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+
+    public function children()
+    {
+        return $this->node()->with('children');
+    }
     /**
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  mixed  $type
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeTop($query)
+    public function scopeParentId($query,$parent_id)
     {
-        return $query->where('parent_id', 0);
+        return $query->where('parent_id', $parent_id);
     }
 
 
@@ -74,21 +83,5 @@ class Category extends EloquentModel
         return \Cache::rememberForever(static::getCacheKey(),function (){
             return $this->all()->toArray();
         });
-    }
-
-
-    public function getTree($data, $parent_id=0, $level=1)
-    {
-        $tree = array();
-        foreach($data as $k => $v)
-        {
-            if($v['parent_id'] == $parent_id)
-            {        //父亲找到儿子
-                $v['children'] = $this->getTree($data, $v['region_id'],$level+1);
-                $tree[] = $v;
-                unset($data[$k]);
-            }
-        }
-        return $tree;
     }
 }

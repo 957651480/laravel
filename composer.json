@@ -25,7 +25,8 @@
         "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5",
         "laravel/ui": "^2.0",
-        "barryvdh/laravel-ide-helper": "^2.7"
+        "barryvdh/laravel-ide-helper": "^2.7",
+        "barryvdh/laravel-debugbar": "^3.4"
     },
     "config": {
         "optimize-autoloader": true,
