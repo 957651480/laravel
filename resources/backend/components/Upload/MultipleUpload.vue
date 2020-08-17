@@ -70,14 +70,14 @@
             this.uploadAttrs = this.$attrs;
         },
         handleSuccess(res, file) {
-            const success = this.onSuccess(res, file, this.uploadFiles);
-            if(!success){
-                let {data}=res;
-                this.fileIds.push(data.id);
-                this.fileList.push(data.url);
-                this.$emit('input',this.fileIds);
-                this.$emit('update:file_urls',this.fileList);
+            if(this.onSuccess){
+                return this.onSuccess(res, file, this.uploadFiles);
             }
+            let {data}=res;
+            this.fileIds.push(data.id);
+            this.fileList.push(data.url);
+            this.$emit('input',this.fileIds);
+            this.$emit('update:file_urls',this.fileList);
 
         },
         handleBeforeUpload(file) {
