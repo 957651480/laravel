@@ -1,14 +1,15 @@
 <template>
-
+<div class="single-upload">
     <el-upload
-        class="avatar-uploader"
-        action="/api/admin/file/upload"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
+            class="avatar-uploader"
+            action="/api/admin/file/upload"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
         <img v-if="elFileUrl" :src.sync="elFileUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
+</div>
 
 </template>
 

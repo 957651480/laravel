@@ -11,7 +11,10 @@
             <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
         <el-form-item prop="image_uri"  label="图片">
-            <Upload v-model="postForm.image_uri" />
+            <multiple-upload
+                    v-model="postForm.image_ids" :file_urls.sync="image_urls"
+                    list-type="picture-card"
+                    ></multiple-upload>
         </el-form-item>
         <el-form-item prop="content" >
             <Tinymce ref="editor" v-model="postForm.content" :height="400" />
@@ -28,13 +31,14 @@
 </template>
 
 <script>
-import Tinymce from '@/components/Tinymce'
-import Upload from '@/components/Upload/SingleImage3'
-import { validURL } from '@/utils/validate'
-import { fetchArticle } from '@/api/article'
-import { searchUser } from '@/api/remote-search'
+    import Tinymce from '@/components/Tinymce'
+    import Upload from '@/components/Upload/SingleImage3'
+    import {validURL} from '@/utils/validate'
+    import {fetchArticle} from '@/api/article'
+    import {searchUser} from '@/api/remote-search'
+    import MultipleUpload from "@/components/Upload/MultipleUpload";
 
-const defaultForm = {
+    const defaultForm = {
   status: 'draft',
   title: '', // 文章题目
   content: '', // 文章内容
@@ -42,12 +46,12 @@ const defaultForm = {
   image_uri: '', // 文章图片
   display_time: undefined, // 前台展示时间
   id: undefined,
-  importance: 0
+    image_ids: []
 }
 
 export default {
   name: 'ArticleDetail',
-  components: { Tinymce, Upload},
+  components: {MultipleUpload, Tinymce, Upload},
   props: {
     isEdit: {
       type: Boolean,
@@ -82,16 +86,18 @@ export default {
       }
     }
     return {
-      postForm: Object.assign({}, defaultForm),
-      loading: false,
-      userListOptions: [],
-      rules: {
+        postForm: Object.assign({}, defaultForm),
+        loading: false,
+        userListOptions: [],
+        image_urls:[],
+        rules: {
         image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
         content: [{ validator: validateRequire }],
         source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
-      },
-      tempRoute: {}
+        },
+        tempRoute: {},
+
     }
   },
   computed: {
