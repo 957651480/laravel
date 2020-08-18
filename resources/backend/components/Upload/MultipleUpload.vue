@@ -5,6 +5,7 @@
             v-bind="uploadAttrs"
             v-on="$listeners"
             :action="action"
+            :headers="header"
             :before-upload="handleBeforeUpload"
             :on-success="handleSuccess"
             >
@@ -14,12 +15,20 @@
 </template>
 
 <script>
+    import {getToken} from "@/utils/auth";
+
     export default {
     name: "MultipleUpload",
     props:{
         action:{
             type:String,
             default:'/api/admin/file/upload'
+        },
+        header:{
+            type:Object,
+            default(){
+                return { Authorization: 'Bearer ' + getToken() }
+            }
         },
         extension: {
             type: Array,

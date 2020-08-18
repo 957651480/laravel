@@ -1,10 +1,13 @@
 <template>
-<div class="single-upload">
+<div v-bind="$attrs" class="single-upload">
     <el-upload
             class="avatar-uploader"
-            action="/api/admin/file/upload"
+            :ref="$attrs.ref"
+            v-bind="uploadAttrs"
+            v-on="$listeners"
+            :action="action"
+            :headers="header"
             :show-file-list="false"
-            :headers="myHeaders"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
         <img v-if="elFileUrl" :src.sync="elFileUrl" class="avatar">
@@ -15,12 +18,24 @@
 </template>
 
 <script>
-export default {
+    import {getToken} from "@/utils/auth";
+
+    export default {
     name: "SingleUpload",
     props:{
-        value: {
-            type: Number,
-            default: 0
+        action:{
+            type:String,
+            default:'/api/admin/file/upload'
+        },
+        header:{
+            type:Object,
+            default(){
+                return { Authorization: 'Bearer ' + getToken() }
+            }
+        },
+        "show-file-list":{
+            type:Boolean,
+            default:false
         },
         extension: {
             type: Array,
@@ -32,28 +47,37 @@ export default {
             type: Number,
             default: 0
         },
-        img_url:{
-            type: String,
-            default: ''
+        file_url:{
+            type:String,
+            default:''
         }
     },
     data() {
         return {
-            elFileUrl:this.img_url,
-            myHeaders: { Authorization: 'Bearer ' + getToken() },
+            uploadAttrs:{},
+            elFileUrl:this.file_url
         };
     },
     watch:{
-        img_url(val){
-            this.elFileUrl=this.img_url;
+        file_url(val){
+            this.elFileUrl=this.file_url;
         }
     },
+    created(){
+        this.$nextTick(() => {
+            this.init()
+        })
+    },
     methods: {
+        init() {
+            this.uploadAttrs = this.$attrs;
+        },
         handleAvatarSuccess(res, file) {
-            let {data}=res;
-            this.elFileUrl = data.url;
+            let {data}=file.response;
+
+            this.elFileUrl=data.url;
             this.$emit('input',data.id);
-            this.$emit('update:img_url',data.url);
+            this.$emit('update:file_url',data.url);
 
         },
         beforeAvatarUpload(file) {
