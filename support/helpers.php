@@ -16,8 +16,8 @@ if (! function_exists('api_response')) {
         return $factory->json($response);
     }
 }
-if (! function_exists('getSons')) {
-    function getSons($data, $parent_id = 0, string $pIdName = 'parent_id')
+if (! function_exists('get_sons')) {
+    function get_sons($data, $parent_id = 0, string $pIdName = 'parent_id')
     {
         $sons = [];
         foreach ($data as $key=>$item) {
@@ -46,9 +46,9 @@ if (! function_exists('get_subs_recursive'))
     }
 }
 
-if (! function_exists('getParents'))
+if (! function_exists('get_parents'))
 {
-    function getParents(array $data, int $parent_id,string $pkName = 'id', string $pIdName = 'parent_id'){
+    function get_parents(array $data, int $parent_id,string $pkName = 'id', string $pIdName = 'parent_id'){
         $parents=array();
         while($parent_id != 0){
             foreach($data as $key=>$item){

@@ -12,7 +12,7 @@
         </el-form-item>
         <el-form-item prop="image_uri"  label="图片">
             <multiple-upload
-                    v-model="postForm.image_ids" :file_urls.sync="image_urls"
+                    v-model="postForm.image_ids" :file-list.sync="image_urls"
                     list-type="picture-card"
                     ></multiple-upload>
         </el-form-item>

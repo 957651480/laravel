@@ -4,6 +4,7 @@
             class="avatar-uploader"
             action="/api/admin/file/upload"
             :show-file-list="false"
+            :headers="myHeaders"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
         <img v-if="elFileUrl" :src.sync="elFileUrl" class="avatar">
@@ -38,7 +39,8 @@ export default {
     },
     data() {
         return {
-            elFileUrl:this.img_url
+            elFileUrl:this.img_url,
+            myHeaders: { Authorization: 'Bearer ' + getToken() },
         };
     },
     watch:{
