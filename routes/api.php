@@ -14,73 +14,67 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::namespace('Api')->group(function (){
+Route::group(['prefix'=>'admin/','namespace'=>'Admin'],function ()
+{
+    Route::post('auth/login','AuthController@login');
 
-    //后台api
-    Route::prefix('admin/')->namespace('Backend')->group(function(){
+});
+//后台api
+Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanctum'],function()
+{
+    Route::get('auth/logout','AuthController@logout');
+    Route::get('user/info','UserController@info');
 
-        Route::post('auth/login','AuthController@login');
-        Route::get('auth/logout','AuthController@logout');
-        Route::get('user/info','UserController@info');
+    //轮播图
+    Route::get('banner', 'BannerController@index');
+    Route::post('banner/create', 'BannerController@store');
+    Route::get('banner/detail/{id}', 'BannerController@show');
+    Route::post('banner/update/{id}', 'BannerController@update');
+    Route::get('banner/delete/{id}', 'BannerController@destroy');
+    Route::post('banner/batch/delete','BannerController@batchDelete');
 
-        Route::get('/article/list', function (Faker $faker) {
-            $rowsNumber = 10;
-            $list = [];
-            for ($rowIndex = 0; $rowIndex < $rowsNumber; $rowIndex++) {
-                $row = [
-                    'id' => mt_rand(100, 10000),
+    //品牌
+    Route::get('brand', 'BrandController@index');
+    Route::post('brand/create', 'BrandController@store');
+    Route::get('brand/detail/{id}', 'BrandController@show');
+    Route::post('brand/update/{id}', 'BrandController@update');
+    Route::get('brand/delete/{id}', 'BrandController@destroy');
+    Route::post('brand/batch/delete','BrandController@batchDelete');
 
-                    'display_time' => $faker->dateTime()->format('Y-m-d H:i:s'),
-                    'title' => Str::random(),
-                    'author' => Str::random(5),
-                    'comment_disabled' => boolval(mt_rand(0,1)),
-                    'content' => Str::random(100),
-                    'content_short' => Str::random(50),
-                    'status' => Arr::random(['deleted', 'published', 'draft']),
-                    'forecast' => mt_rand(100, 9999) / 100,
-                    'image_uri' => 'https://via.placeholder.com/400x300',
-                    'importance' => mt_rand(1, 3),
-                    'pageviews' => mt_rand(10000, 999999),
-                    'reviewer' => Str::random(5),
-                    'timestamp' => $faker->dateTime()->getTimestamp(),
-                    'type' => Arr::random(['US', 'VI', 'JA']),
-
-                ];
-
-                $list[] = $row;
-            }
-            $data =[
-                'code'=>20000,
-                'data'=>[
-                    'items'=>$list,
-                    'total'=>count($list)
-                ]
-            ];
-            return response()->json($data);
-        });
-
-        Route::get('file/list','FileController@index');
-        Route::post('file/upload','FileController@upload');
-
-        Route::any('banner/list','BannerController@index');
-        Route::any('banner/create','BannerController@create');
-        Route::any('banner/detail/{id}','BannerController@detail');
-        Route::any('banner/update/{id}','BannerController@update');
-        Route::any('banner/delete/{id}','BannerController@delete');
-        Route::any('banner/batch/delete','BannerController@batchDelete');
-
-        Route::any('category/list','CategoryController@index');
-        Route::any('category/list/top','CategoryController@topList');
-        Route::any('category/tree','CategoryController@tree');
-        Route::any('category/create','CategoryController@create');
-        Route::any('category/detail/{id}','CategoryController@detail');
-        Route::any('category/update/{id}','CategoryController@update');
-        Route::any('category/delete/{id}','CategoryController@delete');
-        Route::any('category/batch/delete','CategoryController@batchDelete');
-    });
 });
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:api','namespace'=>'Api'], function ()
+{
+    Route::get('file/list','FileController@index');
+    Route::post('file/upload','FileController@upload');
+
+    Route::any('banner/list','BannerController@index');
+    Route::any('banner/create','BannerController@create');
+    Route::any('banner/detail/{id}','BannerController@detail');
+    Route::any('banner/update/{id}','BannerController@update');
+    Route::any('banner/delete/{id}','BannerController@delete');
+    Route::any('banner/batch/delete','BannerController@batchDelete');
+
+    Route::any('category/list','CategoryController@index');
+    Route::any('category/list/top','CategoryController@topList');
+    Route::any('category/tree','CategoryController@tree');
+    Route::any('category/create','CategoryController@create');
+    Route::any('category/detail/{id}','CategoryController@detail');
+    Route::any('category/update/{id}','CategoryController@update');
+    Route::any('category/delete/{id}','CategoryController@delete');
+    Route::any('category/batch/delete','CategoryController@batchDelete');
+    Route::any('house/parking/identify','HouseController@identify');
+    Route::any('auction/create', 'AuctionController@auction');
 });
+
+//公共路由
+Route::group(['namespace'=>'Api'],function (){
+
+    //公共路由
+    Route::any('region/city','RegionController@city');
+    Route::any('banner/list', 'BannerController@index');
+    Route::any('brand/list', 'BrandController@index');
+
+});
+

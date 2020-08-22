@@ -19,7 +19,7 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'edit_article','display_name'=>'编辑文章']
         );
 
-        $superRole = Role::create(['name' => 'super_admin','display_name'=>'超级管理员']);
+        $superRole = Role::create(['name' => 'admin','display_name'=>'管理员']);
 
         $permission->assignRole($superRole);
     }

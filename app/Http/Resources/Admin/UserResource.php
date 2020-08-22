@@ -17,13 +17,11 @@ class UserResource extends JsonResource
         $permissions = $this->getAllPermissions();
         return [
             'id' => $this->id,
-            'username' => $this->username,
-            'nickName' => $this->nickName,
+            'name' => $this->name,
+
             'role_list' => $this->roles,
             'permission_list' => $permissions,
-            'open_id'=>$this->open_id,
             'avatar' =>$this->avatarUrl,
-            'token'=>$this->token,
             'roles' => array_map(
                 function ($role) {
                     return $role['name'];
