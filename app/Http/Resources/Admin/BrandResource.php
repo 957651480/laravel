@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Backend;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class BrandResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,14 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'id'=>(integer)$this->id,
             'name'=>(string)$this->name,
-            'parent_id'=>(integer)$this->parent_id,
-            'desc'=>(string)$this->desc,
+            'image_id'=>(integer)$this->image_id,
+            'image_url'=>optional($this->image)->url,
             'show'=>(integer)$this->show,
+            'sort'=>(integer)$this->sort,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
         ];

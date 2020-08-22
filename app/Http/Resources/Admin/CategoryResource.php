@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Backend;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BannerResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,15 +14,12 @@ class BannerResource extends JsonResource
      */
     public function toArray($request)
     {
-        $image = $this->image?:optional();
         return [
-            'id'=>$this->id,
-            'sort'=>$this->sort,
-            'title'=>$this->title,
-            'desc'=>$this->desc,
-            'image_id'=>$this->image_id,
-            'image_url'=>$image->url,
-            'show'=>$this->show,
+            'id'=>(integer)$this->id,
+            'name'=>(string)$this->name,
+            'parent_id'=>(integer)$this->parent_id,
+            'desc'=>(string)$this->desc,
+            'show'=>(integer)$this->show,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
         ];
