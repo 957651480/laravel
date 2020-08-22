@@ -25,6 +25,8 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::get('auth/logout','AuthController@logout');
     Route::get('user/info','UserController@info');
 
+    Route::get('file/list','FileController@index');
+    Route::post('file/upload','FileController@upload');
     //轮播图
     Route::get('banner', 'BannerController@index');
     Route::post('banner/create', 'BannerController@store');
@@ -41,21 +43,6 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::get('brand/delete/{id}', 'BrandController@destroy');
     Route::post('brand/batch/delete','BrandController@batchDelete');
 
-});
-
-
-Route::group(['middleware' => 'auth:api','namespace'=>'Api'], function ()
-{
-    Route::get('file/list','FileController@index');
-    Route::post('file/upload','FileController@upload');
-
-    Route::any('banner/list','BannerController@index');
-    Route::any('banner/create','BannerController@create');
-    Route::any('banner/detail/{id}','BannerController@detail');
-    Route::any('banner/update/{id}','BannerController@update');
-    Route::any('banner/delete/{id}','BannerController@delete');
-    Route::any('banner/batch/delete','BannerController@batchDelete');
-
     Route::any('category/list','CategoryController@index');
     Route::any('category/list/top','CategoryController@topList');
     Route::any('category/tree','CategoryController@tree');
@@ -65,7 +52,14 @@ Route::group(['middleware' => 'auth:api','namespace'=>'Api'], function ()
     Route::any('category/delete/{id}','CategoryController@delete');
     Route::any('category/batch/delete','CategoryController@batchDelete');
     Route::any('house/parking/identify','HouseController@identify');
-    Route::any('auction/create', 'AuctionController@auction');
+
+});
+
+
+Route::group(['middleware' => 'auth:api','namespace'=>'Api'], function ()
+{
+
+
 });
 
 //公共路由

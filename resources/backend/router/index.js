@@ -10,6 +10,7 @@ import fileRouter from "@/router/modules/file";
 import bannerRouter from "@/router/modules/banner";
 import informationRouter from "@/router/modules/information";
 import categoryRouter from "@/router/modules/category";
+import excavatorRouter from "@/router/modules/excavator";
 
 Vue.use(Router)
 
@@ -164,6 +165,7 @@ export const asyncRoutes = [
   settingRouter,
     categoryRouter,
     fileRouter,
+    excavatorRouter,
     bannerRouter,
     informationRouter,
   componentsRouter,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\ApiController;
@@ -30,12 +30,11 @@ class BrandController extends ApiController
     public function index(Request $request)
     {
         //
-        $form = $request->all();
-        $limit = Arr::getInt($form,'limit',15);
+        $limit = $request->get('limit',15);
 
         $query = $this->brands->newQuery();
 
-        if($name = Arr::getStringTrimAddSlashes($form,'name')){
+        if($name = $request->get('name')){
             $query->where('name','like',"%$name%");
         }
 
