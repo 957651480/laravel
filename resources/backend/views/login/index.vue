@@ -74,10 +74,10 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
+  import {validUsername} from '@/utils/validate'
+  import SocialSign from './components/SocialSignin'
 
-export default {
+  export default {
   name: 'Login',
   components: { SocialSign },
   data() {
@@ -98,7 +98,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: 'admin123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],

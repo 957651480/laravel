@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        cache()->flush();
-        // $this->call(UserSeeder::class);
-        //$this->call(CategorySeeder::class);
+        $this->call(PermissionTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(CategorySeeder::class);
     }
 }

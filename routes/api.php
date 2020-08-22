@@ -19,8 +19,8 @@ Route::namespace('Api')->group(function (){
     //后台api
     Route::prefix('admin/')->namespace('Backend')->group(function(){
 
-        Route::post('user/login','UserController@login');
-        Route::get('user/logout','UserController@logout');
+        Route::post('auth/login','AuthController@login');
+        Route::get('auth/logout','AuthController@logout');
         Route::get('user/info','UserController@info');
 
         Route::get('/article/list', function (Faker $faker) {
