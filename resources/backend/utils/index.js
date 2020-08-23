@@ -357,7 +357,7 @@ export function removeClass(ele, cls) {
 }
 
 export function emptyArrayToUndefinedRecursive(data,name) {
-  for(var i=0;i<data.length;i++)
+  for(let i=0;i<data.length;i++)
   {
     if(data[i][name].length<1){
       // children若为空数组，则将children设为undefined
@@ -368,4 +368,20 @@ export function emptyArrayToUndefinedRecursive(data,name) {
     }
   }
   return data;
+}
+
+export function fetchTreeChildren(tree, parent_id=0,level=1, pkName = 'id', childName = 'children') {
+
+  let children=[];
+  for(let i=0;i<tree.length;i++)
+  {
+    if(tree[i][childName].length>0){
+      fetchTreeChildren(tree[i][childName],parent_id,level++,pkName,childName)
+    }
+    if(tree[i][pkName]===parent_id){
+        children= tree[i][childName];
+        break
+    }
+  }
+  return children;
 }

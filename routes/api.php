@@ -28,7 +28,7 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::get('file/list','FileController@index');
     Route::post('file/upload','FileController@upload');
     //轮播图
-    Route::get('banner', 'BannerController@index');
+    Route::get('banner/list', 'BannerController@index');
     Route::post('banner/create', 'BannerController@store');
     Route::get('banner/detail/{id}', 'BannerController@show');
     Route::post('banner/update/{id}', 'BannerController@update');
@@ -36,7 +36,7 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::post('banner/batch/delete','BannerController@batchDelete');
 
     //品牌
-    Route::get('brand', 'BrandController@index');
+    Route::get('brand/list', 'BrandController@index');
     Route::post('brand/create', 'BrandController@store');
     Route::get('brand/detail/{id}', 'BrandController@show');
     Route::post('brand/update/{id}', 'BrandController@update');
@@ -52,6 +52,15 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::any('category/delete/{id}','CategoryController@delete');
     Route::any('category/batch/delete','CategoryController@batchDelete');
     Route::any('house/parking/identify','HouseController@identify');
+
+    //地区
+    Route::get('region/list', 'SysRegionController@index');
+    Route::get('region/list/top', 'SysRegionController@topList');
+    Route::get('region/tree', 'SysRegionController@tree');
+    Route::post('region/create', 'SysRegionController@create');
+    Route::get('region/detail/{id}', 'SysRegionController@detail');
+    Route::post('region/update/{id}', 'SysRegionController@update');
+    Route::get('region/delete/{id}', 'SysRegionController@delete');
 
 });
 

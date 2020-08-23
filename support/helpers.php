@@ -117,6 +117,7 @@ if (! function_exists('arr_to_tree_recursive'))
             if ($sorData[$pIdName] == $rootId)
             {
                 $sorData[$childName] = arr_to_tree_recursive($data, $sorData[$pkName]);
+                $sorData['has_children']=$sorData[$childName]?1:0;
                 $arr[]               = $sorData;
             }
         }

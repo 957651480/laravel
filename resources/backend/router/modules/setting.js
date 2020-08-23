@@ -21,7 +21,7 @@ const settingRouter = {
 
         {
             path: 'region',
-            component: () => import('@/views/setting/RegionList'),
+            component: () => import('@/views/region/List'),
             name: 'RegionList',
             meta: { title: '地区列表', icon: 'list' }
         },

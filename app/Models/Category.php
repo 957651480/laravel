@@ -49,14 +49,10 @@ class Category extends EloquentModel
     }
 
 
-    public function node() {
+    public function children() {
         return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
-    public function children()
-    {
-        return $this->node()->with('children');
-    }
     /**
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  mixed  $type

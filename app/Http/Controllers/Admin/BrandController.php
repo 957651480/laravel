@@ -62,7 +62,7 @@ class BrandController extends ApiController
     public function update(Request $request, $id)
     {
         //
-        $banner = $this->brands->getModelByIdOrFail($id);
+        $banner = $this->brands->firstModelByIdOrFail($id);
         $data = $this->validateBrand($request->all());
         $banner->update($data);
         return api_response()->success();
@@ -72,7 +72,7 @@ class BrandController extends ApiController
     public function destroy($id)
     {
         //
-        $banner = $this->brands->getModelByIdOrFail($id);
+        $banner = $this->brands->firstModelByIdOrFail($id);
         $banner->delete();
         return api_response()->success();
     }
