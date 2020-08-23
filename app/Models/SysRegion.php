@@ -33,24 +33,33 @@ class SysRegion extends EloquentModel
         return $query->where($this->qualifyColumn('parent_id'),$operator, $parent_id);
     }
 
-
     /**
-     * @param int $parent_id
-     * @return mixed
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $type
+     * @param  mixed  $name
+     * @param  mixed  $operator
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function topList($parent_id=0,$limit=15)
+    public function scopeName($query, $name, $operator='=')
+    {
+        return $query->where($this->qualifyColumn('name'),$operator, $name);
+    }
+
+
+
+    public function topList()
     {
         //todo distinct 分页总数无效，使用group by
         $prefix = \DB::getConfig('prefix');
 
-        $sub = self::select('parent_id')->parentId($parent_id,'>');
+        $sub = self::select('parent_id')->parentId(0,'>');
         $has_children = \DB::raw("if({$prefix}r.parent_id={$prefix}sys_region.id,1,0) as has_children");
-        return self::select([
+        $query = self::select([
             'sys_region.*',
             $has_children
             ])->leftJoinSub($sub,'r','sys_region.id','r.parent_id')
-            ->groupBy('sys_region.id')
-            ->parentId($parent_id)->paginate($limit);
+            ->groupBy('sys_region.id');
+        return $query;
     }
 
     public function fetchAll()

@@ -41,8 +41,14 @@ class SysRegionController extends ApiController
 
     public function topList(Request $request){
 
+        $query = $this->sysRegion->topList();
         $parent_id = $request->get('parent_id',0);
-        $paginate = $this->sysRegion->topList($parent_id,$request->get('limit'));
+        if($name = $request->get('name','')){
+            $query->name("%$name%",'like');
+        }else{
+            $query->parentId($parent_id);
+        }
+        $paginate = $query->paginate($request->get('limit'));
         $data = SysRegionResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
