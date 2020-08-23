@@ -1,18 +1,24 @@
 <template>
 <div v-bind="$attrs" class="single-upload">
     <el-upload
-            class="avatar-uploader"
             :ref="$attrs.ref"
             v-bind="uploadAttrs"
             v-on="$listeners"
             :action="action"
             :headers="header"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-        <img v-if="elFileUrl" :src.sync="elFileUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            :accept="accept"
+            :limit="limit"
+            :list-type="listType"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :on-exceed="handleExceed"
+            :before-upload="beforeUpload">
+        <i  class="el-icon-plus"></i>
     </el-upload>
+    <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="elFileUrl" alt="">
+    </el-dialog>
 </div>
 
 </template>
@@ -33,15 +39,9 @@
                 return { Authorization: 'Bearer ' + getToken() }
             }
         },
-        "show-file-list":{
-            type:Boolean,
-            default:false
-        },
-        extension: {
-            type: Array,
-            default(){
-                return []
-            }
+        accept: {
+            type: String,
+            default:'.png,.jpg,.jpeg,.bmp'
         },
         size: {
             type: Number,
@@ -50,12 +50,22 @@
         file_url:{
             type:String,
             default:''
+        },
+        limit:{
+            type:Number,
+            default:1
+        },
+        listType:{
+            type:String,
+            default:'picture-card'
         }
     },
     data() {
         return {
             uploadAttrs:{},
-            elFileUrl:this.file_url
+            elFileUrl:this.file_url,
+            dialogImageUrl: '',
+            dialogVisible: false
         };
     },
     watch:{
@@ -72,7 +82,7 @@
         init() {
             this.uploadAttrs = this.$attrs;
         },
-        handleAvatarSuccess(res, file) {
+        handleSuccess(res, file) {
             let {data}=file.response;
 
             this.elFileUrl=data.url;
@@ -80,51 +90,35 @@
             this.$emit('update:file_url',data.url);
 
         },
-        beforeAvatarUpload(file) {
-            let length = this.extension.length;
-            if (length) {
-                let allow_extension = this.extension.some(item=>{
-                    return item===file.type;
-                });
-                if(!allow_extension){
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                    return false;
-                }
-            }
+        beforeUpload(file) {
             if (this.size) {
-                if(file.size>this.size){
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                let fileMb = file.size / 1024 / 1024 < 10;
+                if(fileMb>this.size){
+                    this.$message.warning(`上传图片大小不能超过 ${this.size}MB!`);
                     return false;
                 }
 
             }
             return true;
         },
-
-
+        handleRemove(file, fileList) {
+            this.$emit('input',null);
+            this.$emit('update:file_url','');
+            console.log(file, fileList);
+        },
+        handlePictureCardPreview(file) {
+            this.dialogImageUrl = file.url;
+            this.dialogVisible = true;
+        },
+        handleExceed(files, fileList){
+            this.$message.warning(`只能上传${this.limit}张图片`);
+            return false;
+        }
     }
 }
 </script>
 
 <style >
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
-        text-align: center;
-    }
     .avatar {
         width: 178px;
         height: 178px;
