@@ -75,7 +75,7 @@
                         <el-input v-model="newBanner.desc"  type="textarea"  placeholder="请输入简介" />
                     </el-form-item>
                     <el-form-item label="图片:" prop="image_id">
-                        <single-upload v-model="newBanner.image_id" :file_url.sync="newBanner.image_url"></single-upload>
+                        <single-image v-model="newBanner.image_id" :file_url.sync="newBanner.image_url"></single-image>
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
                         <custom-element-switch v-model="newBanner.show" ></custom-element-switch>
@@ -109,14 +109,14 @@
     import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
     import waves from '@/directive/waves'; // Waves directive
     import {batchDeleteBanner, createBanner, deleteBanner, fetchList, updateBanner} from '@/api/banner';
-    import SingleUpload from "@/components/Upload/SingleUpload";
     import {confirmMessage, httpSuccess} from "@/utils/message";
     import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
     import BaseTable from "@/components/Element/Table/BaseTable";
+    import SingleImage from "@/components/Upload/SingleImage";
 
     export default {
         name: 'BannerList',
-        components: {BaseTable, CustomElementSwitch, SingleUpload,  Pagination },
+        components: {SingleImage, BaseTable, CustomElementSwitch,  Pagination },
         directives: { waves },
         data() {
             return {

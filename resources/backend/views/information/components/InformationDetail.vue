@@ -11,10 +11,10 @@
             <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
         <el-form-item prop="image_uri"  label="图片">
-            <multiple-upload
+            <multiple-image
                     v-model="postForm.image_ids" :file-list.sync="image_urls"
                     list-type="picture-card"
-                    ></multiple-upload>
+                    ></multiple-image>
         </el-form-item>
         <el-form-item prop="content" >
             <Tinymce ref="editor" v-model="postForm.content" :height="400" />
@@ -36,7 +36,7 @@
     import {validURL} from '@/utils/validate'
     import {fetchArticle} from '@/api/article'
     import {searchUser} from '@/api/remote-search'
-    import MultipleUpload from "@/components/Upload/MultipleUpload";
+    import MultipleImage from "@/components/Upload/MultipleImage";
 
     const defaultForm = {
   status: 'draft',
@@ -51,7 +51,7 @@
 
 export default {
   name: 'ArticleDetail',
-  components: {MultipleUpload, Tinymce, Upload},
+  components: {MultipleImage, Tinymce, Upload},
   props: {
     isEdit: {
       type: Boolean,

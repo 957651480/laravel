@@ -72,7 +72,7 @@
             <el-input v-model="newBrand.name" show-word-limit maxlength="25"/>
           </el-form-item>
           <el-form-item label="图片:" prop="image_id">
-            <single-upload v-model="newBrand.image_id" :file_url.sync="newBrand.image_url"></single-upload>
+            <single-image v-model="newBrand.image_id" :file_url.sync="newBrand.image_url"></single-image>
           </el-form-item>
           <el-form-item label="状态:" prop="show">
             <custom-element-switch v-model="newBrand.show" ></custom-element-switch>
@@ -103,17 +103,17 @@
 </template>
 
 <script>
-  import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
-  import waves from '@/directive/waves'; // Waves directive
-  import {batchDeleteBrand, createBrand, deleteBrand, fetchList, updateBrand} from '@/api/brand';
-  import SingleUpload from "@/components/Upload/SingleUpload";
-  import {confirmMessage, httpSuccess} from "@/utils/message";
-  import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
-  import BaseTable from "@/components/Element/Table/BaseTable";
+    import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
+    import waves from '@/directive/waves'; // Waves directive
+    import {batchDeleteBrand, createBrand, deleteBrand, fetchList, updateBrand} from '@/api/brand';
+    import SingleImage from "@/components/Upload/SingleImage";
+    import {confirmMessage, httpSuccess} from "@/utils/message";
+    import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
+    import BaseTable from "@/components/Element/Table/BaseTable";
 
-  export default {
+    export default {
     name: 'BrandList',
-    components: {BaseTable, CustomElementSwitch, SingleUpload,  Pagination },
+    components: {BaseTable, CustomElementSwitch, SingleImage,  Pagination },
     directives: { waves },
     data() {
       return {

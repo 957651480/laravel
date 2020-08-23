@@ -1,24 +1,28 @@
 <template>
-<div v-bind="$attrs" class="multiple-upload">
+<div v-bind="$attrs" class="multiple-image">
     <el-upload
             :ref="$attrs.ref"
             v-bind="uploadAttrs"
             v-on="$listeners"
             :action="action"
             :headers="header"
+            :accept="accept"
             :before-upload="handleBeforeUpload"
+            :on-exceed="handleExceed"
             :on-success="handleSuccess"
             >
-        <i class="el-icon-plus avatar-uploader-icon"></i>
+        <i slot="default" class="el-icon-plus "></i>
+        <div slot="tip" class="el-upload__tip">建议上传png格式图片</div>
     </el-upload>
 </div>
 </template>
 
 <script>
     import {getToken} from "@/utils/auth";
+    import {limitTip, sizeTip} from "@/components/Upload/upload";
 
     export default {
-    name: "MultipleUpload",
+    name: "MultipleImage",
     props:{
         action:{
             type:String,
@@ -30,11 +34,9 @@
                 return { Authorization: 'Bearer ' + getToken() }
             }
         },
-        extension: {
-            type: Array,
-            default(){
-                return []
-            }
+        accept: {
+            type: String,
+            default:'.png,.jpg,.jpeg,.bmp'
         },
         size: {
             type: Number,
@@ -71,24 +73,7 @@
 
         },
         handleBeforeUpload(file) {
-            let length = this.extension.length;
-            if (length) {
-                let allow_extension = this.extension.some(item=>{
-                    return item===file.type;
-                });
-                if(!allow_extension){
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                    return false;
-                }
-            }
-            if (this.size) {
-                if(file.size>this.size){
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                    return false;
-                }
-
-            }
-            return true;
+            return sizeTip(file,this.size);
         },
         handleRemove(file) {
             console.log(file);
@@ -99,6 +84,9 @@
         },
         handleDownload(file) {
             console.log(file);
+        },
+        handleExceed(files, fileList){
+            return  limitTip(fileList,this.limit)
         }
     }
 }

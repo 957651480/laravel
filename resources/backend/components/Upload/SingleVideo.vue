@@ -1,5 +1,5 @@
 <template>
-<div v-bind="$attrs" class="single-upload">
+<div v-bind="$attrs" class="single-video">
     <el-upload
             :ref="$attrs.ref"
             v-bind="uploadAttrs"
@@ -9,15 +9,17 @@
             :accept="accept"
             :limit="limit"
             :list-type="listType"
+            :show-file-list="false"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :on-success="handleSuccess"
             :on-exceed="handleExceed"
             :before-upload="beforeUpload">
-        <i  class="el-icon-plus"></i>
+        <video  v-if="elFileUrl" :src.sync="elFileUrl" controls="controls" class="video"></video>
+        <i v-else class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
-        <img width="100%" :src="elFileUrl" alt="">
+        <video width="100%" :src.sync="elFileUrl" controls="controls"></video>
     </el-dialog>
 </div>
 
@@ -25,9 +27,10 @@
 
 <script>
     import {getToken} from "@/utils/auth";
+    import {limitTip, sizeTip} from "@/components/Upload/upload";
 
     export default {
-    name: "SingleUpload",
+    name: "SingleVideo",
     props:{
         action:{
             type:String,
@@ -41,7 +44,7 @@
         },
         accept: {
             type: String,
-            default:'.png,.jpg,.jpeg,.bmp'
+            default:'.mp4'
         },
         size: {
             type: Number,
@@ -91,15 +94,7 @@
 
         },
         beforeUpload(file) {
-            if (this.size) {
-                let fileMb = file.size / 1024 / 1024 < 10;
-                if(fileMb>this.size){
-                    this.$message.warning(`上传图片大小不能超过 ${this.size}MB!`);
-                    return false;
-                }
-
-            }
-            return true;
+            return sizeTip(file,this.size);
         },
         handleRemove(file, fileList) {
             this.$emit('input',null);
@@ -111,17 +106,16 @@
             this.dialogVisible = true;
         },
         handleExceed(files, fileList){
-            this.$message.warning(`只能上传${this.limit}张图片`);
-            return false;
+            return  limitTip(fileList,this.limit)
         }
     }
 }
 </script>
 
 <style >
-    .avatar {
-        width: 178px;
-        height: 178px;
+    .video {
+        width: 146px;
+        height: 146px;
         display: block;
     }
 </style>

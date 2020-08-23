@@ -1,7 +1,5 @@
 <?php
 
-use Faker\Generator as Faker;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,8 +27,8 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::post('file/upload','FileController@upload');
     //轮播图
     Route::get('banner/list', 'BannerController@index');
-    Route::post('banner/create', 'BannerController@store');
-    Route::get('banner/detail/{id}', 'BannerController@show');
+    Route::post('banner/create', 'BannerController@create');
+    Route::get('banner/detail/{id}', 'BannerController@detail');
     Route::post('banner/update/{id}', 'BannerController@update');
     Route::get('banner/delete/{id}', 'BannerController@destroy');
     Route::post('banner/batch/delete','BannerController@batchDelete');
