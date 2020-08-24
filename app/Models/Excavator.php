@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Excavator extends Model
+{
+    //
+    protected $table='excavator';
+    protected $guarded=[];
+}
