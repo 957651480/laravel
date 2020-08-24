@@ -41,6 +41,14 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::get('brand/delete/{id}', 'BrandController@destroy');
     Route::post('brand/batch/delete','BrandController@batchDelete');
 
+    //挖机
+    Route::get('excavator/list', 'ExcavatorController@index');
+    Route::post('excavator/create', 'ExcavatorController@create');
+    Route::get('excavator/detail/{id}', 'ExcavatorController@detail');
+    Route::post('excavator/update/{id}', 'ExcavatorController@update');
+    Route::get('excavator/delete/{id}', 'ExcavatorController@destroy');
+    Route::post('excavator/batch/delete','ExcavatorController@batchDelete');
+
     Route::any('category/list','CategoryController@index');
     Route::any('category/list/top','CategoryController@topList');
     Route::any('category/tree','CategoryController@tree');

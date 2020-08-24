@@ -2,6 +2,9 @@
  * Created by PanJiaChen on 16/11/18.
  */
 
+export function getUnix(datetime) {
+    return Math.floor(new Date(datetime).getTime()/1000)
+}
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time

@@ -16,18 +16,25 @@ class CreateExcavatorTable extends Migration
         Schema::create('excavator', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('brand_id');
-            $table->string('model');
-            $table->string('method');
-            $table->date('date_of_production');
-            $table->unsignedBigInteger('duration_of_use');
-            $table->unsignedBigInteger('brand_id');
-            $table->string('motor_brand');
-            $table->string('motor_model');
-            $table->string('motor_rate_of_work')->comment('功率');
-            $table->string('hydraulic_pump_rand')->comment('');
-            $table->string('hydraulic_pump_model')->comment('');
-            $table->string('hydraulic_pump_flow')->comment('');
+            $table->string('model')->default('');
+            $table->string('method')->default('');
+            $table->unsignedInteger('date_of_production')->default(0);
+            $table->unsignedBigInteger('duration_of_use')->default(0);
+            $table->string('equipment_operation')->default('');
+            $table->string('motor_brand')->default('');
+            $table->string('motor_model')->default('');
+            $table->string('motor_rate_of_work')->default('')->comment('功率');
+            $table->string('hydraulic_pump_rand')->default('')->comment('');
+            $table->string('hydraulic_pump_model')->default('')->comment('');
+            $table->unsignedBigInteger('hydraulic_pump_flow')->default(0)->comment('');
+            $table->softDeletes();
             $table->timestamps();
+        });
+        Schema::create('excavator_image', function (Blueprint $table)  {
+            $table->unsignedInteger('excavator_id');
+            $table->unsignedInteger('image_id');
+            $table->timestamps();
+            $table->index(['excavator_id','image_id'], 'excavator_image_id');
         });
     }
 
@@ -39,5 +46,6 @@ class CreateExcavatorTable extends Migration
     public function down()
     {
         Schema::dropIfExists('excavator');
+        Schema::dropIfExists('excavator_image');
     }
 }

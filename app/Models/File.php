@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\Collection\FileCollection;
+
 /**
  * App\Models\File
  *
@@ -47,6 +49,11 @@ class File extends EloquentModel
         'url'
     ];
 
+
+    public function newCollection(array $models = [])
+    {
+        return new FileCollection($models);
+    }
 
     public function getUrlAttribute()
     {

@@ -1,6 +1,21 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-form :inline="true" >
+      <el-form-item label="轮播标题:">
+        <el-input v-model="query.title" placeholder="请输入轮播标题" clearable style="width: 200px;" @change="handleFilter" class="filter-item" @keyup.enter.native="handleFilter" />
+      </el-form-item>
+      <el-button v-waves type="primary" icon="el-icon-search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button type="primary" icon="el-icon-plus" @click="handleCreate">
+        添加
+      </el-button>
+      <el-button v-waves :loading="downloading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+        导出
+      </el-button>
+    </el-form>
+
+    <el-table v-loading="tableLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
@@ -57,7 +72,7 @@
 </template>
 
 <script>
-    import {fetchList} from '@/api/article'
+    import {fetchList} from '@/api/excavator'
     import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
     export default {
@@ -77,7 +92,7 @@
     return {
       list: null,
       total: 0,
-      listLoading: true,
+      tableLoading: true,
       listQuery: {
         page: 1,
         limit: 20
@@ -88,14 +103,13 @@
     this.getList()
   },
   methods: {
-    getList() {
-      this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-        this.listLoading = false
-      })
-    }
+    async getList() {
+      this.tableLoading = true;
+      const { total,data } = await fetchList(this.query);
+      this.list = data;
+      this.total = total;
+      this.tableLoading = false;
+    },
   }
 }
 </script>

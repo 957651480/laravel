@@ -1,8 +1,8 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container" label-width="120px">
+    <el-form ref="form" :model="form" :rules="rules" class="form-container" label-width="120px">
 
-      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.status">
+      <sticky :z-index="10" :class-name="'sub-navbar '+form.status">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
           发布
         </el-button>
@@ -21,41 +21,40 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item" prop="brand_id">
-              <el-select v-model="postForm.brand_id" :remote-method="getRemoteBrandList" filterable default-first-option remote placeholder="选择品牌">
+              <el-select v-model="form.brand_id" :remote-method="getRemoteBrandList" filterable default-first-option remote placeholder="选择品牌">
                 <el-option v-for="(item,index) in brands" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
           </el-col>
 
           <el-col :span="10">
-            <el-form-item label-width="120px" label="型号:" class="postInfo-container-item">
-              <el-input v-model="postForm.model" style="width: 217px"></el-input>
+            <el-form-item label-width="120px" label="型号:" class="postInfo-container-item" prop="model">
+              <el-input v-model="form.model" style="width: 217px"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
             <el-form-item label-width="90px" label="挖机制式:" class="postInfo-container-item">
-              <el-radio v-model="postForm.method" label="1">履带式</el-radio>
-              <el-radio v-model="postForm.method" label="2">轮式</el-radio>
+              <el-input v-model="form.method" ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label-width="120px" label="出厂日期:" class="postInfo-container-item">
-              <el-date-picker v-model="displayTime" type="date" format="yyyy-MM-dd" placeholder="选择出厂日期" />
+            <el-form-item label-width="120px" label="出厂日期:" class="postInfo-container-item" prop="date_of_production">
+              <el-date-picker v-model="dateOfProduction" type="date" format="yyyy-MM-dd" placeholder="选择出厂日期" />
             </el-form-item>
           </el-col>
 
           <el-col :span="10">
             <el-form-item label-width="120px" label="使用时长:" class="postInfo-container-item">
-              <el-input-number ></el-input-number><span>使用时长,单位(小时)</span>
+              <el-input-number v-model="form.duration_of_use"></el-input-number><span>使用时长,单位(小时)</span>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
             <el-form-item label-width="90px" label="设备手术:" class="postInfo-container-item">
-              <el-input ></el-input>
+              <el-input v-model="form.equipment_operation"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -68,21 +67,19 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item">
-              <el-select v-model="postForm.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="Search user">
-                <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
-              </el-select>
+              <el-input v-model="form.motor_brand" style="width: 217px"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="10">
             <el-form-item label-width="120px" label="型号:" class="postInfo-container-item">
-              <el-input v-model="postForm.model" style="width: 217px"></el-input>
+              <el-input v-model="form.motor_model" style="width: 217px"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
             <el-form-item label-width="90px" label="功率:" class="postInfo-container-item">
-              <el-input></el-input>
+              <el-input-number v-model="form.motor_rate_of_work"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -95,21 +92,19 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item">
-              <el-select v-model="postForm.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="Search user">
-                <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
-              </el-select>
+              <el-input v-model="form.hydraulic_pump_rand" style="width: 217px"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="10">
             <el-form-item label-width="120px" label="型号:" class="postInfo-container-item">
-              <el-input v-model="postForm.model" style="width: 217px"></el-input>
+              <el-input v-model="form.hydraulic_pump_model" style="width: 217px"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
             <el-form-item label-width="90px" label="流量:" class="postInfo-container-item">
-              <el-input-number ></el-input-number>
+              <el-input-number v-model="form.hydraulic_pump_flow"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -121,13 +116,13 @@
         <el-divider></el-divider>
         <el-row>
           <el-col :span="14">
-            <el-form-item label-width="120px" label="图片:" class="postInfo-container-item">
-              <multiple-image v-model="postForm.image_ids" :file-list.sync="postForm.image_urls" list-type="picture-card"></multiple-image>
+            <el-form-item label-width="120px" label="图片:" class="postInfo-container-item" prop="image_ids">
+              <multiple-image v-model="form.image_ids" :file-list.sync="form.image_urls" list-type="picture-card"></multiple-image>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label-width="120px" label="视频:" class="postInfo-container-item">
-              <single-video v-model="postForm.video" :file_url.sync="postForm.video" :size="2">
+              <single-video v-model="form.video_id" :file_url.sync="form.video_url" :size="2">
               </single-video>
             </el-form-item>
           </el-col>
@@ -141,7 +136,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item">
-              <el-select v-model="postForm.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="Search user">
+              <el-select v-model="form.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="Search user">
                 <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
               </el-select>
             </el-form-item>
@@ -149,7 +144,7 @@
 
           <el-col :span="10">
             <el-form-item label-width="120px" label="型号:" class="postInfo-container-item">
-              <el-input v-model="postForm.model" ></el-input>
+              <el-input v-model="form.model" ></el-input>
             </el-form-item>
           </el-col>
 
@@ -160,12 +155,12 @@
           </el-col>
         </el-row>
         <!--<el-form-item style="margin-bottom: 40px;" label-width="70px" label="Summary:">
-          <el-input v-model="postForm.content_short" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
+          <el-input v-model="form.content_short" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
 
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.content" :height="400" />
+          <Tinymce ref="editor" v-model="form.content" :height="400" />
         </el-form-item>-->
       </div>
     </el-form>
@@ -175,26 +170,30 @@
 <script>
   import Tinymce from '@/components/Tinymce'
   import Sticky from '@/components/Sticky' // 粘性header组件
-  import {fetchArticle} from '@/api/article'
-  import {searchUser} from '@/api/remote-search'
+  import {createExcavator, fetchExcavator, updateExcavator} from '@/api/excavator'
   import {fetchList} from "@/api/brand";
   import MultipleImage from "@/components/Upload/MultipleImage";
   import SingleVideo from "@/components/Upload/SingleVideo";
+  import {httpSuccess} from "@/utils/message";
+  import {getUnix} from "@/utils";
 
   const defaultForm = {
-  brand_id:null,
+  brand_id:undefined,
   model:'',
-  status: 'draft',
-  title: '', // 文章题目
-  content: '', // 文章内容
-  content_short: '', // 文章摘要
-  source_uri: '', // 文章外链
-  image_uri: '', // 文章图片
-  display_time: undefined, // 前台展示时间
-  id: undefined,
-  platforms: ['a-platform'],
-  comment_disabled: false,
-  importance: 0
+  method: '',
+  date_of_production: '',
+  duration_of_use: undefined,
+  equipment_operation: '',
+  motor_brand: '',
+  motor_model: '',
+  motor_rate_of_work: undefined,
+  hydraulic_pump_rand: undefined,
+  hydraulic_pump_model: undefined,
+  hydraulic_pump_flow: undefined,
+  image_ids:[],
+  image_urls:[],
+  video_id:undefined,
+  video_url:undefined,
 }
 
 export default {
@@ -209,32 +208,29 @@ export default {
   data() {
 
     return {
-      postForm: Object.assign({}, defaultForm),
+      form: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
       rules: {
         brand_id: [{ required:true,message:'请选择品牌',trigger: 'blur'}],
-        title: [{ required:true,trigger: 'blur' }],
-        content: [{ required:true,trigger: 'blur' }],
+        model: [{ required:true,message:'请填写模型',trigger: 'blur' }],
+        date_of_production: [{ required:true,message:'请选择出厂日期',trigger: 'blur' }],
+        image_ids: [{ required:true,message:'请上传图片',trigger: 'blur' }],
       },
       tempRoute: {},
       brands:[]
     }
   },
   computed: {
-    contentShortLength() {
-      return this.postForm.content_short.length
-    },
-    displayTime: {
-      // set and get is useful when the data
-      // returned by the back end api is different from the front end
+
+    dateOfProduction: {
       // back end return => "2013-06-25 06:59:25"
       // front end need timestamp => 1372114765000
       get() {
-        return (+new Date(this.postForm.display_time))
+        return (+new Date(this.form.date_of_production))
       },
       set(val) {
-        this.postForm.display_time = new Date(val)
+        this.form.date_of_production = getUnix(val);
       }
     }
   },
@@ -243,85 +239,64 @@ export default {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
     }
-
-    // Why need to make a copy of this.$route here?
-    // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
-    // https://github.com/PanJiaChen/vue-element-admin/issues/1221
     this.tempRoute = Object.assign({}, this.$route);
     this.getRemoteBrandList();
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id).then(response => {
-        this.postForm = response.data
-
-        // just for test
-        this.postForm.title += `   Article Id:${this.postForm.id}`
-        this.postForm.content_short += `   Article Id:${this.postForm.id}`
-
-        // set tagsview title
+      fetchExcavator(id).then(response => {
+        this.form = response.data
         this.setTagsViewTitle()
-
-        // set page title
         this.setPageTitle()
-      }).catch(err => {
-        console.log(err)
       })
     },
     setTagsViewTitle() {
-      const title = 'Edit Article'
-      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.id}` })
+      const title = '编辑挖机'
+      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.form.id}` })
       this.$store.dispatch('tagsView/updateVisitedView', route)
     },
     setPageTitle() {
-      const title = 'Edit Article'
-      document.title = `${title} - ${this.postForm.id}`
+      const title = '编辑挖机'
+      document.title = `${title} - ${this.form.id}`
     },
     submitForm() {
-      console.log(this.postForm)
-      this.$refs.postForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$notify({
-            title: '成功',
-            message: '发布文章成功',
-            type: 'success',
-            duration: 2000
-          })
-          this.postForm.status = 'published'
-          this.loading = false
-        } else {
-          console.log('error submit!!')
-          return false
+      this.$refs.form.validate(valid => {
+        if (!valid) return false;
+        this.loading = true
+        if(this.isEdit){
+            updateExcavator(this.form.id,this.form).then(response =>
+            {
+              httpSuccess(response);
+              this.initForm();
+            })
+            .finally(() => {
+              this.loading = false;
+            })
+        }else {
+            createExcavator(this.form).then(response =>
+            {
+              httpSuccess(response);
+              this.initForm();
+            })
+            .finally(() => {
+              this.loading = false;
+            })
         }
       })
     },
-    draftForm() {
-      if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
-        this.$message({
-          message: '请填写必要的标题和内容',
-          type: 'warning'
-        })
-        return
+    initForm() {
+      if (this.$refs.form) {
+        this.$refs.form.resetFields();
       }
-      this.$message({
-        message: '保存成功',
-        type: 'success',
-        showClose: true,
-        duration: 1000
-      })
-      this.postForm.status = 'draft'
+      this.form = defaultForm;
+    },
+    draftForm() {
+
     },
     async getRemoteBrandList(query) {
       let {data} = await fetchList();
       this.brands = data;
     },
-    getRemoteUserList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        this.userListOptions = response.data.items.map(v => v.name)
-      })
-    }
   }
 }
 </script>
