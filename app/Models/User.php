@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Hash;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -72,8 +74,51 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function idents()
+    public function indents()
     {
         return $this->hasMany(Ident::class,'user_id');
+    }
+
+
+    /**
+     * @param $identify
+     * @param $password
+     * @return User|Builder|\Illuminate\Database\Eloquent\Model|object|null
+     * @throws @\Throwable
+     */
+    public function getUserByIdentifyPassword($identify,$password)
+    {
+        $user = static::whereHas('indents', function (Builder $query) use($identify){
+            $query->where('identify', $identify);
+        })->first();
+        throw_unless($user,\Exception::class,['用户未注册']);
+        throw_unless(Hash::check($password,$user->password),\Exception::class,['用户账号或密码有误']);
+        return $user;
+    }
+
+    /**
+     * @param $identify
+     * @return User|Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getUserByIdentify($identify)
+    {
+        return static::whereHas('indents', function (Builder $query) use($identify){
+            $query->where('identify', $identify);
+        })->first();
+    }
+
+    /**
+     * @param $user_data
+     * @param $indent_data
+     * @return User|\Illuminate\Database\Eloquent\Model
+     * @throws @\Throwable
+     */
+    public function createUser($user_data, $indent_data)
+    {
+        $user = static::create($user_data);
+        throw_unless($user,\Exception::class,['创建失败']);
+        $indent_data['user_id']=$user->id;
+        $user->indents()->create($indent_data);
+        return $user;
     }
 }

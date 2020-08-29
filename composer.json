@@ -17,7 +17,8 @@
         "spatie/laravel-permission": "^3.13",
         "overtrue/laravel-filesystem-qiniu": "^1.0",
         "mews/captcha": "^3.1",
-        "laravel/sanctum": "^2.4"
+        "laravel/sanctum": "^2.4",
+        "overtrue/laravel-wechat": "~5.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

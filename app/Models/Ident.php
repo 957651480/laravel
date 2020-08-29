@@ -43,6 +43,10 @@ class Ident extends EloquentModel
     }
 
 
+    public function firstOrCreateIdentify($identify)
+    {
+        return static::firstOrCreate(['identify'=>$identify]);
+    }
     public static function getUidByIdentify($identify)
     {
         return static::ofIdentify($identify)->value('user_id');

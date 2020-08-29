@@ -74,6 +74,7 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
 Route::group(['middleware' => 'auth:api','namespace'=>'Api'], function ()
 {
 
+    
 
 });
 

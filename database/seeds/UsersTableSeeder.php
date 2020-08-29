@@ -11,20 +11,16 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run( User $users)
     {
 
-        $admin = User::create([
-            'name'=>'admin',
-            'email'=>'admin@admin@com',
+        $admin = $users->createUser([
+            'nickname'=>'admin',
             'password' => Hash::make('admin123456'),
-        ]);
-        $admin->idents()->create([
-            'identify'=>'admin',
-            'type'=>10,
-            'user_id'=>$admin->id
-        ]);
-
+        ],
+        ['identify'=>'admin','type'=>10]
+        );
+        $admin->indents()->create(['identify'=>'admin@admin@com','user_id'=>$admin->id,'type'=>20]);
         $adminRole = Role::all();
         $admin->syncRoles($adminRole);
     }
