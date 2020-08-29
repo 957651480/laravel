@@ -22,7 +22,7 @@ class Excavator extends EloquentModel
     {
         return $this->belongsToMany(
             File::class,'excavator_image',
-            'excavator_id','image_id');
+            'excavator_id','image_id')->select(['id','name','path']);
     }
 
     public function imagesAttach($id, array $attributes = [], $touch = true)
