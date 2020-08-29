@@ -5,7 +5,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 /**
@@ -19,18 +18,26 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class EloquentModel extends Model
 {
 
-    public static function firstModelById(int $id,$columns = ['*'],$with=[])
+
+    public function batchDelete(array $ids)
     {
-        return static::when($with,function (EloquentModel $model,$with){
-            $model->with($with);
-        })->whereKey($id)->first($columns);
+        return $this->whereIn('id',$ids)->delete();
     }
 
-    public static function firstModelByIdOrFail(int $id,$columns = ['*'],$with=[])
+    public  function firstModelById(int $id,$with=[],$columns = ['*'])
     {
-        $model = static::firstModelById($id,$columns,$with);
-        throw_unless($model,ModelNotFoundException::class);
-        return $model;
+        if($with){
+            $this->with($with);
+        }
+        return $this->whereKey($id)->first($columns);
+    }
+
+    public  function firstModelByIdOrFail(int $id,$with=[],$columns = ['*'])
+    {
+        if($with){
+            $this->with($with);
+        }
+        return $this->whereKey($id)->firstOrFail($columns);
     }
 
     public static function getCacheKey()

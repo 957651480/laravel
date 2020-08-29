@@ -12,6 +12,7 @@
             :file-list="elFileList"
             :before-upload="handleBeforeUpload"
             :on-exceed="handleExceed"
+            :on-remove="handleRemove"
             :on-success="handleSuccess"
             >
         <i slot="default" class="el-icon-plus "></i>
@@ -53,7 +54,7 @@
             type:String,
             default:'picture-card'
         },
-        file_urls:{
+        fileList:{
             type:Array,
             default:[]
         }
@@ -62,7 +63,7 @@
     data() {
         return {
             uploadAttrs: {},
-            elFileList:this.file_urls,
+            elFileList:this.fileList,
             dialogVisible: false,
             disabled: false
         };
@@ -73,24 +74,35 @@
         })
     },
     watch:{
-        file_urls(val){
-            this.elFileList=this.file_urls;
+        fileList(val){
+            this.elFileList=this.fileList;
         }
     },
     methods: {
         init() {
             this.uploadAttrs = this.$attrs;
         },
-        handleSuccess(response, file) {
+        handleSuccess(response, file,fileList) {
+            let {data}= response;
             let ids=this.value;
-            let fileList=this.elFileList;
-            this.$emit('input',ids.push(response.data.id));
-            this.$emit('update:file_urls',fileList.push(response.data.url));
+            ids.push(data.id);
+            this.$emit('input',ids);
+            this.$emit('update:fileList',fileList);
         },
         handleBeforeUpload(file) {
             return sizeTip(file,this.size);
         },
-        handleRemove(file) {
+        handleRemove(file,fileList) {
+            let id = file.id;
+            if(!id){
+                file.response.data.id;
+            }
+            let ids=this.value.filter((item)=>{
+                return item!==id;
+            });
+            this.$emit('input',ids);
+            this.$emit('update:fileList',fileList);
+
             console.log(file);
         },
         handlePictureCardPreview(file) {

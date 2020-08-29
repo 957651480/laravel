@@ -45,19 +45,18 @@ class ExcavatorController extends ApiController
 
     public function detail(Request $request,int $id)
     {
-        $model = $this->excavators->detail($id);
-        return api_response()->success(['data'=>$model]);
+        $model = $this->excavators->firstModelByIdOrFail($id,['images','video']);
+        $data = new ExcavatorResource($model);
+        return api_response()->success(['data'=>$data]);
    }
 
     public function update(Request $request,int $id)
     {
-        $model = $this->excavators->firstModelByIdOrFail($id);
-
+        $model = $this->excavators->firstModelByIdOrFail($id,['images','video']);
         DB::transaction(function ()use($request,$model)
         {
             list($data,$image_ids) = $this->validateExcavator($request);
-            $model->setRawAttributes($data);
-            $model->save();
+            $model->update($data);
             $model->images()->sync($image_ids);
         });
         return api_response()->success();
@@ -82,7 +81,7 @@ class ExcavatorController extends ApiController
             'brand_id'=>'required',
             'model'=>'required',
             'method'=>'sometimes',
-            'date_of_production'=>'required',
+            //'date_of_production'=>'required',
             'duration_of_use'=>'sometimes',
             'equipment_operation'=>'sometimes',
             'motor_brand'=>'sometimes',

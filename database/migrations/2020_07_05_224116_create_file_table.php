@@ -14,7 +14,7 @@ class CreateFileTable extends Migration
     public function up()
     {
         Schema::create('file', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id')->autoIncrement();
             $table->string('name')->default('')->comment('文件名');
             $table->string('path')->default('')->comment('文件上传路径');
             $table->unsignedInteger('group_id')->default(0)->comment('分组id');

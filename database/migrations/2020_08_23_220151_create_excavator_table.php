@@ -13,8 +13,9 @@ class CreateExcavatorTable extends Migration
      */
     public function up()
     {
-        Schema::create('excavator', function (Blueprint $table) {
-            $table->id();
+        Schema::create('excavator', function (Blueprint $table)
+        {
+            $table->unsignedBigInteger('id')->autoIncrement();
             $table->unsignedBigInteger('brand_id');
             $table->string('model')->default('');
             $table->string('method')->default('');
@@ -27,14 +28,28 @@ class CreateExcavatorTable extends Migration
             $table->string('hydraulic_pump_rand')->default('')->comment('');
             $table->string('hydraulic_pump_model')->default('')->comment('');
             $table->unsignedBigInteger('hydraulic_pump_flow')->default(0)->comment('');
+            $table->unsignedBigInteger('video_id')->default(0)->comment('');
             $table->softDeletes();
             $table->timestamps();
         });
         Schema::create('excavator_image', function (Blueprint $table)  {
-            $table->unsignedInteger('excavator_id');
-            $table->unsignedInteger('image_id');
+            $table->unsignedBigInteger('excavator_id');
+            $table->unsignedBigInteger('image_id');
             $table->timestamps();
             $table->index(['excavator_id','image_id'], 'excavator_image_id');
+
+            $table->foreign('excavator_id')
+                ->references('id')
+                ->on('excavator')
+                ->onDelete('cascade');
+
+            $table->foreign('image_id')
+                ->references('id')
+                ->on('file')
+                ->onDelete('cascade');
+
+            $table->primary(['excavator_id', 'image_id'],
+                'model_has_permissions_permission_model_type_primary');
         });
     }
 
