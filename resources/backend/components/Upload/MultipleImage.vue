@@ -85,7 +85,7 @@
             let ids=this.value;
             let fileList=this.elFileList;
             this.$emit('input',ids.push(response.data.id));
-            this.$emit('update:file_url',fileList.push(response.data.url));
+            this.$emit('update:file_urls',fileList.push(response.data.url));
         },
         handleBeforeUpload(file) {
             return sizeTip(file,this.size);
