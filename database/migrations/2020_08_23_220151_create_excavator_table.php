@@ -37,19 +37,6 @@ class CreateExcavatorTable extends Migration
             $table->unsignedBigInteger('image_id');
             $table->timestamps();
             $table->index(['excavator_id','image_id'], 'excavator_image_id');
-
-            $table->foreign('excavator_id')
-                ->references('id')
-                ->on('excavator')
-                ->onDelete('cascade');
-
-            $table->foreign('image_id')
-                ->references('id')
-                ->on('file')
-                ->onDelete('cascade');
-
-            $table->primary(['excavator_id', 'image_id'],
-                'model_has_permissions_permission_model_type_primary');
         });
     }
 
