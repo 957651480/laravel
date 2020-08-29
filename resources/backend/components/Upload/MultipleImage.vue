@@ -5,8 +5,11 @@
             v-bind="uploadAttrs"
             v-on="$listeners"
             :action="action"
+            v-model="value"
             :headers="header"
             :accept="accept"
+            :list-type="listType"
+            :file-list="elFileList"
             :before-upload="handleBeforeUpload"
             :on-exceed="handleExceed"
             :on-success="handleSuccess"
@@ -24,6 +27,10 @@
     export default {
     name: "MultipleImage",
     props:{
+        value:{
+            type:Array,
+            default:[]
+        },
         action:{
             type:String,
             default:'/api/admin/file/upload'
@@ -42,11 +49,20 @@
             type: Number,
             default: 0
         },
+        listType:{
+            type:String,
+            default:'picture-card'
+        },
+        file_urls:{
+            type:Array,
+            default:[]
+        }
     },
 
     data() {
         return {
             uploadAttrs: {},
+            elFileList:this.file_urls,
             dialogVisible: false,
             disabled: false
         };
@@ -56,21 +72,19 @@
             this.init()
         })
     },
+    watch:{
+        file_urls(val){
+            this.elFileList=this.file_urls;
+        }
+    },
     methods: {
         init() {
             this.uploadAttrs = this.$attrs;
         },
-        handleSuccess(res, file,fileList) {
-
-            let ids=[];
-            let file_urls=[];
-            fileList.forEach((item)=>{
-                ids.push(item.response.data.id);
-                file_urls.push(item.response.data.url);
-            });
+        handleSuccess(response, file) {
+            let ids=this.value;
+            ids.push(response.data.id);
             this.$emit('input',ids);
-            this.$emit('update:file-list',file_urls);
-
         },
         handleBeforeUpload(file) {
             return sizeTip(file,this.size);
