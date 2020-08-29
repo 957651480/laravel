@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class WechatController extends ApiController
 {
+    const WECHAT_TOKEN='Wechat-token';
 
     public function Login(Request $request,User $users)
     {
@@ -24,8 +25,14 @@ class WechatController extends ApiController
         }
         //登录
         Auth::loginUsingId($user->id);
-        $token = $user->createToken('wechat-token');
+        $token = $user->createToken(self::WECHAT_TOKEN);
         return api_response()->success(['data'=>['token'=>$token->plainTextToken]]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        return api_response()->success();
     }
 
     /**
