@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\ApiController;
-use App\Models\Ident;
 use App\Models\User;
 use Auth;
-use Http;
 use Illuminate\Http\Request;
 
 class WechatController extends ApiController
@@ -16,7 +14,7 @@ class WechatController extends ApiController
 
     public function Login(Request $request,User $users)
     {
-        list($code,$userInfo) = $this->ValidateLogin($request);
+        list($code,$userInfo) = $this->validateLogin($request);
 
         $openId = app()->auth->session($code);
 
@@ -30,8 +28,12 @@ class WechatController extends ApiController
         return api_response()->success(['data'=>['token'=>$token->plainTextToken]]);
     }
 
-
-    public function ValidateLogin(Request $request)
+    /**
+     * @param Request $request
+     * @return array
+     * @throws @\Illuminate\Validation\ValidationException
+     */
+    public function validateLogin(Request $request)
     {
         $data = $this->validate($request,[
             'code' => 'required',
