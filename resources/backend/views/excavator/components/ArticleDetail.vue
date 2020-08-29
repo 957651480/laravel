@@ -117,12 +117,12 @@
         <el-row>
           <el-col :span="14">
             <el-form-item label-width="120px" label="图片:" class="postInfo-container-item" prop="image_ids">
-              <multiple-image v-model="form.image_ids" :file-list.sync="form.image_urls" list-type="picture-card"></multiple-image>
+              <multiple-image v-model="form.image_ids" :file-list="form.image_urls" ></multiple-image>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label-width="120px" label="视频:" class="postInfo-container-item">
-              <single-video v-model="form.video_id" :file_url.sync="form.video_url" :size="2">
+              <single-video v-model="form.video_id" :file_url="form.video_url" :size="2">
               </single-video>
             </el-form-item>
           </el-col>
@@ -136,9 +136,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item">
-              <el-select v-model="form.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="Search user">
-                <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
-              </el-select>
+
             </el-form-item>
           </el-col>
 
@@ -149,9 +147,7 @@
           </el-col>
 
           <el-col :span="6">
-            <el-form-item label-width="90px" label="挖机制式:" class="postInfo-container-item">
-              <el-date-picker v-model="displayTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Select date and time" />
-            </el-form-item>
+
           </el-col>
         </el-row>
         <!--<el-form-item style="margin-bottom: 40px;" label-width="70px" label="Summary:">

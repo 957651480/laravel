@@ -38,7 +38,7 @@ class ExcavatorController extends ApiController
         {
             list($data,$image_ids) = $this->validateExcavator($request);
             $model = $this->excavators->create($data);
-            $model->images()->sync($image_ids);
+            $model->imagesAttach($image_ids);
         });
         return api_response()->success();
    }
@@ -52,19 +52,25 @@ class ExcavatorController extends ApiController
 
     public function update(Request $request,int $id)
     {
-        $model = $this->excavators->firstModelByIdOrFail($id,['images','video']);
+        $model = $this->excavators->firstModelByIdOrFail($id);
         DB::transaction(function ()use($request,$model)
         {
             list($data,$image_ids) = $this->validateExcavator($request);
             $model->update($data);
-            $model->images()->sync($image_ids);
+            $model->imagesSync($image_ids);
         });
         return api_response()->success();
    }
 
     public function delete(Request $request, int $id)
     {
-        $this->excavators->delete($id);
+        $model = $this->excavators->firstModelByIdOrFail($id,[],['id']);
+        DB::transaction(function ()use($request,$model)
+        {
+            $model->delete();
+            $model->imagesDetach();
+        });
+
         return api_response()->success();
    }
 
