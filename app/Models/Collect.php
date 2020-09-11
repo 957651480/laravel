@@ -10,8 +10,12 @@ class Collect extends Model
     protected $table='collect';
     protected $guarded=[];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
     public function excavator()
     {
-        return $this->hasOne(Excavator::class,'excavator_id');
+        return $this->belongsTo(Excavator::class,'excavator_id');
     }
 }

@@ -16,8 +16,8 @@ class MyCollectListResource extends JsonResource
     {
 
         $excavator = $this->excavator;
-        $brand = $excavator->brand;
-        $images = $excavator->images;
+        $brand = $excavator->brand?:optional();
+        $images = $excavator->images?:collect();
 
         return [
             'id'=>$this->id,

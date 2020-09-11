@@ -15,6 +15,9 @@ class CreateVisitsTable extends Migration
     {
         Schema::create('visit', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->index()->comment('用户uuid');
+            $table->unsignedBigInteger('excavator_id')->index()->comment('机型');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

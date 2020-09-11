@@ -33,4 +33,17 @@ class CollectController extends ApiController
         $data = MyCollectListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
+
+    public function create(Request $request)
+    {
+        $user = $request->user();
+        if(!$excavator_id = $request->get('excavator_id')){
+            return api_response()->json(['msg'=>'请选择收藏的挖机']);
+        }
+        $this->models->create([
+            'user_id'=>$user->id,
+            'excavator_id'=>$excavator_id
+        ]);
+        return api_response()->success();
+    }
 }

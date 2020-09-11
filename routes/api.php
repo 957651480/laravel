@@ -71,16 +71,21 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
 });
 
 
-Route::group(['middleware' => 'auth:api','namespace'=>'Api'], function ()
+Route::group(['middleware' => 'auth:sanctum','namespace'=>'Api'], function ()
 {
 
-    
+    Route::get('collect/list/mine','CollectController@mineList');
+    Route::any('collect/create','CollectController@create');
+
+    Route::get('visit/list/mine','VisitController@mineList');
+    Route::any('visit/create','VisitController@create');
 
 });
 
 //公共路由
 Route::group(['namespace'=>'Api'],function (){
 
+    Route::post('auth/login','AuthController@login');
     //公共路由
     Route::any('region/city','RegionController@city');
     Route::any('banner/list', 'BannerController@index');
