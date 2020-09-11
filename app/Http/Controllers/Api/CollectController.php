@@ -38,7 +38,7 @@ class CollectController extends ApiController
     {
         $user = $request->user();
         if(!$excavator_id = $request->get('excavator_id')){
-            return api_response()->json(['msg'=>'请选择收藏的挖机']);
+            return api_response()->fail(['msg'=>'请选择收藏的挖机']);
         }
         $this->models->create([
             'user_id'=>$user->id,

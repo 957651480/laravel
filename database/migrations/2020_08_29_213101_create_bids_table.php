@@ -15,6 +15,10 @@ class CreateBidsTable extends Migration
     {
         Schema::create('bid', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->index()->comment('用户uuid');
+            $table->unsignedBigInteger('excavator_id')->index()->comment('机型');
+            $table->decimal('price')->default(0)->comment('价格');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
