@@ -74,11 +74,11 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
 Route::group(['middleware' => 'auth:sanctum','namespace'=>'Api'], function ()
 {
 
-    Route::get('collect/list/mine','CollectController@mineList');
-    Route::any('collect/create','CollectController@create');
+    Route::get('excavator/collect/list/mine','ExcavatorController@mineCollectList');
+    Route::any('excavator/collect/create','ExcavatorController@collect');
 
-    Route::get('visit/list/mine','VisitController@mineList');
-    Route::any('visit/create','VisitController@create');
+    Route::get('excavator/visit/list/mine','ExcavatorController@mineVisitList');
+    Route::any('excavator/visit/create','ExcavatorController@visit');
 
 });
 
@@ -89,7 +89,7 @@ Route::group(['namespace'=>'Api'],function (){
     //公共路由
     Route::any('region/city','RegionController@city');
     Route::any('banner/list', 'BannerController@index');
-    Route::any('brand/list', 'BrandController@index');
+    Route::any('excavator/brand/list', 'BrandController@index');
 
 });
 

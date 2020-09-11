@@ -6,8 +6,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\Admin\ExcavatorResource;
+use App\Http\Resources\Api\MyCollectListResource;
+use App\Http\Resources\Api\MyVisitListResource;
 use App\Models\Bid;
+use App\Models\Collect;
 use App\Models\Excavator;
+use App\Models\Visit;
 use Illuminate\Http\Request;
 
 
@@ -38,6 +42,49 @@ class ExcavatorController extends ApiController
         return api_response()->success(['data'=>$data]);
    }
 
+    public function mineVisitList(Request $request)
+    {
+        $user = $request->user();
+        $paginate = $this->models->with(['excavator'])
+            ->where('user_id',$user->id)->paginate($request->get('limit'));
+        $data = MyVisitListResource::collection($paginate);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
+    }
+
+    public function visit(Request $request)
+    {
+        $user = $request->user();
+        if(!$excavator_id = $request->get('excavator_id')){
+            return api_response()->fail(['msg'=>'请选择的挖机']);
+        }
+        Visit::create([
+            'user_id'=>$user->id,
+            'excavator_id'=>$excavator_id
+        ]);
+        return api_response()->success(['msg'=>'成功']);
+    }
+
+    public function mineCollectList(Request $request)
+    {
+        $user = $request->user();
+        $paginate = $this->models->with(['excavator'])
+            ->where('user_id',$user->id)->paginate($request->get('limit'));
+        $data = MyCollectListResource::collection($paginate);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
+    }
+
+    public function collect(Request $request)
+    {
+        $user = $request->user();
+        if(!$excavator_id = $request->get('excavator_id')){
+            return api_response()->fail(['msg'=>'请选择收藏的挖机']);
+        }
+        Collect::create([
+            'user_id'=>$user->id,
+            'excavator_id'=>$excavator_id
+        ]);
+        return api_response()->success();
+    }
 
     public function bid(Request $request)
     {
