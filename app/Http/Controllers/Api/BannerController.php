@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\Admin\BannerResource;
 use App\Models\Banner;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +33,11 @@ class BannerController extends ApiController
 
     public function index(Request $request)
     {
-        $paginate = $this->banners->with('image')->paginate($request->get('limit'));
+        $show = intval($request->get('show'));
+        $paginate = $this->banners->with('image')
+            ->when($show,function (Builder $query,$show){
+            $query->where('show',$show);
+        })->paginate($request->get('limit'));
         $data = BannerResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
