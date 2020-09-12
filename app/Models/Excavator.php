@@ -2,10 +2,16 @@
 
 namespace App\Models;
 
+use App\Casts\Json;
+
+
 class Excavator extends EloquentModel
 {
     //
     protected $table='excavator';
+    protected $casts=[
+        'costs'=>Json::class
+    ];
     protected $guarded=[];
 
     public function video()
@@ -18,6 +24,10 @@ class Excavator extends EloquentModel
         return $this->belongsTo(Brand::class,'brand_id');
     }
 
+    public function region()
+    {
+        return $this->belongsTo(SysRegion::class,'region_id');
+    }
     public function images()
     {
         return $this->belongsToMany(

@@ -22,6 +22,7 @@ class CreateExcavatorTable extends Migration
             $table->unsignedInteger('date_of_production')->default(0);
             $table->unsignedBigInteger('duration_of_use')->default(0);
             $table->string('equipment_operation')->default('');
+            $table->unsignedInteger('region_id')->default(0)->comment('地址');
             $table->string('motor_brand')->default('');
             $table->string('motor_model')->default('');
             $table->string('motor_rate_of_work')->default('')->comment('功率');
@@ -29,6 +30,7 @@ class CreateExcavatorTable extends Migration
             $table->string('hydraulic_pump_model')->default('')->comment('');
             $table->unsignedBigInteger('hydraulic_pump_flow')->default(0)->comment('');
             $table->unsignedBigInteger('video_id')->default(0)->comment('');
+            $table->mediumText('costs')->comment('费用明细');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -17,6 +17,7 @@ class ExcavatorResource extends JsonResource
         $images = $this->images;
         $video = $this->video?:optional();
         $brand = $this->brand?:optional();
+        $region = $this->region?:optional();
         return [
             'id'=>$this->id,
             'brand_id'=>$this->brand_id,
@@ -36,6 +37,9 @@ class ExcavatorResource extends JsonResource
             'image_urls'=>$images,
             'video_id'=>$this->video_id,
             'video_url'=>$video->url,
+            'costs'=>$this->costs,
+            'region_id'=>$this->region_id,
+            'region_merger_name'=>$region->merger_name,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
         ];

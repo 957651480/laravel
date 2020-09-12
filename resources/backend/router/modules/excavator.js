@@ -36,12 +36,12 @@ const excavatorRouter= {
             name: 'BrandList',
             meta: { title: '品牌列表', icon: 'list',noCache: true },
         },
-        {
+       /* {
             path: 'excavator/cost/list',
             component: () => import('@/views/excavator/Cost'),
             name: 'ExcavatorCostList',
             meta: { title: '费用明细列表', icon: 'list',noCache: true },
-        },
+        },*/
     ]
 }
 

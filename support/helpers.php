@@ -103,20 +103,23 @@ if (! function_exists('arr_to_tree_recursive'))
      *
      * @param  array   $data   数据列表
      * @param  integer $rootId    根节点ID
+     * @param  integer $level    根节点ID
      * @param  string  $pkName    主键
      * @param  string  $pIdName   父节点名称
      * @param  string  $childName 子节点名称
      *
      * @return array  转换后的树
      */
-    function arr_to_tree_recursive(array $data, int $rootId = 0, string $pkName = 'id', string $pIdName = 'parent_id', string $childName = 'children')
+    function arr_to_tree_recursive(array $data, int $rootId = 0,int $level=1, string $pkName = 'id', string $pIdName = 'parent_id', string $childName = 'children')
     {
         $arr = [];
         foreach ($data as $sorData)
         {
             if ($sorData[$pIdName] == $rootId)
             {
-                $sorData[$childName] = arr_to_tree_recursive($data, $sorData[$pkName]);
+                $sorData['level']=$level;
+                $level++;
+                $sorData[$childName] = arr_to_tree_recursive($data, $sorData[$pkName],$level);
                 $sorData['has_children']=$sorData[$childName]?1:0;
                 $arr[]               = $sorData;
             }

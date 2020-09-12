@@ -53,10 +53,23 @@ class SysRegionController extends ApiController
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
-    public function tree($parent_id=0){
+    public function tree(Request $request){
 
-        $list = $this->sysRegion->fetchAll();
-        $data=arr_to_tree_recursive($list,$parent_id);
+        $parent_id = $request->get('parent_id',0);
+        $need_level = $request->get('need_level',0);
+        $model_key = $this->sysRegion->getCacheKey();
+        $key = sprintf("%s:%s:%s",$model_key,$parent_id,$need_level);
+        $data = cache()->rememberForever($key,function ()use($parent_id,$need_level){
+            $query = $this->sysRegion->query();
+            if($need_level ){
+                $query->where('level','<=',$need_level);
+            }
+            if($parent_id){
+                $query->where('parent_id',$parent_id);
+            }
+            $all_region = $query->get()->toArray();
+            return arr_to_tree_recursive($all_region,$parent_id);
+        });
         return api_response()->success(['data'=>$data]);
     }
 

@@ -42,7 +42,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label-width="120px" label="出厂日期:" class="postInfo-container-item" prop="date_of_production">
-              <el-date-picker v-model="dateOfProduction" type="date" format="yyyy-MM-dd" placeholder="选择出厂日期" />
+              <el-date-picker v-model="form.date_of_production" type="date" value-format="yyyy-MM-dd" placeholder="选择出厂日期" />
             </el-form-item>
           </el-col>
 
@@ -55,6 +55,15 @@
           <el-col :span="6">
             <el-form-item label-width="90px" label="设备手术:" class="postInfo-container-item">
               <el-input v-model="form.equipment_operation"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item   label="地址" prop="region_id">
+              <el-cascader
+                      v-model="form.region_id"
+                      :props="optionProps"
+                      :options="regionTrees"
+              ></el-cascader>
             </el-form-item>
           </el-col>
         </el-row>
@@ -133,53 +142,64 @@
           </div>
         </div>
         <el-divider></el-divider>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item">
+        <el-row v-for="(cost,index) in form.costs" :key="index">
 
+            <el-form-item :prop="'costs.' + index + '.name'" label="明细组名称:"
+                          :rules="{required: true, message: '明细组不能为空', trigger: 'blur'}">
+              <el-col :span="8">
+                <el-input v-model="cost.name" ></el-input>
+              </el-col>
+              <el-col :span="4" v-if="(index+1)==form.costs.length" style="margin-left: 20px;">
+                <el-button type="primary" class="el-icon-plus" @click.prevent="addGroup(form.costs)">添加</el-button>
+                <el-button type="danger" class="el-icon-delete" @click.prevent="removeGroup(form.costs,index)">删除</el-button>
+              </el-col>
             </el-form-item>
-          </el-col>
 
-          <el-col :span="10">
-            <el-form-item label-width="120px" label="型号:" class="postInfo-container-item">
-              <el-input v-model="form.model" ></el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="6">
-
-          </el-col>
+          <el-form-item label-width="0" v-for="(item,key) in cost.children" :key="key" style="margin-left: 50px;">
+            <el-col :span="8">
+              <el-form-item :prop="'costs.' + index + '.children.'+key+'.name'" label="子项名称:"
+                            :rules="{required: true, message: '名称不能为空', trigger: 'blur'}">
+                <el-input v-model="item.name"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="2"></el-col>
+            <el-col :span="8">
+              <el-form-item :prop="'costs.' + index + '.children.'+key+'.rmb'" label="子项价格:"
+                            :rules="{required: true, message: '价格不能为空', trigger: 'blur'}">
+                <el-input v-model="item.rmb">
+                  <template slot="append">RMB</template>
+                </el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4" v-if="(key+1)==cost.children.length" style="margin-left: 20px;">
+              <el-button type="primary" class="el-icon-plus" @click.prevent="addItem(cost.children)">添加</el-button>
+              <el-button type="danger" class="el-icon-delete" @click.prevent="removeItem(cost.children,key)">删除</el-button>
+            </el-col>
+          </el-form-item>
         </el-row>
-        <!--<el-form-item style="margin-bottom: 40px;" label-width="70px" label="Summary:">
-          <el-input v-model="form.content_short" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
-          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
-        </el-form-item>
 
-        <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="form.content" :height="400" />
-        </el-form-item>-->
       </div>
     </el-form>
   </div>
 </template>
 
 <script>
-  import Tinymce from '@/components/Tinymce'
   import Sticky from '@/components/Sticky' // 粘性header组件
-  import {createExcavator, fetchExcavator, updateExcavator} from '@/api/excavator'
+  import {createExcavator, fetchCost, fetchExcavator, updateExcavator} from '@/api/excavator'
+  import {fetchTree} from '@/api/region'
   import {fetchList} from "@/api/brand";
   import MultipleImage from "@/components/Upload/MultipleImage";
   import SingleVideo from "@/components/Upload/SingleVideo";
   import {httpSuccess} from "@/utils/message";
-  import {getUnix} from "@/utils";
 
   const defaultForm = {
   brand_id:undefined,
   model:'',
   method: '',
-  date_of_production: '',
+  date_of_production: undefined,
   duration_of_use: undefined,
   equipment_operation: '',
+  region_id:undefined,
   motor_brand: '',
   motor_model: '',
   motor_rate_of_work: undefined,
@@ -190,11 +210,12 @@
   image_urls:[],
   video_id:undefined,
   video_url:undefined,
+  costs:[],
 }
 
 export default {
-  name: 'ArticleDetail',
-  components: {MultipleImage, SingleVideo, Tinymce, Sticky },
+  name: 'ExcavatorDetail',
+  components: {MultipleImage, SingleVideo, Sticky },
   props: {
     isEdit: {
       type: Boolean,
@@ -214,29 +235,25 @@ export default {
         image_ids: [{ required:true,message:'请上传图片',trigger: 'blur' }],
       },
       tempRoute: {},
-      brands:[]
-    }
-  },
-  computed: {
-
-    dateOfProduction: {
-      // back end return => "2013-06-25 06:59:25"
-      // front end need timestamp => 1372114765000
-      get() {
-        return (+new Date(this.form.date_of_production))
+      brands:[],
+      optionProps:{
+        value: 'id',
+        label: 'name',
+        emitPath:false
       },
-      set(val) {
-        this.form.date_of_production = getUnix(val);
-      }
+      regionTrees:[],
     }
   },
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+    }else {
+      this.getCostList();
     }
     this.tempRoute = Object.assign({}, this.$route);
     this.getRemoteBrandList();
+    this.getRegionList();
   },
   methods: {
     fetchData(id) {
@@ -256,6 +273,7 @@ export default {
       document.title = `${title} - ${this.form.id}`
     },
     submitForm() {
+      const that = this;
       this.$refs.form.validate(valid => {
         if (!valid) return false;
         this.loading = true
@@ -263,7 +281,9 @@ export default {
             updateExcavator(this.form.id,this.form).then(response =>
             {
               httpSuccess(response);
-              this.initForm();
+              that.$router.push({
+                path: '/excavator/list',
+              });
             })
             .finally(() => {
               this.loading = false;
@@ -272,7 +292,9 @@ export default {
             createExcavator(this.form).then(response =>
             {
               httpSuccess(response);
-              this.initForm();
+              that.$router.push({
+                path: '/excavator/list',
+              });
             })
             .finally(() => {
               this.loading = false;
@@ -293,6 +315,56 @@ export default {
       let {data} = await fetchList();
       this.brands = data;
     },
+    async getCostList(query) {
+      let {data} = await fetchCost();
+      this.form.costs = data;
+    },
+    async getRegionList() {
+      const { data } = await fetchTree({need_level:2});
+      this.regionTrees = this.getTreeData(data);
+    },
+    // 递归判断列表，把最后的children设为undefined
+    getTreeData(data){
+      for(let i=0;i<data.length;i++){
+        if(data[i].children.length<1){
+          // children若为空数组，则将children设为undefined
+          data[i].children=undefined;
+        }else {
+          // children若不为空数组，则继续 递归调用 本方法
+          this.getTreeData(data[i].children);
+        }
+      }
+      return data;
+    },
+    removeItem(item,index){
+
+      if(index===0){
+        this.$message({
+          message: '不能删除子项第一项',
+          type: 'warning'
+        });
+      }else {
+        item.splice(index, 1)
+      }
+    },
+    addItem(item){
+      item.push({name:'',rmb:'',jpn:''});
+    },
+    removeGroup(item,index){
+      if(index===0){
+        this.$message({
+          message: '不能删除分组第一项',
+          type: 'warning'
+        });
+      }else {
+        item.splice(index, 1)
+      }
+    },
+    addGroup(item){
+      item.push({name:'',children:[
+          {name:'',rmb:'',jpn:''}
+        ]});
+    }
   }
 }
 </script>

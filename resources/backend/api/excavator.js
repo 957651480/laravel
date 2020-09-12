@@ -49,3 +49,11 @@ export function batchDeleteExcavator(data) {
         data
     })
 }
+
+export function fetchCost() {
+
+    return request({
+        url: '/admin/excavator/cost',
+        method: 'get',
+    })
+}

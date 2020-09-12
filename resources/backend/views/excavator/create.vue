@@ -1,13 +1,13 @@
 <template>
-  <article-detail :is-edit="false" />
+  <excavator-detail :is-edit="false" />
 </template>
 
 <script>
-    import ArticleDetail from './components/ArticleDetail'
+    import ExcavatorDetail from './components/ExcavatorDetail'
 
     export default {
   name: 'CreateArticle',
-  components: { ArticleDetail }
+  components: { ExcavatorDetail }
 }
 </script>
 

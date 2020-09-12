@@ -39,7 +39,7 @@
             <el-table-column align="center" label="操作" width="350" fixed="right">
                 <template slot-scope="scope">
                     <el-button type="primary" size="small" icon="el-icon-plus" @click="handleCreateNode(scope.$index,scope.row)">
-                        添加子栏目
+                        添加子项
                     </el-button>
                     <el-button type="primary" size="small" icon="el-icon-edit" @click="handleEdit(scope.$index,scope.row)">
                         编辑
@@ -53,10 +53,10 @@
         <el-dialog :title="dialog.title" :visible.sync="dialog.visible" @close='closeDialog'>
             <div v-loading="formCreating" class="form-container">
                 <el-form ref="form" :rules="rules" :model="form" label-position="left" label-width="100px">
-                    <el-form-item label="分类名:" prop="name">
+                    <el-form-item :label="showNameLabel(form.parent_id)" prop="name">
                         <el-input v-model="form.name" show-word-limit maxlength="25"/>
                     </el-form-item>
-                    <el-form-item label="父级栏目:" prop="parent_id" v-show="form.parent_id">
+                    <el-form-item v-if="form.parent_id>0" label="分组名:" prop="parent_id">
                         <el-cascader v-model="form.parent_id"
                                      :options="normalizedParentOption"
                                      :props="parentIdProps"
@@ -80,7 +80,13 @@
 
 <script>
     import waves from '@/directive/waves'; // Waves directive
-    import {batchDelete, createExcavatorCost, deleteExcavatorCost, fetchTree, updateExcavatorCost} from '@/api/excavator-cost';
+    import {
+        batchDelete,
+        createExcavatorCost,
+        deleteExcavatorCost,
+        fetchTree,
+        updateExcavatorCost
+    } from '@/api/excavator-cost';
     import {confirmMessage, httpSuccess} from "@/utils/message";
     import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
     import {deepClone, emptyArrayToUndefinedRecursive} from "@/utils";
@@ -88,7 +94,7 @@
 
     const defaultForm ={
     name: '',
-    parent_id:null,
+    parent_id:0,
 }
 export default {
     name: 'ExcavatorCostList',
@@ -110,8 +116,8 @@ export default {
             form: defaultForm,
             dialog:defaultDialog,
             rules: {
-                name: [{ required: true, message: '标题必须', trigger: 'blur' }],
-                parent_id: [{ required: true, message: '父栏目必须', trigger: 'blur' }],
+                name: [{ required: true, message: '名称必须', trigger: 'blur' }],
+                parent_id: [{ required: true, message: '分组必选', trigger: 'blur' }],
             },
             parentOptions:[],
             parentIdProps:{
@@ -155,7 +161,7 @@ export default {
         },
         handleCreateNode(index,row) {
             this.form.parent_id =row.id;
-            this.setDialog({title: '新增子栏目', type: 'node', visible: true});
+            this.setDialog({title: '新增子项', type: 'node', visible: true});
         },
 
         handleDelete(index,id) {
@@ -172,7 +178,6 @@ export default {
         closeDialog() {
             this.initForm();
             this.setDialog();
-            this.tabActiveIndex='first';
         },
         enterDialog() {
             this.$refs['form'].validate((valid) =>
@@ -210,9 +215,9 @@ export default {
             });
         },
         initForm() {
-            if (this.$refs.form) {
+            /*if (this.$refs.form) {
                 this.$refs.form.resetFields();
-            }
+            }*/
             this.form = defaultForm;
         },
 
@@ -237,6 +242,12 @@ export default {
         {
             this.dialog=options?options:defaultDialog;
         },
+        showNameLabel(parent_id){
+            if(parent_id>0){
+                return '费用子项名:'
+            }
+            return '分组名:';
+        }
     }
 };
 </script>

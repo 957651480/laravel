@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Observers\RegionObserver;
-use Illuminate\Database\Eloquent\Model;
 
 class SysRegion extends EloquentModel
 {
@@ -60,12 +59,5 @@ class SysRegion extends EloquentModel
             ])->leftJoinSub($sub,'r','sys_region.id','r.parent_id')
             ->groupBy('sys_region.id');
         return $query;
-    }
-
-    public function fetchAll()
-    {
-        return \Cache::rememberForever(static::getCacheKey(),function (){
-            return $this->all()->toArray();
-        });
     }
 }

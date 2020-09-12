@@ -50,13 +50,6 @@ class ExcavatorCostController extends ApiController
 
         $list = $this->excavatorCosts->fetchAll();
         $data=arr_to_tree_recursive($list,$parent_id);
-        array_walk_recursive($data,function (&$item, $key){
-            if(in_array($key,['id','parent_id'])){
-                $item=(string)$item;
-            }
-
-            return $item;
-        });
         //深度递归
 
         return api_response()->success(['data'=>$data]);
@@ -101,15 +94,9 @@ class ExcavatorCostController extends ApiController
     {
         return $request->validate([
             'name'=>'required',
-            'parent_id'=>'required',
-            'seo_title'=>'sometimes',
-            'seo_keyword'=>'sometimes',
-            'seo_description'=>'sometimes',
-            'show'=>'sometimes|in:10,20',
-            'link'=>'sometimes',
+            'parent_id'=>'sometimes',
         ],[
             'title.required'=>'名称必须',
-            'parent_id.required'=>'父栏目必须',
         ]);
     }
 

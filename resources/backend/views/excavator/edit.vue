@@ -1,13 +1,13 @@
 <template>
-  <article-detail :is-edit="true" />
+  <excavator-detail :is-edit="true" />
 </template>
 
 <script>
-    import ArticleDetail from './components/ArticleDetail'
+  import ExcavatorDetail from './components/ExcavatorDetail'
 
-    export default {
+  export default {
   name: 'EditForm',
-  components: { ArticleDetail }
+  components: { ExcavatorDetail }
 }
 </script>
 

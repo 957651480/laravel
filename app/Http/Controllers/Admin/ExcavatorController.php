@@ -25,7 +25,7 @@ class ExcavatorController extends ApiController
 
     public function index(Request $request)
     {
-        $paginate = Excavator::with(['images','video'])->paginate($request->get('limit'));
+        $paginate = Excavator::with(['images','video','region'])->paginate($request->get('limit'));
         $data = ExcavatorResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
@@ -81,13 +81,113 @@ class ExcavatorController extends ApiController
         return api_response()->success();
    }
 
+
+    public function cost()
+    {
+        $costs= [
+            [
+                'name'=>'代缴税额',
+                'children'=>[
+                    [
+                        'name'=>'申报机价',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'增值税30%',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'关税8%',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                ]
+            ],
+            [
+                'name'=>'香港中检费',
+                'children'=>[
+                    [
+                        'name'=>'证书费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'入单费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'影像',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'运输费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'过磅费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'清关费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'减产行政费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                ]
+            ],
+            [
+                'name'=>'运输费',
+                'children'=>[
+                    [
+                        'name'=>'HK-莲花山运输费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'莲花山-机械城运输',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                ]
+            ],
+            [
+                'name'=>'报关服务费',
+                'children'=>[
+                    [
+                        'name'=>'港口包干费用',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                    [
+                        'name'=>'渡机费',
+                        'rmb'=>'',
+                        'jpn'=>''
+                    ],
+                ]
+            ],
+
+        ];
+
+        return api_response()->success(['data'=>$costs]);
+   }
+
     protected function validateExcavator(Request $request)
     {
         $data = $request->validate([
             'brand_id'=>'required',
             'model'=>'required',
             'method'=>'sometimes',
-            //'date_of_production'=>'required',
+            'date_of_production'=>'required',
             'duration_of_use'=>'sometimes',
             'equipment_operation'=>'sometimes',
             'motor_brand'=>'sometimes',
@@ -98,13 +198,17 @@ class ExcavatorController extends ApiController
             'hydraulic_pump_flow'=>'sometimes',
             'image_ids'=>'required',
             'video_id'=>'sometimes',
+            'costs'=>'required',
+            'region_id'=>'sometimes',
         ],[
             'brand_id.required'=>'品牌必须',
             'model.required'=>'型号必须',
             'date_of_production.required'=>'出厂日期必须',
             'image_ids.required'=>'图片必须',
+            'costs.required'=>'费用明细必须',
         ]);
         $image_ids = \Arr::pull($data,'image_ids');
+        $data['date_of_production']=strtotime($data['date_of_production']);
         return [$data,$image_ids];
     }
 
