@@ -6,10 +6,7 @@ import Layout from '@/layout'
 import componentsRouter from './modules/components'
 import tableRouter from './modules/table'
 import settingRouter from "@/router/modules/setting";
-import fileRouter from "@/router/modules/file";
 import bannerRouter from "@/router/modules/banner";
-import informationRouter from "@/router/modules/information";
-import categoryRouter from "@/router/modules/category";
 import excavatorRouter from "@/router/modules/excavator";
 
 Vue.use(Router)
@@ -163,11 +160,8 @@ export const asyncRoutes = [
 
   /** when your routing map is too long, you can split it into small modules **/
   settingRouter,
-    categoryRouter,
-    fileRouter,
     excavatorRouter,
     bannerRouter,
-    informationRouter,
   componentsRouter,
   tableRouter,
 
@@ -199,42 +193,6 @@ export const asyncRoutes = [
         component: () => import('@/views/example/list'),
         name: 'ArticleList',
         meta: { title: 'Article List', icon: 'list' }
-      }
-    ]
-  },
-  {
-    path: '/excel',
-    component: Layout,
-    redirect: '/excel/export-excel',
-    name: 'Excel',
-    meta: {
-      title: 'Excel',
-      icon: 'excel'
-    },
-    children: [
-      {
-        path: 'export-excel',
-        component: () => import('@/views/excel/export-excel'),
-        name: 'ExportExcel',
-        meta: { title: 'Export Excel' }
-      },
-      {
-        path: 'export-selected-excel',
-        component: () => import('@/views/excel/select-excel'),
-        name: 'SelectExcel',
-        meta: { title: 'Export Selected' }
-      },
-      {
-        path: 'export-merge-header',
-        component: () => import('@/views/excel/merge-header'),
-        name: 'MergeHeader',
-        meta: { title: 'Merge Header' }
-      },
-      {
-        path: 'upload-excel',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'UploadExcel',
-        meta: { title: 'Upload Excel' }
       }
     ]
   },
