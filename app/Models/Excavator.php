@@ -28,6 +28,16 @@ class Excavator extends EloquentModel
     {
         return $this->belongsTo(SysRegion::class,'region_id');
     }
+
+    public function visits()
+    {
+        return $this->hasMany(Visit::class,'excavator_id');
+    }
+
+    public function collects()
+    {
+        return $this->hasMany(Collect::class,'excavator_id');
+    }
     public function images()
     {
         return $this->belongsToMany(

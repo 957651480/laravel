@@ -76,10 +76,11 @@ Route::group(['middleware' => 'auth:sanctum','namespace'=>'Api'], function ()
 {
 
     Route::get('excavator/collect/list/mine','ExcavatorController@mineCollectList');
-    Route::any('excavator/collect/create','ExcavatorController@collect');
+    Route::any('excavator/collect','ExcavatorController@collect');
 
     Route::get('excavator/visit/list/mine','ExcavatorController@mineVisitList');
-    Route::any('excavator/visit/create','ExcavatorController@visit');
+    Route::any('excavator/visit','ExcavatorController@visit');
+    Route::any('excavator/bid','ExcavatorController@bid');
 
 });
 
