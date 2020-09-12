@@ -7,15 +7,16 @@ class ExchangeRate extends Cache
 {
 
 
-    /**
-     *
-     */
-    public static function fetchList()
+
+    public static function fetchList($fresh=false)
     {
-        $list = cache()->remember(__FUNCTION__,10,function (){
+        $key=__FUNCTION__;
+        if($fresh){
+            cache()->forget($key);
+        }
+        return cache()->remember($key,10,function (){
             return ExchangeRate::fetchList();
         });
-        return $list;
     }
 
     public static function fetchJapan()
