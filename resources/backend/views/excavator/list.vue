@@ -31,8 +31,8 @@
         <template slot-scope="scope">
           <el-image
                   style="width: 80px; height: 80px"
-                  :src="scope.row.image_urls[0]"
-                  :preview-src-list="scope.row.image_urls"
+                  :src="scope.row.image_urls[0].url"
+                  :preview-src-list="showImageList(scope.row.image_urls)"
           ></el-image>
         </template>
       </el-table-column>
@@ -93,13 +93,13 @@
 
 <script>
   import {deleteExcavator, fetchList} from '@/api/excavator'
-    import {fetchList as fetchBrandList} from '@/api/brand'
-    import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-    import waves from '@/directive/waves';
-    import {confirmMessage, httpSuccess} from "@/utils/message";
+  import {fetchList as fetchBrandList} from '@/api/brand'
+  import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+  import waves from '@/directive/waves';
+  import {confirmMessage, httpSuccess} from "@/utils/message";
 
 
-    export default {
+  export default {
   name: 'ArticleList',
   components: { Pagination },
   directives: { waves },
@@ -155,6 +155,13 @@
         });
       }).catch(() => {
       });
+    },
+    showImageList(imageList){
+      let tmpList = [];
+      for (let i = 0;i < imageList.length;i++){
+        tmpList[i]=imageList[i].url;
+      }
+      return tmpList;
     },
   }
 }

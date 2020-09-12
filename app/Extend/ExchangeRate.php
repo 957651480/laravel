@@ -12,7 +12,7 @@ class ExchangeRate
     public static function fetchList()
     {
         $response = Http::get(self::EXCHANGE_RATE_API)->json();
-        if($response['err_code']!=0){
+        if($response['error_code']!=0){
             throw new \Exception('汇率查询失败');
         }
         return $response['result']['list'];

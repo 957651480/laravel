@@ -92,5 +92,7 @@ Route::group(['namespace'=>'Api'],function (){
     Route::any('banner/list', 'BannerController@index');
     Route::any('excavator/brand/list', 'BrandController@index');
 
+    Route::any('rate','IndexController@rate');
+
 });
 

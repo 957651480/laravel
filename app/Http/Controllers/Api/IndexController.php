@@ -4,6 +4,8 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Cache\ExchangeRate;
+use App\Cache\ExchangeRateCache;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\Admin\BannerResource;
 use App\Models\Banner;
@@ -24,4 +26,9 @@ class IndexController extends ApiController
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
+    public function rate()
+    {
+        $rate = ExchangeRateCache::fetchJapan();
+        return api_response()->success(['data'=>$rate]);
+    }
 }
