@@ -48,6 +48,15 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::post('excavator/update/{id}', 'ExcavatorController@update');
     Route::get('excavator/delete/{id}', 'ExcavatorController@destroy');
     Route::post('excavator/batch/delete','ExcavatorController@batchDelete');
+    //挖机费用明细
+    Route::any('excavator/cost/list','ExcavatorCostController@index');
+    Route::any('excavator/cost/list/top','ExcavatorCostController@topList');
+    Route::any('excavator/cost/tree','ExcavatorCostController@tree');
+    Route::any('excavator/cost/create','ExcavatorCostController@create');
+    Route::any('excavator/cost/detail/{id}','ExcavatorCostController@detail');
+    Route::any('excavator/cost/update/{id}','ExcavatorCostController@update');
+    Route::any('excavator/cost/delete/{id}','ExcavatorCostController@delete');
+    Route::any('excavator/cost/batch/delete','ExcavatorCostController@batchDelete');
 
     Route::any('category/list','CategoryController@index');
     Route::any('category/list/top','CategoryController@topList');
@@ -57,7 +66,6 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::any('category/update/{id}','CategoryController@update');
     Route::any('category/delete/{id}','CategoryController@delete');
     Route::any('category/batch/delete','CategoryController@batchDelete');
-    Route::any('house/parking/identify','HouseController@identify');
 
     //地区
     Route::get('region/list', 'SysRegionController@index');

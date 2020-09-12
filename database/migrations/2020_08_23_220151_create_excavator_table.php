@@ -32,12 +32,31 @@ class CreateExcavatorTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+
+        Schema::create('excavator_cost', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->default('')->comment('名称');
+            $table->unsignedBigInteger('parent_id')->default(0)->comment('父级id');
+            $table->decimal('price')->default(0)->comment('价格');
+            $table->softDeletes()->comment('删除时间');
+            $table->timestamps();
+        });
+
         Schema::create('excavator_image', function (Blueprint $table)  {
             $table->unsignedBigInteger('excavator_id');
             $table->unsignedBigInteger('image_id');
             $table->timestamps();
             $table->index(['excavator_id','image_id'], 'excavator_image_id');
         });
+
+        Schema::create('excavator_cost_pivot', function (Blueprint $table)  {
+            $table->unsignedBigInteger('excavator_id');
+            $table->unsignedBigInteger('excavator_cost_id');
+            $table->timestamps();
+            $table->index(['excavator_id','excavator_cost_id'], 'excavator_cost_id');
+        });
+
     }
 
     /**
@@ -48,6 +67,8 @@ class CreateExcavatorTable extends Migration
     public function down()
     {
         Schema::dropIfExists('excavator');
+        Schema::dropIfExists('excavator_cost');
         Schema::dropIfExists('excavator_image');
+        Schema::dropIfExists('excavator_cost_pivot');
     }
 }
