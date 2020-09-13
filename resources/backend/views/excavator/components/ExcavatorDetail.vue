@@ -57,8 +57,17 @@
               <el-input v-model="form.equipment_operation"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item   label="地址" prop="region_id">
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item  label-width="120px" label="重量" prop="weight" class="postInfo-container-item">
+              <el-input v-model="form.weight" style="width: 217px">
+                <template slot="append">KG</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item   label="地址" prop="region_id" class="postInfo-container-item">
               <el-cascader
                       v-model="form.region_id"
                       :props="optionProps"
@@ -66,8 +75,23 @@
               ></el-cascader>
             </el-form-item>
           </el-col>
+          <el-col :span="6">
+            <el-form-item label-width="90px" label="推荐:" class="postInfo-container-item">
+              <el-radio v-model="form.recommend" :label="10">是</el-radio>
+              <el-radio v-model="form.recommend" :label="20">否</el-radio>
+            </el-form-item>
+          </el-col>
         </el-row>
-        <div  >
+        <el-row>
+          <el-col :span="8">
+            <el-form-item  label-width="120px" label="排序" prop="sort" class="postInfo-container-item">
+              <el-input v-model="form.sort" style="width: 217px">
+                <template slot="append">值越大越靠前</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <div >
           <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default am-no-layout">
             <h2 class="am-titlebar-title">发动机信息</h2>
           </div>
@@ -199,6 +223,9 @@
   date_of_production: undefined,
   duration_of_use: undefined,
   equipment_operation: '',
+  weight: undefined,
+  recommend: undefined,
+  sort: undefined,
   region_id:undefined,
   motor_brand: '',
   motor_model: '',

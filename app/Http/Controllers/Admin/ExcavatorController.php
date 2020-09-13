@@ -200,6 +200,9 @@ class ExcavatorController extends ApiController
             'video_id'=>'sometimes',
             'costs'=>'required',
             'region_id'=>'sometimes',
+            'weight'=>'sometimes',
+            'recommend'=>'sometimes',
+            'sort'=>'sometimes',
         ],[
             'brand_id.required'=>'品牌必须',
             'model.required'=>'型号必须',

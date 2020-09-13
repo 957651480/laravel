@@ -18,8 +18,10 @@ class ExcavatorResource extends JsonResource
         $video = $this->video?:optional();
         $brand = $this->brand?:optional();
         $region = $this->region?:optional();
+        $title = sprintf("%s%s%s挖掘机",$brand->name,$this->model,$this->method);
         return [
             'id'=>$this->id,
+            'title'=>$title,
             'brand_id'=>$this->brand_id,
             'brand_name'=>$brand->name,
             'model'=>$this->model,
@@ -40,6 +42,9 @@ class ExcavatorResource extends JsonResource
             'costs'=>$this->costs,
             'region_id'=>$this->region_id,
             'region_merger_name'=>$region->merger_name,
+            'weight'=>$this->weight,
+            'recommend'=>$this->recommend,
+            'sort'=>$this->sort,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
         ];

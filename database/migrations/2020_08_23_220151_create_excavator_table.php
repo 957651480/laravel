@@ -22,6 +22,9 @@ class CreateExcavatorTable extends Migration
             $table->unsignedInteger('date_of_production')->default(0);
             $table->unsignedBigInteger('duration_of_use')->default(0);
             $table->string('equipment_operation')->default('');
+            $table->string('weight')->default('')->comment('重量');
+            $table->string('recommend')->default('')->comment('推荐');
+            $table->string('sort')->default('')->comment('排序');
             $table->unsignedInteger('region_id')->default(0)->comment('地址');
             $table->string('motor_brand')->default('');
             $table->string('motor_model')->default('');
