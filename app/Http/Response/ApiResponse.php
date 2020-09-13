@@ -35,7 +35,7 @@ class ApiResponse
      * @param string $msg
      * @param mixed $data
      */
-    public function __construct(int $code=20000, string $msg='成功', $data=[])
+    public function __construct(int $code=200, string $msg='成功', $data=[])
     {
         $this->response=response();
         $this->code = $code;
@@ -139,7 +139,7 @@ class ApiResponse
 
     public function dataFill($response,$result=true)
     {
-        data_fill($response,'code',$result?20000:0);
+        data_fill($response,'code',$result?200:0);
         data_fill($response,'msg',$result?'成功':'失败');
         data_fill($response,'data',array());
         return $response;

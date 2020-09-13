@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Models\User;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class AuthController extends ApiController
@@ -18,7 +19,10 @@ class AuthController extends ApiController
         $user = $users->getUserByIdentifyPassword($username,$password);
 
         Auth::loginUsingId($user->id);
-
+        /**
+         * @var $Kk Collection
+         */
+        $Kk = $user->indentTypeAndIdentify->pluck('identify','type');
         $token = $user->createToken('api-token');
 
         return api_response()->success(['data'=>['token'=>$token->plainTextToken]]);

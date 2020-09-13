@@ -18,9 +18,9 @@ class UsersTableSeeder extends Seeder
             'nickname'=>'admin',
             'password' => Hash::make('admin123456'),
         ],
-        ['identify'=>'admin','type'=>10]
+        ['identify'=>'admin','type'=>'username']
         );
-        $admin->indents()->create(['identify'=>'admin@admin@com','user_id'=>$admin->id,'type'=>20]);
+        $admin->indents()->create(['identify'=>'admin@admin@com','user_id'=>$admin->id,'type'=>'email']);
         $adminRole = Role::all();
         $admin->syncRoles($adminRole);
     }

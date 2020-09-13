@@ -21,7 +21,7 @@ class UserResource extends JsonResource
 
             'role_list' => $this->roles,
             'permission_list' => $permissions,
-            'avatar' =>$this->avatarUrl,
+            'avatar' =>$this->avatar,
             'roles' => array_map(
                 function ($role) {
                     return $role['name'];

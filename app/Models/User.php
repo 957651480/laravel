@@ -53,7 +53,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nickname', 'password','avatar',
     ];
 
     /**
@@ -79,6 +79,10 @@ class User extends Authenticatable
         return $this->hasMany(Ident::class,'user_id');
     }
 
+    public function indentTypeAndIdentify()
+    {
+        return $this->indents->pluck('identify','type')->toArray();
+    }
 
     /**
      * @param $identify
