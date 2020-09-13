@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Cache\ExchangeRateCache;
 use App\Casts\Json;
 
 
@@ -58,5 +59,31 @@ class Excavator extends EloquentModel
     public function imagesSync($ids, $detaching = true)
     {
         return $this->images()->sync($ids, $detaching);
+    }
+
+
+    public function getCostRmbAttribute()
+    {
+        $rmb_list=[];
+        $costs = $this->costs;
+        array_walk_recursive($costs,function ($value, $key)use(&$rmb_list){
+            if($key=='rmb'){
+                $rmb_list[]=$value;
+            }
+        });
+        return array_sum($rmb_list);
+    }
+
+    public function getCostJpnAttribute()
+    {
+        $rate = ExchangeRateCache::fetchJapan();
+        $jpn_list=[];
+        $costs = $this->costs;
+        array_walk_recursive($costs,function ($value, $key,$rate)use(&$jpn_list){
+            if($key=='rmb'){
+                $jpn_list[]=$value*$rate;
+            }
+        },$rate);
+        return array_sum($jpn_list);
     }
 }

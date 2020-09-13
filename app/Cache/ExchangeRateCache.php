@@ -27,6 +27,6 @@ class ExchangeRateCache extends Cache
     {
         $list = self::fetchList();
         $japan = $list[5];
-        return 100/$japan[2];
+        return number_format(100/$japan[2],2);
     }
 }

@@ -16,33 +16,20 @@ class MyCollectListResource extends JsonResource
     {
 
         $images = $this->images;
-        $video = $this->video?:optional();
         $brand = $this->brand?:optional();
         $region = $this->region?:optional();
+
+        $title = sprintf("%s%s%s挖掘机",$brand->name,$this->model,$this->method);
         return [
-            'id'=>$this->id,
-            'brand_id'=>$this->brand_id,
-            'brand_name'=>$brand->name,
-            'model'=>$this->model,
-            'method'=>$this->method,
-            'date_of_production'=>date('Y-m-d',$this->date_of_production),
-            'duration_of_use'=>$this->duration_of_use,
-            'equipment_operation'=>$this->equipment_operation,
-            'motor_brand'=>$this->motor_brand,
-            'motor_model'=>$this->motor_model,
-            'motor_rate_of_work'=>$this->motor_rate_of_work,
-            'hydraulic_pump_rand'=>$this->hydraulic_pump_rand,
-            'hydraulic_pump_model'=>$this->hydraulic_pump_model,
-            'hydraulic_pump_flow'=>$this->hydraulic_pump_flow,
-            'image_ids'=>$images->modelKeys(),
-            'image_urls'=>$images,
-            'video_id'=>$this->video_id,
-            'video_url'=>$video->url,
-            'costs'=>$this->costs,
-            'region_id'=>$this->region_id,
-            'region_merger_name'=>$region->merger_name,
-            'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
-            'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
+            'id'=>(integer)$this->id,
+            'title'=>(string)$title,
+            'date_of_production'=>(string)date('Y',$this->date_of_production),
+            'duration_of_use'=>(integer)$this->duration_of_use,
+            'motor_model'=>(string)$this->motor_model,
+            'image_url'=>(string)$images->first()->url,
+            'total_cost_rmb'=>(float)number_format($this->cost_rmb/10000,2),
+            'total_cost_jpn'=>(float)number_format($this->cost_jpn/10000,2),
+            'region_merger_name'=>(string)$region->merger_name,
         ];
     }
 }

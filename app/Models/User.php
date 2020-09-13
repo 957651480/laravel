@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Hash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -79,10 +78,6 @@ class User extends Authenticatable
         return $this->hasMany(Ident::class,'user_id');
     }
 
-    public function indentTypeAndIdentify()
-    {
-        return $this->indents->pluck('identify','type')->toArray();
-    }
 
     /**
      * @param $identify
@@ -95,8 +90,6 @@ class User extends Authenticatable
         $user = static::whereHas('indents', function (Builder $query) use($identify){
             $query->where('identify', $identify);
         })->first();
-        throw_unless($user,\Exception::class,['用户未注册']);
-        throw_unless(Hash::check($password,$user->password),\Exception::class,['用户账号或密码有误']);
         return $user;
     }
 

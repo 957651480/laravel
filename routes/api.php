@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth:sanctum','namespace'=>'Api'], function ()
 
     Route::get('excavator/visit/list/mine','ExcavatorController@mineVisitList');
     Route::any('excavator/visit','ExcavatorController@visit');
+    Route::any('excavator/bid/list/mine','ExcavatorController@mineBidList');
     Route::any('excavator/bid','ExcavatorController@bid');
 
     //绑定手机号
@@ -91,9 +92,10 @@ Route::group(['namespace'=>'Api'],function (){
 
     Route::any('wechat/login','WechatController@login');
     Route::post('auth/login','AuthController@login');
-    //公共路由
     Route::any('region/city','RegionController@city');
+
     Route::any('banner/list', 'BannerController@index');
+    Route::any('excavator/list', 'ExcavatorController@index');
     Route::any('excavator/brand/list', 'BrandController@index');
 
     Route::any('rate','IndexController@rate');

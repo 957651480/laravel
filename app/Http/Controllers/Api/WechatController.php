@@ -54,9 +54,6 @@ class WechatController extends ApiController
         list($code,$encrypted_data,$encrypt_iv) = $this->validateBind($request);
         $miniProgram = \EasyWeChat::miniProgram();
         $session = $miniProgram->auth->session($code);
-        if(isset($session['errcode'])){
-            throw new \Exception($session['errmsg']);
-        }
         try {
             $data= $miniProgram->encryptor->decryptData($session['session_key'],$encrypt_iv,$encrypted_data);
             $phone = $data['phoneNumber'];

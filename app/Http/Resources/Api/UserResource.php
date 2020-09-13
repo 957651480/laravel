@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api;
 
+use Arr;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -15,8 +16,8 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         $is_login=0;
-        $typeAndIdentify = $this->indentTypeAndIdentify();
-        if(!$phone = data_get($typeAndIdentify,'phone')){
+        $typeAndIdentify = $this->indents->pluck('identify','type')->toArray();
+        if(!Arr::has($typeAndIdentify,'phone')){
             $is_login=2;
         }
         $data = array_merge([

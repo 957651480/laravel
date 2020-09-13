@@ -9,12 +9,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\UserResource;
-use App\Models\Ident;
 use App\Models\User;
-use Arr;
 use Hash;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 /**
@@ -34,8 +30,12 @@ class AuthController extends Controller
     public function login(Request $request,User $users)
     {
         list($username,$password) = $this->validateLogin($request);
-        $user = $users->getUserByIdentifyPassword($username,$password);
-
+        if(!$user = $users->getUserByIdentifyPassword($username,$password)){
+            return  api_response()->fail(['msg'=>'用户未注册']);
+        }
+        if(!Hash::check($password,$user->password)){
+            return  api_response()->fail(['msg'=>'用户账号或密码有误']);
+        }
         \Auth::loginUsingId($user->id);
 
         $token = $user->createToken(self::ADMIN_TOKEN);

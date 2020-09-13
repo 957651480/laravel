@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\ApiController;
-use App\Http\Resources\Admin\ExcavatorResource;
-use App\Http\Resources\Api\MyCollectListResource;
+use App\Http\Resources\Api\ExcavatorListResource;
+use App\Http\Resources\Api\MyBidListResource;
 use App\Http\Resources\Api\MyVisitListResource;
 use App\Models\Bid;
 use App\Models\Collect;
@@ -31,17 +31,9 @@ class ExcavatorController extends ApiController
     {
         $paginate = Excavator::with(['images','video','region','brand'])
             ->paginate($request->get('limit'));
-        $data = ExcavatorResource::collection($paginate);
+        $data = ExcavatorListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
-
-
-    public function detail(Request $request,int $id)
-    {
-        $model = $this->excavators->firstModelByIdOrFail($id,['images','video']);
-        $data = new ExcavatorResource($model);
-        return api_response()->success(['data'=>$data]);
-   }
 
     public function mineVisitList(Request $request)
     {
@@ -76,7 +68,7 @@ class ExcavatorController extends ApiController
         $paginate = $this->excavators->with(['images','video','region','brand'])
             ->rightJoinSub($sub_query,'c','c.excavator_id','=','id')
             ->paginate($request->get('limit'));
-        $data = MyCollectListResource::collection($paginate);
+        $data = MyVisitListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
@@ -91,6 +83,19 @@ class ExcavatorController extends ApiController
             'excavator_id'=>$excavator_id
         ]);
         return api_response()->success();
+    }
+
+
+    public function mineBidList(Request $request)
+    {
+        $user = $request->user();
+        $sub_query = Bid::select(['excavator_id'])
+            ->where('user_id',$user->id);
+        $paginate = $this->excavators->with(['images','video','region','brand'])
+            ->rightJoinSub($sub_query,'c','c.excavator_id','=','id')
+            ->paginate($request->get('limit'));
+        $data = MyBidListResource::collection($paginate);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
     public function bid(Request $request)

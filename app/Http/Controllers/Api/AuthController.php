@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Models\User;
 use Auth;
-use Illuminate\Database\Eloquent\Collection;
+use Hash;
 use Illuminate\Http\Request;
 
 class AuthController extends ApiController
@@ -16,13 +16,14 @@ class AuthController extends ApiController
     {
         list($username,$password) = $this->validateLogin($request);
 
-        $user = $users->getUserByIdentifyPassword($username,$password);
-
+        if(!$user = $users->getUserByIdentifyPassword($username,$password)){
+            return  api_response()->fail(['msg'=>'用户未注册']);
+        }
+        if(!Hash::check($password,$user->password)){
+            return  api_response()->fail(['msg'=>'用户账号或密码有误']);
+        }
         Auth::loginUsingId($user->id);
-        /**
-         * @var $Kk Collection
-         */
-        $Kk = $user->indentTypeAndIdentify->pluck('identify','type');
+
         $token = $user->createToken('api-token');
 
         return api_response()->success(['data'=>['token'=>$token->plainTextToken]]);

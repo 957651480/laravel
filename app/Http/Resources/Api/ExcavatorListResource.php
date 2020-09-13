@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MyBidListResource extends JsonResource
+class ExcavatorListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,7 +14,6 @@ class MyBidListResource extends JsonResource
      */
     public function toArray($request)
     {
-
         $images = $this->images;
         $brand = $this->brand?:optional();
         $region = $this->region?:optional();

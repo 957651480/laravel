@@ -33,17 +33,17 @@ class BannerController extends ApiController
 
     public function index(Request $request)
     {
-        $param=$request->only(['page','limit','show']);
-        $key = sprintf("%s:%s",$this->banners->getCacheKey(),implode(':',$param));
-        list($data,$total) = cache()->rememberForever($key,function ()use($param,$request){
-            $paginate = $this->banners->with('image')
-                ->when(data_get($param,'show'),function (Builder $query,$show){
-                    $query->where('show',$show);
-                })->paginate(data_get($param,'limit'));
-            $data = BannerResource::collection($paginate)->toArray($request);
-            $total=$paginate->total();
-            return [$data,$total];
-        });
+        $param=array_merge([
+            'page'=>1,
+            'limit'=>15,
+            'show'=>''
+        ],$request->all());
+        $paginate = $this->banners->with('image')
+            ->when(data_get($param,'show'),function (Builder $query,$show){
+                $query->where('show',$show);
+            })->paginate(data_get($param,'limit'));
+        $data = BannerResource::collection($paginate)->toArray($request);
+        $total=$paginate->total();
         return api_response()->success(['total'=>$total,'data'=>$data]);
     }
 
