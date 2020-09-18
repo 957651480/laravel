@@ -49,6 +49,8 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::get('excavator/delete/{id}', 'ExcavatorController@destroy');
     Route::post('excavator/batch/delete','ExcavatorController@batchDelete');
     Route::any('excavator/cost','ExcavatorController@cost');
+    Route::any('excavator/visit/list','ExcavatorController@visitList');
+    Route::any('excavator/collect/list','ExcavatorController@collectList');
 
 
     Route::any('category/list','CategoryController@index');

@@ -57,3 +57,21 @@ export function fetchCost() {
         method: 'get',
     })
 }
+
+export function fetchExcavatorVisitList(query) {
+
+    return request({
+        url: '/admin/excavator/visit/list',
+        method: 'get',
+        params: query
+    })
+}
+
+export function fetchExcavatorCollectList(query) {
+
+    return request({
+        url: '/admin/excavator/collect/list',
+        method: 'get',
+        params: query
+    })
+}

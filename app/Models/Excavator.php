@@ -30,9 +30,18 @@ class Excavator extends EloquentModel
         return $this->belongsTo(SysRegion::class,'region_id');
     }
 
+    public function visit()
+    {
+        return $this->hasOne(Visit::class,'excavator_id');
+    }
     public function visits()
     {
         return $this->hasMany(Visit::class,'excavator_id');
+    }
+
+    public function collect()
+    {
+        return $this->hasOne(Collect::class,'excavator_id');
     }
 
     public function collects()

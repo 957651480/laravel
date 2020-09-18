@@ -36,12 +36,18 @@ const excavatorRouter= {
             name: 'BrandList',
             meta: { title: '品牌列表', icon: 'list',noCache: true },
         },
-       /* {
-            path: 'excavator/cost/list',
-            component: () => import('@/views/excavator/Cost'),
-            name: 'ExcavatorCostList',
-            meta: { title: '费用明细列表', icon: 'list',noCache: true },
-        },*/
+       {
+            path: 'visit/list',
+            component: () => import('@/views/excavator/visit'),
+            name: 'ExcavatorVisitList',
+            meta: { title: '浏览列表', icon: 'list',noCache: true },
+        },
+        {
+            path: 'collect/list',
+            component: () => import('@/views/excavator/collect'),
+            name: 'ExcavatorCollectList',
+            meta: { title: '收藏列表', icon: 'list',noCache: true },
+        },
     ]
 }
 

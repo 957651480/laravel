@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Admin\CollectListResource;
 use App\Http\Resources\Admin\ExcavatorResource;
+use App\Http\Resources\Admin\VisitListResource;
 use App\Models\Excavator;
+use App\Models\Visit;
 use DB;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 
@@ -81,6 +85,40 @@ class ExcavatorController extends ApiController
         return api_response()->success();
    }
 
+
+    public function visitList(Request $request)
+    {
+        $query = $this->excavators->newQuery();
+
+        if($nickname = $request->get('nickname')){
+            $query->whereHas('visit.user',function (Builder$builder) use($nickname){
+                $builder->where('nickname','like',"%{$nickname}%");
+            });
+        }else{
+            $query->has('visit');
+        }
+        $paginate = $query->with(['images','video','region','brand','visit.user'])
+            ->paginate($request->get('limit'));
+        $data = VisitListResource::collection($paginate);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
+    }
+
+    public function collectList(Request $request)
+    {
+        $query = $this->excavators->newQuery();
+
+        if($nickname = $request->get('nickname')){
+            $query->whereHas('collect.user',function (Builder$builder) use($nickname){
+                $builder->where('nickname','like',"%{$nickname}%");
+            });
+        }else{
+            $query->has('collect');
+        }
+        $paginate = $query->with(['images','video','region','brand','collect.user'])
+            ->paginate($request->get('limit'));
+        $data = CollectListResource::collection($paginate);
+        return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
+    }
 
     public function cost()
     {
