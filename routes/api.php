@@ -82,8 +82,8 @@ Route::group(['middleware' => 'auth:sanctum','namespace'=>'Api'], function ()
 
     Route::get('excavator/visit/list/mine','ExcavatorController@mineVisitList');
     Route::any('excavator/visit','ExcavatorController@visit');
-    Route::any('excavator/bid/list/mine','ExcavatorController@mineBidList');
-    Route::any('excavator/bid','ExcavatorController@bid');
+    Route::any('excavator/reserve/list/mine','ExcavatorController@mineReserveList');
+    Route::any('excavator/reserve','ExcavatorController@reserve');
 
     //绑定手机号
     Route::any('wechat/bind/phone','WechatController@bindPhone');

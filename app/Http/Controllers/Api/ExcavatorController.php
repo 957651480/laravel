@@ -6,11 +6,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\Api\ExcavatorListResource;
-use App\Http\Resources\Api\MyBidListResource;
+use App\Http\Resources\Api\MyReserveListResource;
 use App\Http\Resources\Api\MyVisitListResource;
-use App\Models\Bid;
 use App\Models\Collect;
 use App\Models\Excavator;
+use App\Models\Reserve;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 
@@ -86,19 +86,19 @@ class ExcavatorController extends ApiController
     }
 
 
-    public function mineBidList(Request $request)
+    public function mineReserveList(Request $request)
     {
         $user = $request->user();
-        $sub_query = Bid::select(['excavator_id'])
+        $sub_query = Reserve::select(['excavator_id'])
             ->where('user_id',$user->id);
         $paginate = $this->excavators->with(['images','video','region','brand'])
             ->rightJoinSub($sub_query,'c','c.excavator_id','=','id')
             ->paginate($request->get('limit'));
-        $data = MyBidListResource::collection($paginate);
+        $data = MyReserveListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
-    public function bid(Request $request)
+    public function reserve(Request $request)
     {
         $user = $request->user();
         if(!$excavator_id = $request->get('excavator_id')){
@@ -108,7 +108,7 @@ class ExcavatorController extends ApiController
         if($price<0){
             return api_response()->fail(['msg'=>'价格必须大于0']);
         }
-        Bid::updateOrCreate([
+        Reserve::updateOrCreate([
             'user_id'=>$user->id,
             'excavator_id'=>$excavator_id
         ],['price'=>$price]);

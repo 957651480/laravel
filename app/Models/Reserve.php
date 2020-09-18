@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bid extends Model
+class Reserve extends Model
 {
     //
-    protected $table='bid';
+    protected $table='reserve';
     protected $guarded=[];
 
     public function excavator()
