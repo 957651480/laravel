@@ -15,19 +15,17 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column width="180px" align="center" label="型号">
+      <el-table-column align="center" label="排序" width="80">
         <template slot-scope="scope">
-          <span>{{ scope.row.model}}</span>
+          <span>{{ scope.row.sort }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column width="120px" align="center" label="品牌">
+      <el-table-column width="180px" align="center" label="名称">
         <template slot-scope="scope">
-          <span>{{ scope.row.brand_name }}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column  label="图片" width="110">
+      <el-table-column  label="图片" align="center">
         <template slot-scope="scope">
           <el-image
                   style="width: 80px; height: 80px"
@@ -36,44 +34,32 @@
           ></el-image>
         </template>
       </el-table-column>
-      <el-table-column width="100px" label="挖机制式">
-        <template slot-scope="scope">
-          <span>{{ scope.row.method }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column  label="出厂日期" width="110">
+      <el-table-column  label="出厂日期" align="center">
         <template slot-scope="{row}">
             {{ row.date_of_production }}
         </template>
       </el-table-column>
-      <el-table-column  label="使用时长" width="110">
+      <el-table-column  label="使用时长" align="center">
         <template slot-scope="{row}">
           {{ row.duration_of_use }}(小时)
         </template>
       </el-table-column>
-      <el-table-column  label="设备手术" width="110">
+      <el-table-column  label="重量" align="center">
         <template slot-scope="{row}">
-          {{ row.equipment_operation }}
+          {{ row.weight }}
         </template>
       </el-table-column>
-      <!--<el-table-column class-name="status-col" label="Status" width="110">
+      <el-table-column  label="地址" align="center">
         <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
-          </el-tag>
+          {{ row.region_merger_name }}
         </template>
-      </el-table-column>-->
-
-      <!--<el-table-column min-width="300px" label="Title">
+      </el-table-column>
+      <el-table-column  label="推荐" align="center">
         <template slot-scope="{row}">
-          <router-link :to="'/example/edit/'+row.id" class="link-type">
-            <span>{{ row.title }}</span>
-          </router-link>
+          {{ row.recommend==10?`是`:`否` }}
         </template>
-      </el-table-column>-->
-
-      <el-table-column align="center" label="操作" width="350">
+      </el-table-column>
+      <el-table-column align="center" label="操作" width="250">
         <template slot-scope="scope">
           <router-link :to="'/excavator/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">

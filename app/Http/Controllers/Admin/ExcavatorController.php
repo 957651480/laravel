@@ -9,7 +9,6 @@ use App\Http\Resources\Admin\CollectListResource;
 use App\Http\Resources\Admin\ExcavatorResource;
 use App\Http\Resources\Admin\VisitListResource;
 use App\Models\Excavator;
-use App\Models\Visit;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -222,6 +221,7 @@ class ExcavatorController extends ApiController
     protected function validateExcavator(Request $request)
     {
         $data = $request->validate([
+            'name'=>'required',
             'brand_id'=>'required',
             'model'=>'required',
             'method'=>'sometimes',
@@ -242,6 +242,7 @@ class ExcavatorController extends ApiController
             'recommend'=>'sometimes',
             'sort'=>'sometimes',
         ],[
+            'name.required'=>'挖机名称必须',
             'brand_id.required'=>'品牌必须',
             'model.required'=>'型号必须',
             'date_of_production.required'=>'出厂日期必须',

@@ -16,6 +16,7 @@ class CreateExcavatorTable extends Migration
         Schema::create('excavator', function (Blueprint $table)
         {
             $table->unsignedBigInteger('id')->autoIncrement();
+            $table->string('name',255)->default('')->comment('挖机名称');
             $table->unsignedBigInteger('brand_id');
             $table->string('model')->default('');
             $table->string('method')->default('');

@@ -21,10 +21,9 @@ class CollectListResource extends JsonResource
         $visit = $this->visit?:optional();
 
 
-        $title = sprintf("%s%s%s挖掘机",$brand->name,$this->model,$this->method);
         return [
             'id'=>(integer)$this->id,
-            'title'=>(string)$title,
+            'name'=>(string)$this->name,
             'date_of_production'=>(string)date('Y',$this->date_of_production),
             'duration_of_use'=>(integer)$this->duration_of_use,
             'motor_model'=>(string)$this->motor_model,

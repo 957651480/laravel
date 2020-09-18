@@ -1,6 +1,6 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="form" :model="form" :rules="rules" class="form-container" label-width="120px">
+    <el-form ref="form" :model="form" :rules="rules" label-position="right" label-width="120px">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+form.status">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
@@ -19,56 +19,59 @@
         </div>
         <el-divider></el-divider>
         <el-row>
-          <el-col :span="8">
-            <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item" prop="brand_id">
-              <el-select v-model="form.brand_id" :remote-method="getRemoteBrandList" filterable default-first-option remote placeholder="选择品牌">
+          <el-col :span="6">
+            <el-form-item  label="名称:"  prop="name">
+              <el-input v-model="form.name"  placeholder="请输入挖机名称"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item  label="品牌:"  prop="brand_id">
+              <el-select v-model="form.brand_id" :remote-method="getRemoteBrandList" filterable default-first-option remote placeholder="选择品牌" style="width: 100%;">
                 <el-option v-for="(item,index) in brands" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
           </el-col>
 
-          <el-col :span="10">
-            <el-form-item label-width="120px" label="型号:" class="postInfo-container-item" prop="model">
-              <el-input v-model="form.model" style="width: 217px"></el-input>
+          <el-col :span="6">
+            <el-form-item  label="型号:"  prop="model">
+              <el-input v-model="form.model" placeholder="请输入挖机型号"></el-input>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
-            <el-form-item label-width="90px" label="挖机制式:" class="postInfo-container-item">
-              <el-input v-model="form.method" ></el-input>
+            <el-form-item  label="挖机制式:" >
+              <el-input v-model="form.method" placeholder="请输入挖机制式,如:轮滑式或者滚轮式"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label-width="120px" label="出厂日期:" class="postInfo-container-item" prop="date_of_production">
-              <el-date-picker v-model="form.date_of_production" type="date" value-format="yyyy-MM-dd" placeholder="选择出厂日期" />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="10">
-            <el-form-item label-width="120px" label="使用时长:" class="postInfo-container-item">
-              <el-input-number v-model="form.duration_of_use"></el-input-number><span>使用时长,单位(小时)</span>
+          <el-col :span="6">
+            <el-form-item label="日期:"  prop="date_of_production">
+              <el-date-picker v-model="form.date_of_production" type="date" value-format="yyyy-MM-dd" placeholder="选择出厂日期" style="width: 100%;"/>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
-            <el-form-item label-width="90px" label="设备手术:" class="postInfo-container-item">
-              <el-input v-model="form.equipment_operation"></el-input>
+            <el-form-item  label="使用时长:" >
+              <el-input v-model="form.duration_of_use" placeholder="请输入挖机使用时长">
+                <template slot="append">小时</template>
+              </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item  label-width="120px" label="重量" prop="weight" class="postInfo-container-item">
-              <el-input v-model="form.weight" style="width: 217px">
+
+          <el-col :span="6">
+            <el-form-item  label="设备手术:" >
+              <el-input v-model="form.equipment_operation" placeholder="请输入挖机设备手术"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item  label="重量" prop="weight" >
+              <el-input v-model="form.weight" placeholder="请输入挖机重量">
                 <template slot="append">KG</template>
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="10">
-            <el-form-item   label="地址" prop="region_id" class="postInfo-container-item">
-              <el-cascader
+          <el-col :span="6">
+            <el-form-item   label="地址" prop="region_id" >
+              <el-cascader placeholder="请选择挖机所在地" style="width: 100%;"
                       v-model="form.region_id"
                       :props="optionProps"
                       :options="regionTrees"
@@ -76,17 +79,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label-width="90px" label="推荐:" class="postInfo-container-item">
+            <el-form-item  label="推荐:" class="postInfo-container-item">
               <el-radio v-model="form.recommend" :label="10">是</el-radio>
               <el-radio v-model="form.recommend" :label="20">否</el-radio>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item  label-width="120px" label="排序" prop="sort" class="postInfo-container-item">
-              <el-input v-model="form.sort" style="width: 217px">
-                <template slot="append">值越大越靠前</template>
+          <el-col :span="6">
+            <el-form-item   label="排序" prop="sort" class="postInfo-container-item">
+              <el-input v-model="form.sort" placeholder="请输入排序值,值越大越靠前">
               </el-input>
             </el-form-item>
           </el-col>
@@ -217,6 +217,7 @@
   import {httpSuccess} from "@/utils/message";
 
   const defaultForm = {
+  name:'',
   brand_id:undefined,
   model:'',
   method: '',
@@ -256,8 +257,9 @@ export default {
       loading: false,
       userListOptions: [],
       rules: {
+        name: [{ required:true,message:'请填写挖机名称',trigger: 'blur'}],
         brand_id: [{ required:true,message:'请选择品牌',trigger: 'blur'}],
-        model: [{ required:true,message:'请填写模型',trigger: 'blur' }],
+        model: [{ required:true,message:'请填写型号',trigger: 'blur' }],
         date_of_production: [{ required:true,message:'请选择出厂日期',trigger: 'blur' }],
         image_ids: [{ required:true,message:'请上传图片',trigger: 'blur' }],
       },
