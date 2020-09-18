@@ -20,12 +20,14 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin'],function ()
 //后台api
 Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanctum'],function()
 {
+    Route::get('dashboard/panel/group/list', 'DashboardController@panelGroup');
     Route::get('auth/logout','AuthController@logout');
     Route::get('user/info','UserController@info');
 
     Route::get('file/list','FileController@index');
     Route::post('file/upload','FileController@upload');
     //轮播图
+    Route::get('banner/list', 'BannerController@index');
     Route::get('banner/list', 'BannerController@index');
     Route::post('banner/create', 'BannerController@create');
     Route::get('banner/detail/{id}', 'BannerController@detail');

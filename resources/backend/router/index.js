@@ -8,6 +8,7 @@ import bannerRouter from "@/router/modules/banner";
 import excavatorRouter from "@/router/modules/excavator";
 import reserveRouter from "@/router/modules/reserve";
 import orderRouter from "@/router/modules/order";
+import userRouter from "@/router/modules/user";
 
 Vue.use(Router)
 
@@ -146,6 +147,7 @@ export const asyncRoutes = [
   },*/
 
   /** when your routing map is too long, you can split it into small modules **/
+  userRouter,
   settingRouter,
   excavatorRouter,
   reserveRouter,
