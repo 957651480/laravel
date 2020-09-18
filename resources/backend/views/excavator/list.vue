@@ -7,6 +7,10 @@
       <el-button v-waves type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
+      <router-link to="/excavator/create">
+        <el-button v-waves type="primary" icon="el-icon-plus" >新建挖机</el-button>
+      </router-link>
+
     </el-form>
 
     <el-table v-loading="tableLoading" :data="list" border fit highlight-current-row style="width: 100%">
@@ -34,17 +38,22 @@
           ></el-image>
         </template>
       </el-table-column>
+      <el-table-column  label="价格(RMB)" align="center">
+        <template slot-scope="{row}">
+          {{ row.price }}
+        </template>
+      </el-table-column>
       <el-table-column  label="出厂日期" align="center">
         <template slot-scope="{row}">
             {{ row.date_of_production }}
         </template>
       </el-table-column>
-      <el-table-column  label="使用时长" align="center">
+      <el-table-column  label="使用时长(小时)" align="center">
         <template slot-scope="{row}">
-          {{ row.duration_of_use }}(小时)
+          {{ row.duration_of_use }}
         </template>
       </el-table-column>
-      <el-table-column  label="重量" align="center">
+      <el-table-column  label="重量(KG)" align="center">
         <template slot-scope="{row}">
           {{ row.weight }}
         </template>

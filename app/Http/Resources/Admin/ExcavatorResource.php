@@ -45,6 +45,7 @@ class ExcavatorResource extends JsonResource
             'weight'=>$this->weight,
             'recommend'=>(integer)$this->recommend,
             'sort'=>$this->sort,
+            'price'=>$this->price,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
         ];

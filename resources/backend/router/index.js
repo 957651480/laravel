@@ -3,11 +3,11 @@ import Router from 'vue-router'
 /* Layout */
 import Layout from '@/layout'
 /* Router Modules */
-import componentsRouter from './modules/components'
-import tableRouter from './modules/table'
 import settingRouter from "@/router/modules/setting";
 import bannerRouter from "@/router/modules/banner";
 import excavatorRouter from "@/router/modules/excavator";
+import reserveRouter from "@/router/modules/reserve";
+import orderRouter from "@/router/modules/order";
 
 Vue.use(Router)
 
@@ -103,7 +103,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
+ /* {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
@@ -143,29 +143,18 @@ export const asyncRoutes = [
         }
       }
     ]
-  },
-
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
+  },*/
 
   /** when your routing map is too long, you can split it into small modules **/
   settingRouter,
-    excavatorRouter,
-    bannerRouter,
-  componentsRouter,
-  tableRouter,
+  excavatorRouter,
+  reserveRouter,
+  orderRouter,
+  bannerRouter,
+  //componentsRouter,
+  //tableRouter,
 
-  {
+  /*{
     path: '/example',
     component: Layout,
     redirect: '/example/list',
@@ -195,7 +184,7 @@ export const asyncRoutes = [
         meta: { title: 'Article List', icon: 'list' }
       }
     ]
-  },
+  },*/
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

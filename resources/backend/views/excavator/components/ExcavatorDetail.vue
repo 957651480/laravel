@@ -37,6 +37,11 @@
               <el-input v-model="form.model" placeholder="请输入挖机型号"></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="6">
+            <el-form-item  label="价格:"  prop="price">
+              <el-input v-model="form.price" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');" placeholder="请输入挖机价格"></el-input>
+            </el-form-item>
+          </el-col>
 
           <el-col :span="6">
             <el-form-item  label="挖机制式:" >
@@ -51,7 +56,7 @@
 
           <el-col :span="6">
             <el-form-item  label="使用时长:" >
-              <el-input v-model="form.duration_of_use" placeholder="请输入挖机使用时长">
+              <el-input v-model="form.duration_of_use" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');" placeholder="请输入挖机使用时长">
                 <template slot="append">小时</template>
               </el-input>
             </el-form-item>
@@ -64,7 +69,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item  label="重量" prop="weight" >
-              <el-input v-model="form.weight" placeholder="请输入挖机重量">
+              <el-input v-model="form.weight" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');" placeholder="请输入挖机重量">
                 <template slot="append">KG</template>
               </el-input>
             </el-form-item>
@@ -86,7 +91,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item   label="排序" prop="sort" class="postInfo-container-item">
-              <el-input v-model="form.sort" placeholder="请输入排序值,值越大越靠前">
+              <el-input v-model="form.sort" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');" placeholder="请输入排序值,值越大越靠前">
               </el-input>
             </el-form-item>
           </el-col>
@@ -221,6 +226,7 @@
   brand_id:undefined,
   model:'',
   method: '',
+  price: '',
   date_of_production: undefined,
   duration_of_use: undefined,
   equipment_operation: '',
@@ -258,6 +264,7 @@ export default {
       userListOptions: [],
       rules: {
         name: [{ required:true,message:'请填写挖机名称',trigger: 'blur'}],
+        price: [{ required:true,message:'请填写挖机价格',trigger: 'blur'}],
         brand_id: [{ required:true,message:'请选择品牌',trigger: 'blur'}],
         model: [{ required:true,message:'请填写型号',trigger: 'blur' }],
         date_of_production: [{ required:true,message:'请选择出厂日期',trigger: 'blur' }],

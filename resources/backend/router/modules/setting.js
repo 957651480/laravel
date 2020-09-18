@@ -12,12 +12,12 @@ const settingRouter = {
         icon: 'el-icon-setting'
     },
     children: [
-        {
+        /*{
             path: 'setting',
             component: () => import('@/views/setting/Setting'),
             name: 'FileList',
             meta: { title: '设置', icon: 'edit',noCache: true }
-        },
+        },*/
 
         {
             path: 'region',

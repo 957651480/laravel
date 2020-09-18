@@ -20,6 +20,7 @@ class CreateExcavatorTable extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->string('model')->default('');
             $table->string('method')->default('');
+            $table->decimal('price',20,2)->default(0.00)->comment('价格');
             $table->unsignedInteger('date_of_production')->default(0);
             $table->unsignedBigInteger('duration_of_use')->default(0);
             $table->string('equipment_operation')->default('');

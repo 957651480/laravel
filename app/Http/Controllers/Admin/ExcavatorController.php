@@ -8,7 +8,9 @@ use App\Http\Controllers\ApiController;
 use App\Http\Resources\Admin\CollectListResource;
 use App\Http\Resources\Admin\ExcavatorResource;
 use App\Http\Resources\Admin\VisitListResource;
+use App\Models\Collect;
 use App\Models\Excavator;
+use App\Models\Visit;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -87,16 +89,18 @@ class ExcavatorController extends ApiController
 
     public function visitList(Request $request)
     {
-        $query = $this->excavators->newQuery();
-
-        if($nickname = $request->get('nickname')){
-            $query->whereHas('visit.user',function (Builder$builder) use($nickname){
-                $builder->where('nickname','like',"%{$nickname}%");
+        $query = Visit::query();
+        if($user_nickname = $request->get('user_nickname')){
+            $query->whereHas('user',function (Builder$builder) use($user_nickname){
+                $builder->where('nickname','like',"%{$user_nickname}%");
             });
-        }else{
-            $query->has('visit');
         }
-        $paginate = $query->with(['images','video','region','brand','visit.user'])
+        if($excavator_name = $request->get('excavator_name')){
+            $query->whereHas('excavator',function (Builder$builder) use($excavator_name){
+                $builder->where('name','like',"%{$excavator_name}%");
+            });
+        }
+        $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
             ->paginate($request->get('limit'));
         $data = VisitListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
@@ -104,16 +108,18 @@ class ExcavatorController extends ApiController
 
     public function collectList(Request $request)
     {
-        $query = $this->excavators->newQuery();
-
-        if($nickname = $request->get('nickname')){
-            $query->whereHas('collect.user',function (Builder$builder) use($nickname){
-                $builder->where('nickname','like',"%{$nickname}%");
+        $query = Collect::query();
+        if($user_nickname = $request->get('user_nickname')){
+            $query->whereHas('user',function (Builder$builder) use($user_nickname){
+                $builder->where('nickname','like',"%{$user_nickname}%");
             });
-        }else{
-            $query->has('collect');
         }
-        $paginate = $query->with(['images','video','region','brand','collect.user'])
+        if($excavator_name = $request->get('excavator_name')){
+            $query->whereHas('excavator',function (Builder$builder) use($excavator_name){
+                $builder->where('name','like',"%{$excavator_name}%");
+            });
+        }
+        $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
             ->paginate($request->get('limit'));
         $data = CollectListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
@@ -225,6 +231,7 @@ class ExcavatorController extends ApiController
             'brand_id'=>'required',
             'model'=>'required',
             'method'=>'sometimes',
+            'price'=>'required',
             'date_of_production'=>'required',
             'duration_of_use'=>'sometimes',
             'equipment_operation'=>'sometimes',
@@ -245,6 +252,7 @@ class ExcavatorController extends ApiController
             'name.required'=>'挖机名称必须',
             'brand_id.required'=>'品牌必须',
             'model.required'=>'型号必须',
+            'price.required'=>'价格必须',
             'date_of_production.required'=>'出厂日期必须',
             'image_ids.required'=>'图片必须',
             'costs.required'=>'费用明细必须',

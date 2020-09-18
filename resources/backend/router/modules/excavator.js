@@ -15,7 +15,8 @@ const excavatorRouter= {
             path: 'create',
             component: () => import('@/views/excavator/create'),
             name: 'CreateExcavator',
-            meta: { title: '创建挖机', icon: 'edit' }
+            meta: { title: '创建挖机', icon: 'edit' },
+            hidden: true
         },
         {
             path: 'edit/:id(\\d+)',
