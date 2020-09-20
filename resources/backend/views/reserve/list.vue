@@ -33,7 +33,13 @@
                     ></el-image>
                 </template>
             </el-table-column>
-
+            <el-table-column align="center" label="操作" slot="operate" >
+                <template slot-scope="scope">
+                    <el-button type="primary" size="small" icon="el-icon-plus" @click="handleGenerateOrder(scope.$index,scope.row)">
+                        生成订单
+                    </el-button>
+                </template>
+            </el-table-column>
         </base-table>
         <pagination v-show="total>0" :total="total" :page.sync="query.page" :limit.sync="query.limit" @pagination="getList" />
     </div>
@@ -43,7 +49,8 @@
     import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
     import waves from '@/directive/waves'; // Waves directive
     import BaseTable from "@/components/Element/Table/BaseTable";
-    import {fetchExcavatorCollectList} from "@/api/excavator";
+    import {fetchList,generateOrder} from "@/api/reserve";
+    import {httpSuccess} from "@/utils/message";
 
     export default {
         name: 'BannerList',
@@ -62,12 +69,16 @@
                 },
                 columns:[
                     {
-                        prop: "title",
-                        label: "标题"
+                        prop: "name",
+                        label: "名称"
                     },
 
                     {
                         slot:'image_url'
+                    },
+                    {
+                        prop: "price",
+                        label: "价格"
                     },
                     {
                         prop: "visit_user_nickname",
@@ -78,7 +89,7 @@
                     },
                     {
                         prop: "visit_created_at",
-                        label: "收藏时间"
+                        label: "预定时间"
                     },
                     {
                         slot:'operate'
@@ -94,7 +105,7 @@
         methods: {
             async getList() {
                 this.tableLoading = true;
-                const { total,data } = await fetchExcavatorCollectList(this.query);
+                const { total,data } = await fetchList(this.query);
                 this.list = data;
                 this.total = total;
                 this.tableLoading = false;
@@ -110,7 +121,11 @@
                 }
                 return tmpList;
             },
-
+            handleGenerateOrder(index,row){
+                generateOrder(row.id,{}).then(response => {
+                    httpSuccess(response);
+                })
+            }
         },
     };
 </script>

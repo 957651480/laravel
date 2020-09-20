@@ -21,7 +21,7 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin'],function ()
 Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanctum'],function()
 {
     Route::get('dashboard/panel/group/list', 'DashboardController@panelGroup');
-    Route::get('auth/logout','AuthController@logout');
+    Route::any('auth/logout','AuthController@logout');
     Route::get('user/info','UserController@info');
 
     Route::get('file/list','FileController@index');
@@ -54,6 +54,10 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
     Route::any('excavator/visit/list','ExcavatorController@visitList');
     Route::any('excavator/collect/list','ExcavatorController@collectList');
 
+    Route::any('reserve/list','ReserveController@index');
+    Route::any('reserve/generate/order/{id}','ReserveController@generateOrder');
+
+    Route::any('order/list','OrderController@index');
 
     Route::any('category/list','CategoryController@index');
     Route::any('category/list/top','CategoryController@topList');

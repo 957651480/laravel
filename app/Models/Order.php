@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reserve extends EloquentModel
+class Order extends EloquentModel
 {
     //
-    protected $table='reserve';
+    protected $table='order';
     protected $guarded=[];
-
 
     public function user()
     {
