@@ -15,7 +15,7 @@ class WechatController extends ApiController
     const WECHAT_TOKEN='Wechat-token';
 
 
-    public function Login(Request $request,User $users)
+    public function login(Request $request,User $users)
     {
         list($code,$userInfo,$encrypted_data,$encrypt_iv) = $this->validateLogin($request);
         $miniProgram = \EasyWeChat::miniProgram();

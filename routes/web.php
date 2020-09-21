@@ -18,5 +18,5 @@ Route::get('/',[\App\Http\Controllers\HomeController::class,'index']);
 Auth::routes();
 
 Route::prefix('admin')->group(function () {
-    Route::get('/','AdminController@index')->name('admin');
+    Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin');
 });

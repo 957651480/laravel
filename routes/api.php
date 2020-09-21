@@ -12,70 +12,70 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['prefix'=>'admin/','namespace'=>'Admin'],function ()
+
+Route::group(['prefix'=>'admin/'],function ()
 {
-    Route::post('auth/login','AuthController@login');
+    Route::post('auth/login',[\App\Http\Controllers\Admin\AuthController::class,'login']);
 
 });
 //后台api
-Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanctum'],function()
+Route::group(['prefix'=>'admin/','middleware' => 'auth:sanctum'],function()
 {
     Route::get('dashboard/panel/group/list', 'DashboardController@panelGroup');
-    Route::any('auth/logout','AuthController@logout');
-    Route::get('user/info','UserController@info');
+    Route::any('auth/logout',[\App\Http\Controllers\Admin\AuthController::class,'logout']);
+    Route::get('user/info',[\App\Http\Controllers\Admin\UserController::class,'info']);
 
     Route::get('file/list','FileController@index');
-    Route::post('file/upload','FileController@upload');
+    Route::post('file/upload',[\App\Http\Controllers\Admin\FileController::class,'upload']);
     //轮播图
-    Route::get('banner/list', 'BannerController@index');
-    Route::get('banner/list', 'BannerController@index');
-    Route::post('banner/create', 'BannerController@create');
-    Route::get('banner/detail/{id}', 'BannerController@detail');
-    Route::post('banner/update/{id}', 'BannerController@update');
-    Route::get('banner/delete/{id}', 'BannerController@destroy');
-    Route::post('banner/batch/delete','BannerController@batchDelete');
+    Route::get('banner/list', [\App\Http\Controllers\Admin\BannerController::class,'index']);
+    Route::post('banner/create', [\App\Http\Controllers\Admin\BannerController::class,'create']);
+    Route::get('banner/detail/{id}', [\App\Http\Controllers\Admin\BannerController::class,'detail']);
+    Route::post('banner/update/{id}', [\App\Http\Controllers\Admin\BannerController::class,'update']);
+    Route::get('banner/delete/{id}', [\App\Http\Controllers\Admin\BannerController::class,'delete']);
+    Route::post('banner/batch/delete',[\App\Http\Controllers\Admin\BannerController::class,'batchDelete']);
 
     //品牌
-    Route::get('brand/list', 'BrandController@index');
-    Route::post('brand/create', 'BrandController@store');
-    Route::get('brand/detail/{id}', 'BrandController@show');
-    Route::post('brand/update/{id}', 'BrandController@update');
-    Route::get('brand/delete/{id}', 'BrandController@destroy');
-    Route::post('brand/batch/delete','BrandController@batchDelete');
+    Route::get('brand/list', [\App\Http\Controllers\Admin\BrandController::class,'index']);
+    Route::post('brand/create', [\App\Http\Controllers\Admin\BrandController::class,'create']);
+    Route::get('brand/detail/{id}', [\App\Http\Controllers\Admin\BrandController::class,'detail']);
+    Route::post('brand/update/{id}', [\App\Http\Controllers\Admin\BrandController::class,'update']);
+    Route::get('brand/delete/{id}', [\App\Http\Controllers\Admin\BrandController::class,'delete']);
+    Route::post('brand/batch/delete',[\App\Http\Controllers\Admin\BrandController::class,'batchDelete']);
 
     //挖机
-    Route::get('excavator/list', 'ExcavatorController@index');
-    Route::post('excavator/create', 'ExcavatorController@create');
-    Route::get('excavator/detail/{id}', 'ExcavatorController@detail');
-    Route::post('excavator/update/{id}', 'ExcavatorController@update');
-    Route::get('excavator/delete/{id}', 'ExcavatorController@destroy');
-    Route::post('excavator/batch/delete','ExcavatorController@batchDelete');
-    Route::any('excavator/cost','ExcavatorController@cost');
-    Route::any('excavator/visit/list','ExcavatorController@visitList');
-    Route::any('excavator/collect/list','ExcavatorController@collectList');
+    Route::get('excavator/list', [\App\Http\Controllers\Admin\ExcavatorController::class,'index']);
+    Route::post('excavator/create', [\App\Http\Controllers\Admin\ExcavatorController::class,'create']);
+    Route::get('excavator/detail/{id}', [\App\Http\Controllers\Admin\ExcavatorController::class,'detail']);
+    Route::post('excavator/update/{id}', [\App\Http\Controllers\Admin\ExcavatorController::class,'update']);
+    Route::get('excavator/delete/{id}', [\App\Http\Controllers\Admin\ExcavatorController::class,'delete']);
+    Route::post('excavator/batch/delete',[\App\Http\Controllers\Admin\ExcavatorController::class,'batchDelete']);
+    Route::any('excavator/cost',[\App\Http\Controllers\Admin\ExcavatorController::class,'cost']);
+    Route::any('excavator/visit/list',[\App\Http\Controllers\Admin\ExcavatorController::class,'visitList']);
+    Route::any('excavator/collect/list',[\App\Http\Controllers\Admin\ExcavatorController::class,'collectList']);
 
-    Route::any('reserve/list','ReserveController@index');
-    Route::any('reserve/generate/order/{id}','ReserveController@generateOrder');
+    Route::any('reserve/list',[\App\Http\Controllers\Admin\ReserveController::class,'index']);
+    Route::any('reserve/generate/order/{id}',[\App\Http\Controllers\Admin\ReserveController::class,'generateOrder']);
 
-    Route::any('order/list','OrderController@index');
+    Route::any('order/list',[\App\Http\Controllers\Admin\OrderController::class,'index']);
 
-    Route::any('category/list','CategoryController@index');
-    Route::any('category/list/top','CategoryController@topList');
-    Route::any('category/tree','CategoryController@tree');
-    Route::any('category/create','CategoryController@create');
-    Route::any('category/detail/{id}','CategoryController@detail');
-    Route::any('category/update/{id}','CategoryController@update');
-    Route::any('category/delete/{id}','CategoryController@delete');
-    Route::any('category/batch/delete','CategoryController@batchDelete');
+    Route::any('category/list',[\App\Http\Controllers\Admin\CategoryController::class,'index']);
+    Route::any('category/list/top',[\App\Http\Controllers\Admin\CategoryController::class,'topList']);
+    Route::any('category/tree',[\App\Http\Controllers\Admin\CategoryController::class,'tree']);
+    Route::any('category/create',[\App\Http\Controllers\Admin\CategoryController::class,'create']);
+    Route::any('category/detail/{id}',[\App\Http\Controllers\Admin\CategoryController::class,'detail']);
+    Route::any('category/update/{id}',[\App\Http\Controllers\Admin\CategoryController::class,'update']);
+    Route::any('category/delete/{id}',[\App\Http\Controllers\Admin\CategoryController::class,'delete']);
+    Route::any('category/batch/delete',[\App\Http\Controllers\Admin\CategoryController::class,'batchDelete']);
 
     //地区
-    Route::get('region/list', 'SysRegionController@index');
-    Route::get('region/list/top', 'SysRegionController@topList');
-    Route::get('region/tree', 'SysRegionController@tree');
-    Route::post('region/create', 'SysRegionController@create');
-    Route::get('region/detail/{id}', 'SysRegionController@detail');
-    Route::post('region/update/{id}', 'SysRegionController@update');
-    Route::get('region/delete/{id}', 'SysRegionController@delete');
+    Route::get('region/list', [\App\Http\Controllers\Admin\SysRegionController::class,'index']);
+    Route::get('region/list/top', [\App\Http\Controllers\Admin\SysRegionController::class,'topList']);
+    Route::get('region/tree', [\App\Http\Controllers\Admin\SysRegionController::class,'tree']);
+    Route::post('region/create',[\App\Http\Controllers\Admin\SysRegionController::class,'create']);
+    Route::get('region/detail/{id}',[\App\Http\Controllers\Admin\SysRegionController::class,'detail']);
+    Route::post('region/update/{id}',[\App\Http\Controllers\Admin\SysRegionController::class,'update']);
+    Route::get('region/delete/{id}',[\App\Http\Controllers\Admin\SysRegionController::class,'delete']);
 
 });
 
@@ -83,30 +83,30 @@ Route::group(['prefix'=>'admin/','namespace'=>'Admin','middleware' => 'auth:sanc
 Route::group(['middleware' => 'auth:sanctum','namespace'=>'Api'], function ()
 {
 
-    Route::get('excavator/collect/list/mine','ExcavatorController@mineCollectList');
-    Route::any('excavator/collect','ExcavatorController@collect');
+    Route::get('excavator/collect/list/mine',[\App\Http\Controllers\Api\ExcavatorController::class,'mineCollectList']);
+    Route::any('excavator/collect',[\App\Http\Controllers\Api\ExcavatorController::class,'collect']);
 
-    Route::get('excavator/visit/list/mine','ExcavatorController@mineVisitList');
-    Route::any('excavator/visit','ExcavatorController@visit');
-    Route::any('excavator/reserve/list/mine','ExcavatorController@mineReserveList');
-    Route::any('excavator/reserve','ExcavatorController@reserve');
+    Route::get('excavator/visit/list/mine',[\App\Http\Controllers\Api\ExcavatorController::class,'mineVisitList']);
+    Route::any('excavator/visit',[\App\Http\Controllers\Api\ExcavatorController::class,'visit']);
+    Route::any('excavator/reserve/list/mine',[\App\Http\Controllers\Api\ExcavatorController::class,'mineReserveList']);
+    Route::any('excavator/reserve',[\App\Http\Controllers\Api\ExcavatorController::class,'reserve']);
 
     //绑定手机号
-    Route::any('wechat/bind/phone','WechatController@bindPhone');
+    Route::any('wechat/bind/phone',[\App\Http\Controllers\Api\WechatController::class,'bindPhone']);
 });
 
 //公共路由
 Route::group(['namespace'=>'Api'],function (){
 
-    Route::any('wechat/login','WechatController@login');
-    Route::post('auth/login','AuthController@login');
+    Route::any('wechat/login',[\App\Http\Controllers\Api\WechatController::class,'login']);
+    Route::post('auth/login',[\App\Http\Controllers\Api\AuthController::class,'login']);
     Route::any('region/city','RegionController@city');
 
-    Route::any('banner/list', 'BannerController@index');
-    Route::any('excavator/list', 'ExcavatorController@index');
-    Route::any('excavator/brand/list', 'BrandController@index');
+    Route::any('banner/list', [\App\Http\Controllers\Api\BannerController::class,'index']);
+    Route::any('excavator/list', [\App\Http\Controllers\Api\ExcavatorController::class,'index']);
+    Route::any('excavator/brand/list', [\App\Http\Controllers\Api\BrandController::class,'index']);
 
-    Route::any('rate','IndexController@rate');
+    Route::any('rate',[\App\Http\Controllers\Api\IndexController::class,'rate']);
 
 });
 

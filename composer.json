@@ -16,7 +16,7 @@
         "laravel/tinker": "^2.0",
         "spatie/laravel-permission": "^3.13",
         "mews/captcha": "^3.1",
-        "laravel/sanctum": "^2.4",
+        "laravel/sanctum": "^2.6",
         "overtrue/laravel-wechat": "~5.0"
     },
     "require-dev": {
@@ -26,7 +26,7 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3",
         "laravel/ui": "^2.0",
-        "barryvdh/laravel-ide-helper": "^2.7"
+        "barryvdh/laravel-ide-helper": "^2.8"
     },
     "config": {
         "optimize-autoloader": true,
