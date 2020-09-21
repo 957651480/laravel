@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -12,10 +13,10 @@ use Spatie\Permission\Traits\HasRoles;
  * App\Models\User
  *
  * @property int $id
- * @property string $name ç”¨æˆ·å
+ * @property string $name ÓÃ»§Ãû
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password å¯†ç 
+ * @property string $password ÃÜÂë
  * @property string|null $deleted_at
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -44,6 +45,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
+    use HasFactory, Notifiable;
     use Notifiable,HasRoles,HasApiTokens;
 
     /**
@@ -113,7 +115,7 @@ class User extends Authenticatable
     public function createUser($user_data, $indent_data)
     {
         $user = static::create($user_data);
-        throw_unless($user,\Exception::class,['åˆ›å»ºå¤±è´¥']);
+        throw_unless($user,\Exception::class,['´´½¨Ê§°Ü']);
         $indent_data['user_id']=$user->id;
         $user->indents()->create($indent_data);
         return $user;
