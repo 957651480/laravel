@@ -9,44 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-/**
- * App\Models\User
- *
- * @property int $id
- * @property string $name ÓÃ»§Ãû
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password ÃÜÂë
- * @property string|null $deleted_at
- * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
- * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
- * @property-read int|null $roles_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles, $guard = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
- * @mixin \Eloquent
- */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    use Notifiable,HasRoles,HasApiTokens;
+    use HasRoles,HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -115,7 +81,7 @@ class User extends Authenticatable
     public function createUser($user_data, $indent_data)
     {
         $user = static::create($user_data);
-        throw_unless($user,\Exception::class,['´´½¨Ê§°Ü']);
+        throw_unless($user,\Exception::class,['ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½']);
         $indent_data['user_id']=$user->id;
         $user->indents()->create($indent_data);
         return $user;
