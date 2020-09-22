@@ -75,7 +75,7 @@
                         <el-input v-model="newBanner.desc"  type="textarea"  placeholder="请输入简介" />
                     </el-form-item>
                     <el-form-item label="图片:" prop="image_id">
-                        <single-image v-model="newBanner.image_id" :file_url.sync="newBanner.image_url"></single-image>
+                        <single-image  v-model="newBanner.image_id" :file_url.sync="newBanner.image_url"></single-image>
                     </el-form-item>
                     <el-form-item label="状态:" prop="show">
                         <custom-element-switch v-model="newBanner.show" ></custom-element-switch>
@@ -142,19 +142,23 @@
                     {slot: 'select'},
                     {
                         prop: "id",
-                        label: "ID"
+                        label: "ID",
+                        align:"center"
                     },
                     {
                         prop: "sort",
-                        label: "排序"
+                        label: "排序",
+                        align:"center"
                     },
                     {
                         prop: "title",
-                        label: "标题"
+                        label: "标题",
+                        align:"center"
                     },
                     {
                         prop: "desc",
-                        label: "简介"
+                        label: "简介",
+                        align:"center"
                     },
                     {
                         slot:'image_url'
@@ -164,7 +168,8 @@
                     },
                     {
                         prop: "created_at",
-                        label: "创建时间"
+                        label: "创建时间",
+                        align:"center"
                     },
                     {
                         slot:'operate'
@@ -184,13 +189,9 @@
         },
         methods: {
             async getList() {
-                const { limit, page } = this.query;
                 this.tableLoading = true;
                 const { total,data } = await fetchList(this.query);
                 this.list = data;
-                /*this.list.forEach((element, index) => {
-                    element['index'] = (page - 1) * limit + index + 1;
-                });*/
                 this.total = total;
                 this.tableLoading = false;
             },

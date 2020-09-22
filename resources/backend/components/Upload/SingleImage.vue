@@ -1,25 +1,21 @@
 <template>
 <div v-bind="$attrs" class="single-image">
     <el-upload
-            :ref="$attrs.ref"
+            class="avatar-uploader"
+            ref="upload"
             v-bind="uploadAttrs"
             v-on="$listeners"
             :action="action"
             :headers="header"
             :accept="accept"
-            :limit="limit"
-            :list-type="listType"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
+            :multiple="false"
+            :show-file-list="false"
             :on-success="handleSuccess"
-            :on-exceed="handleExceed"
             :before-upload="beforeUpload">
-        <i slot="default" class="el-icon-plus"></i>
-        <div slot="tip" class="el-upload__tip">建议上传png格式图片</div>
+
+        <img v-if="elFileUrl" :src="elFileUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
-        <img width="100%" :src.sync="elFileUrl" alt="">
-    </el-dialog>
 </div>
 
 </template>
@@ -27,7 +23,7 @@
 <script>
     import {getToken} from "@/utils/auth";
 
-    import {limitTip, sizeTip} from "@/components/Upload/upload";
+    import {sizeTip} from "@/components/Upload/upload";
 
     export default {
     name: "SingleImage",
@@ -54,23 +50,14 @@
             type:String,
             default:''
         },
-        limit:{
-            type:Number,
-            default:1
-        },
-        listType:{
-            type:String,
-            default:'picture-card'
-        }
     },
     data() {
         return {
             uploadAttrs:{},
             elFileUrl:this.file_url,
-            dialogImageUrl: '',
-            dialogVisible: false
         };
     },
+
     watch:{
         file_url(val){
             this.elFileUrl=this.file_url;
@@ -87,29 +74,39 @@
         },
         handleSuccess(res, file) {
             let {data}=file.response;
-
-            this.elFileUrl=data.url;
             this.$emit('input',data.id);
             this.$emit('update:file_url',data.url);
-
+            this.$refs.upload.clearFiles();
         },
         beforeUpload(file) {
             return sizeTip(file,this.size);
         },
-        handleRemove(file, fileList) {
-            this.$emit('input',null);
-            this.$emit('update:file_url','');
-        },
-        handlePictureCardPreview(file) {
-            this.dialogImageUrl = file.url;
-            this.dialogVisible = true;
-        },
-        handleExceed(files, fileList){
-            return  limitTip(fileList,this.limit)
-        }
     }
 }
 </script>
 
 <style >
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 </style>
