@@ -21,12 +21,13 @@ class MyReserveListResource extends JsonResource
         return [
             'id'=>(integer)$this->id,
             'title'=>(string)$this->name,
+            'price'=>$this->price,
             'date_of_production'=>(string)date('Y',$this->date_of_production),
             'duration_of_use'=>(integer)$this->duration_of_use,
             'motor_model'=>(string)$this->motor_model,
             'image_url'=>(string)$images->first()->url,
-            'total_cost_rmb'=>(float)number_format($this->cost_rmb/10000,2),
-            'total_cost_jpn'=>(float)number_format($this->cost_jpn/10000,2),
+            'total_cost_rmb'=>(float)$this->cost_rmb,
+            'total_cost_jpn'=>(float)$this->cost_jpn,
             'region_merger_name'=>(string)$region->merger_name,
         ];
     }

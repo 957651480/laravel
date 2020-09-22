@@ -6,12 +6,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\Api\ExcavatorListResource;
+use App\Http\Resources\Api\MyCollectListResource;
 use App\Http\Resources\Api\MyReserveListResource;
 use App\Http\Resources\Api\MyVisitListResource;
 use App\Models\Collect;
 use App\Models\Excavator;
 use App\Models\Reserve;
 use App\Models\Visit;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 
@@ -29,7 +31,30 @@ class ExcavatorController extends ApiController
 
     public function index(Request $request)
     {
-        $paginate = Excavator::with(['images','video','region','brand'])
+        $param=array_merge([
+            'page'=>1,
+            'limit'=>15,
+            'brand_id'=>'',
+            'weight_start'=>'',
+            'weight_end'=>'',
+        ],$request->all());
+
+        $brand_id = (integer)data_get($param,'brand_id');
+        $weight_start = (integer)data_get($param,'weight_start');
+        $weight_end = (integer)data_get($param,'weight_end');
+        $query = Excavator::query();
+        $query->when($brand_id,function (Builder $query,$brand_id){
+            $query->where('brand_id',$brand_id);
+        });
+        if($weight_start&&$weight_end){
+            $query->whereBetween('weight',[$weight_start,$weight_end]);
+        }elseif ($weight_start){
+            $query->where('weight','>',$weight_start);
+        }elseif ($weight_end){
+            $query->where('weight','<',$weight_end);
+        }
+
+        $paginate = $query->with(['images','video','region','brand'])
             ->paginate($request->get('limit'));
         $data = ExcavatorListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
@@ -68,7 +93,7 @@ class ExcavatorController extends ApiController
 
         $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
             ->paginate($request->get('limit'));
-        $data = MyVisitListResource::collection($paginate);
+        $data = MyCollectListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 

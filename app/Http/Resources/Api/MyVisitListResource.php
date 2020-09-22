@@ -24,12 +24,13 @@ class MyVisitListResource extends JsonResource
         return [
             'id'=>(integer)$this->id,
             'name'=>(string)$excavator->name,
+            'price'=>$excavator->price,
             'date_of_production'=>(string)date('Y',$excavator->date_of_production),
             'duration_of_use'=>(integer)$excavator->duration_of_use,
             'motor_model'=>(string)$excavator->motor_model,
             'image_url'=>(string)$excavator_images->first()->url,
-            'total_cost_rmb'=>(float)number_format($excavator->cost_rmb/10000,2),
-            'total_cost_jpn'=>(float)number_format($excavator->cost_jpn/10000,2),
+            'total_cost_rmb'=>$excavator->cost_rmb,
+            'total_cost_jpn'=>$excavator->cost_jpn,
             'region_merger_name'=>(string)$excavator_region->merger_name,
         ];
     }

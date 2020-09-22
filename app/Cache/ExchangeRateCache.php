@@ -4,7 +4,6 @@
 namespace App\Cache;
 
 use App\Extend\ExchangeRate;
-use Illuminate\Support\Carbon;
 
 class ExchangeRateCache extends Cache
 {
@@ -17,7 +16,7 @@ class ExchangeRateCache extends Cache
         if($fresh){
             cache()->forget($key);
         }
-        $ttl = Carbon::now()->endOfDay();
+        $ttl = 30;
         return cache()->remember($key,$ttl,function (){
             return ExchangeRate::fetchList();
         });
