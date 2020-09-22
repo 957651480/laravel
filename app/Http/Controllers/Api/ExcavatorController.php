@@ -37,14 +37,19 @@ class ExcavatorController extends ApiController
             'brand_id'=>'',
             'weight_start'=>'',
             'weight_end'=>'',
+            'recommend'=>'',
         ],$request->all());
 
         $brand_id = (integer)data_get($param,'brand_id');
+        $recommend = (integer)data_get($param,'recommend');
         $weight_start = (integer)data_get($param,'weight_start');
         $weight_end = (integer)data_get($param,'weight_end');
         $query = Excavator::query();
         $query->when($brand_id,function (Builder $query,$brand_id){
             $query->where('brand_id',$brand_id);
+        });
+        $query->when($recommend,function (Builder $query,$recommend){
+            $query->where('recommend',$recommend);
         });
         if($weight_start&&$weight_end){
             $query->whereBetween('weight',[$weight_start,$weight_end]);
