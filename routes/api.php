@@ -23,6 +23,7 @@ Route::group(['prefix'=>'admin/','middleware' => 'auth:sanctum'],function()
 {
     Route::get('dashboard/panel/group/list', 'DashboardController@panelGroup');
     Route::any('auth/logout',[\App\Http\Controllers\Admin\AuthController::class,'logout']);
+    Route::get('user/wechat/list',[\App\Http\Controllers\Admin\UserController::class,'weChatList']);
     Route::get('user/info',[\App\Http\Controllers\Admin\UserController::class,'info']);
 
     Route::get('file/list','FileController@index');

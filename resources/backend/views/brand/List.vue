@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" >
-      <el-form-item label="轮播标题:">
-        <el-input v-model="query.title" placeholder="请输入轮播标题" clearable style="width: 200px;" @change="handleFilter" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-form-item label="名称:">
+        <el-input v-model="query.name" placeholder="请输入品牌名称" clearable style="width: 200px;" @change="handleFilter" class="filter-item" @keyup.enter.native="handleFilter" />
       </el-form-item>
       <el-button v-waves type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
@@ -103,15 +103,15 @@
 </template>
 
 <script>
-    import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
-    import waves from '@/directive/waves'; // Waves directive
-    import {batchDeleteBrand, createBrand, deleteBrand, fetchList, updateBrand} from '@/api/brand';
-    import SingleImage from "@/components/Upload/SingleImage";
-    import {confirmMessage, httpSuccess} from "@/utils/message";
-    import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
-    import BaseTable from "@/components/Element/Table/BaseTable";
+  import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
+  import waves from '@/directive/waves'; // Waves directive
+  import {batchDeleteBrand, createBrand, deleteBrand, fetchList, updateBrand} from '@/api/brand';
+  import SingleImage from "@/components/Upload/SingleImage";
+  import {confirmMessage, httpSuccess} from "@/utils/message";
+  import CustomElementSwitch from "@/components/Element/Switch/CustomElementSwitch";
+  import BaseTable from "@/components/Element/Table/BaseTable";
 
-    export default {
+  export default {
     name: 'BrandList',
     components: {BaseTable, CustomElementSwitch, SingleImage,  Pagination },
     directives: { waves },
@@ -125,7 +125,7 @@
         query: {
           page: 1,
           limit: 15,
-          title: '',
+          name: '',
         },
         newBrand: {},
         dialogFormVisible: false,

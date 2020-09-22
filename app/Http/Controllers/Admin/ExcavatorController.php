@@ -30,7 +30,17 @@ class ExcavatorController extends ApiController
 
     public function index(Request $request)
     {
-        $paginate = Excavator::with(['images','video','region'])->paginate($request->get('limit'));
+        $param= array_merge([
+            'name'=>''
+        ],$request->all());
+        $query = Excavator::query();
+        $name = $param['name'];
+        $query->when($name,function (Builder $query,$name){
+           $query->where('name','like',"%{$name}%");
+        });
+
+        $paginate = $query->orderByDesc('sort')->latest()
+            ->with(['images','video','region'])->paginate($request->get('limit'));
         $data = ExcavatorResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }

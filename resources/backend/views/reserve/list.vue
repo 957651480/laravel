@@ -49,7 +49,7 @@
     import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
     import waves from '@/directive/waves'; // Waves directive
     import BaseTable from "@/components/Element/Table/BaseTable";
-    import {fetchList,generateOrder} from "@/api/reserve";
+    import {fetchList, generateOrder} from "@/api/reserve";
     import {httpSuccess} from "@/utils/message";
 
     export default {
@@ -70,7 +70,7 @@
                 columns:[
                     {
                         prop: "name",
-                        label: "名称"
+                        label: "挖机名称"
                     },
 
                     {

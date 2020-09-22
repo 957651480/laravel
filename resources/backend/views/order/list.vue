@@ -63,7 +63,7 @@
                 columns:[
                     {
                         prop: "name",
-                        label: "名称"
+                        label: "挖机名称"
                     },
 
                     {

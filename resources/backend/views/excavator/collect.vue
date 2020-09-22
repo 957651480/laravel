@@ -62,8 +62,8 @@
                 },
                 columns:[
                     {
-                        prop: "title",
-                        label: "标题"
+                        prop: "name",
+                        label: "挖机名称"
                     },
 
                     {

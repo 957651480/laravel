@@ -22,3 +22,10 @@ export function logout() {
     method: 'post'
   })
 }
+export function fetchWeChatList(query) {
+  return request({
+    url: '/admin/user/wechat/list',
+    method: 'get',
+    params:query
+  })
+}
