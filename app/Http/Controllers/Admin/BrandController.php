@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\BrandResource;
 use App\Models\Brand;
-use Arr;
 use Illuminate\Http\Request;
 
 class BrandController extends ApiController
@@ -44,7 +42,7 @@ class BrandController extends ApiController
     }
 
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
         //
         $data = $this->validateBrand($request->all());
@@ -69,7 +67,7 @@ class BrandController extends ApiController
     }
 
 
-    public function destroy($id)
+    public function delete($id)
     {
         //
         $banner = $this->brands->firstModelByIdOrFail($id);

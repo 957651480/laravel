@@ -7,11 +7,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\Admin\CollectListResource;
 use App\Http\Resources\Admin\ExcavatorResource;
-use App\Http\Resources\Admin\ReserveListResource;
 use App\Http\Resources\Admin\VisitListResource;
 use App\Models\Collect;
 use App\Models\Excavator;
-use App\Models\Reserve;
 use App\Models\Visit;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
@@ -250,6 +248,7 @@ class ExcavatorController extends ApiController
             'weight'=>'sometimes',
             'recommend'=>'sometimes',
             'sort'=>'sometimes',
+            'map'=>'sometimes',
         ],[
             'name.required'=>'挖机名称必须',
             'brand_id.required'=>'品牌必须',

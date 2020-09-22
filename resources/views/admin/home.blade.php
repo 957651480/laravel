@@ -12,5 +12,6 @@
     <app></app>
 </div>
 <script src="{{ mix('backend/js/main.js') }}"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.4&key=d0211c4b27a431b9c5f9e065e071453a"></script>
 </body>
 </html>

@@ -90,12 +90,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item   label="排序" prop="sort" class="postInfo-container-item">
+            <el-form-item   label="排序" prop="sort" >
               <el-input v-model="form.sort" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');" placeholder="请输入排序值,值越大越靠前">
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
+        <el-form-item  label="定位:" prop="map.address">
+          <el-input v-model="form.map.address" placeholder="请在地图上定位地址" disabled style="width:500px"></el-input>
+        </el-form-item>
+        <el-form-item >
+          <gould-map   v-model="form.map" :width="`100%`" :height="`500px`"></gould-map>
+        </el-form-item>
         <div >
           <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default am-no-layout">
             <h2 class="am-titlebar-title">发动机信息</h2>
@@ -220,6 +226,7 @@
   import MultipleImage from "@/components/Upload/MultipleImage";
   import SingleVideo from "@/components/Upload/SingleVideo";
   import {httpSuccess} from "@/utils/message";
+  import GouldMap from "@/components/Map/Gould/index";
 
   const defaultForm = {
   name:'',
@@ -244,12 +251,13 @@
   image_urls:[],
   video_id:undefined,
   video_url:undefined,
+  map:{lng:null,lat:null,address:null},
   costs:[],
 }
 
 export default {
   name: 'ExcavatorDetail',
-  components: {MultipleImage, SingleVideo, Sticky },
+  components: {GouldMap, MultipleImage, SingleVideo, Sticky },
   props: {
     isEdit: {
       type: Boolean,
@@ -268,6 +276,8 @@ export default {
         brand_id: [{ required:true,message:'请选择品牌',trigger: 'blur'}],
         model: [{ required:true,message:'请填写型号',trigger: 'blur' }],
         date_of_production: [{ required:true,message:'请选择出厂日期',trigger: 'blur' }],
+        "map.address": [{ required: true, message: '请确定定位', trigger: 'blur' }],
+        region_id: [{ required:true,message:'请选择地址',trigger: 'blur'}],
         image_ids: [{ required:true,message:'请上传图片',trigger: 'blur' }],
       },
       tempRoute: {},

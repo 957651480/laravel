@@ -11,7 +11,8 @@ class Excavator extends EloquentModel
     //
     protected $table='excavator';
     protected $casts=[
-        'costs'=>Json::class
+        'costs'=>Json::class,
+        'map'=>Json::class,
     ];
     protected $guarded=[];
 

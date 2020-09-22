@@ -28,6 +28,7 @@ class CreateExcavatorTable extends Migration
             $table->string('recommend')->default('')->comment('推荐');
             $table->string('sort')->default('')->comment('排序');
             $table->unsignedInteger('region_id')->default(0)->comment('地址');
+            $table->string('map')->default('{}')->comment('定位经纬度');
             $table->string('motor_brand')->default('');
             $table->string('motor_model')->default('');
             $table->string('motor_rate_of_work')->default('')->comment('功率');
