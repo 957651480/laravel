@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[\App\Http\Controllers\HomeController::class,'index']);
+Route::get('/',[\App\Http\Controllers\AdminController::class,'index']);
 
-Auth::routes();
+//Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin');
