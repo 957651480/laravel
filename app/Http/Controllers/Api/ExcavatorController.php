@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Api\ExcavatorDetailResource;
 use App\Http\Resources\Api\ExcavatorListResource;
 use App\Http\Resources\Api\MyCollectListResource;
 use App\Http\Resources\Api\MyReserveListResource;
@@ -65,6 +66,12 @@ class ExcavatorController extends ApiController
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
 
+    public function detail(Request $request,$id)
+    {
+        $model = $this->excavators->firstModelByIdOrFail($id,['images','video','brand']);
+        $data = new ExcavatorDetailResource($model);
+        return api_response()->success(['data'=>$data]);
+    }
     public function mineVisitList(Request $request)
     {
         $user = $request->user();

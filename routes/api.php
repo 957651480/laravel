@@ -104,6 +104,7 @@ Route::group(['namespace'=>'Api'],function (){
 
     Route::any('banner/list', [\App\Http\Controllers\Api\BannerController::class,'index']);
     Route::any('excavator/list', [\App\Http\Controllers\Api\ExcavatorController::class,'index']);
+    Route::any('excavator/detail/{id}', [\App\Http\Controllers\Api\ExcavatorController::class,'detail']);
     Route::any('excavator/brand/list', [\App\Http\Controllers\Api\BrandController::class,'index']);
 
     Route::any('rate',[\App\Http\Controllers\Api\IndexController::class,'rate']);
