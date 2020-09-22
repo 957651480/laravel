@@ -51,18 +51,26 @@
 
                     {
                         prop: "nickname",
-                        label: "用户昵称"
+                        label: "用户昵称",
+                        align:"center"
                     },
                     {
                         slot: "avatar",
                     },
                     {
+                        prop: "phone",
+                        label: "手机号",
+                        align:"center"
+                    },
+                    {
                         prop: "openid",
                         label: "微信OPENID"
                     },
+
                     {
                         prop: "created_at",
-                        label: "时间"
+                        label: "时间",
+                        align:"center"
                     },
                     {
                         slot:'operate'

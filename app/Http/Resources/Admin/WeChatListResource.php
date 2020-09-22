@@ -14,12 +14,13 @@ class WeChatListResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $typeAndIdentify = $this->indents->pluck('identify','type')->toArray();
+        return array_merge([
             'id' => $this->id,
             'nickname' => $this->nickname,
             'avatar' =>$this->avatar,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
-        ];
+        ],$typeAndIdentify);
     }
 }
