@@ -25,7 +25,7 @@ class ExcavatorDetailResource extends JsonResource
             'brand_name'=>$brand->name,
             'model'=>$this->model,
             'method'=>$this->method,
-            'date_of_production'=>date('Y-m-d',$this->date_of_production),
+            'date_of_production'=>date('Y',$this->date_of_production),
             'duration_of_use'=>$this->duration_of_use,
             'equipment_operation'=>$this->equipment_operation,
             'motor_brand'=>$this->motor_brand,
