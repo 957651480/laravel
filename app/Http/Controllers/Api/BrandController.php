@@ -35,17 +35,13 @@ class BrandController extends ApiController
         ];
         $param = array_merge($param,$request->all());
 
-        $key = sprintf("%s:%s",$this->brands->getCacheKey(),implode(':',$param));
-        list($data,$total) = cache()->rememberForever($key,function ()use($request,$param){
-
-            $query = $this->brands->with('image');
-            if($param['name']){
-                $query->where('name','like',"%{$param['name']}%");
-            }
-            $paginate = $query->orderByDesc('sort')->latest()->paginate($param['limit']);
-            $data =BrandResource::collection($paginate);
-            return [$data,$paginate->total()];
-        });
+        $query = $this->brands->with('image');
+        if($param['name']){
+            $query->where('name','like',"%{$param['name']}%");
+        }
+        $paginate = $query->orderByDesc('sort')->latest()->paginate($param['limit']);
+        $total = $paginate->total();
+        $data =BrandResource::collection($paginate);
 
         return api_response()->success(['total'=>$total,'data'=>$data]);
     }
