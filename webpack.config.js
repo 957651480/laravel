@@ -36,6 +36,13 @@ module.exports = {
           symbolId: 'icon-[name]',
         },
       },
+      {
+        test: /\.less$/,
+        loader: 'less-loader',
+        options: {
+          javascriptEnabled: true
+        }
+      },
     ],
   },
   externals:{
