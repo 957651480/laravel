@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[\App\Http\Controllers\AdminController::class,'index']);
+Route::get('/',function (){
+    return redirect()->to('/dashboard');
+});
 
 //Auth::routes();
-
+Route::get('/dashboard',[\App\Http\Controllers\AdminController::class,'index'])->name('admin');
 Route::prefix('admin')->group(function () {
-    Route::get('/',[\App\Http\Controllers\AdminController::class,'index'])->name('admin');
+    Route::get('/dashboard/workplace',[\App\Http\Controllers\AdminController::class,'index'])->name('admin');
 });

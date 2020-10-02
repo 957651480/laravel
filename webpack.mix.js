@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-const config = require('./webpack.config');
+const config = require('./webpack.config.js');
 //require('laravel-mix-eslint');
 
 function resolve(dir) {
@@ -22,9 +22,6 @@ Mix.listen('configReady', webpackConfig => {
 
 mix.webpackConfig(config);
 
-mix.autoload({
-    jquery: ['$', 'window.jQuery'],
-});
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management

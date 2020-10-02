@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>挖机后台系统</title>
+    <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
     <app></app>
 </div>
 <script src="{{ mix('backend/js/main.js') }}"></script>
-<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.4&key=d0211c4b27a431b9c5f9e065e071453a"></script>
 </body>
 </html>
