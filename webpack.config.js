@@ -18,6 +18,7 @@ if (report) {
     openAnalyzer: true,
   }));
 }
+
 module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
