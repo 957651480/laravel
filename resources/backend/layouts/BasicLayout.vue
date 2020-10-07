@@ -123,7 +123,8 @@ export default {
     // first update color
     // TIPS: THEME COLOR HANDLER!! PLEASE CHECK THAT!!
     if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
-      updateTheme(this.settings.primaryColor)
+      //@todo yth
+      //updateTheme(this.settings.primaryColor)
     }
   },
   methods: {

@@ -1,7 +1,7 @@
 const path = require('path');
 const mix = require('laravel-mix');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+const createThemeColorReplacerPlugin = require('./resources/backend/config/plugin.config')
 function resolve(dir) {
   return path.join(
     __dirname,
@@ -9,6 +9,7 @@ function resolve(dir) {
     dir
   );
 }
+const isProd = process.env.NODE_ENV === 'production'
 
 const rawArgv = process.argv.slice(2);
 const report = rawArgv.includes('--report');
@@ -18,7 +19,9 @@ if (report) {
     openAnalyzer: true,
   }));
 }
-
+if(!isProd){
+  plugins.push(createThemeColorReplacerPlugin);
+}
 module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -36,8 +39,13 @@ module.exports = {
     rules: [
       {
         test: /\.svg$/,
-        loader: 'svg-sprite-loader',
-        include: [resolve('icons')],
+        loader: 'babel-loader',
+        include: [resolve('assets')],
+      },
+      {
+        test: /\.svg$/,
+        loader: 'vue-svg-icon-loader',
+        include: [resolve('assets')],
         options: {
           symbolId: 'icon-[name]',
         },

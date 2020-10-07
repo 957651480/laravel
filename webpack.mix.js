@@ -17,7 +17,7 @@ Mix.listen('configReady', webpackConfig => {
             String(rule.test) ===
             String(/(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/)
     );
-    imageLoaderConfig.exclude = resolve('icons');
+    imageLoaderConfig.exclude = resolve('assets');
 });
 
 mix.webpackConfig(config);
