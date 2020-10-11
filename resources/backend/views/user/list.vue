@@ -66,7 +66,11 @@
                         prop: "openid",
                         label: "微信OPENID"
                     },
-
+                    {
+                        prop: "avatar",
+                        label: "头像",
+                        align:"center"
+                    },
                     {
                         prop: "created_at",
                         label: "时间",

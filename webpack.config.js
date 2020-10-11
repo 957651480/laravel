@@ -41,7 +41,6 @@ module.exports = {
   externals:{
     'echarts':'echarts',
     'xlsx':'xlsx',
-    'AMap':'AMap',
   },
   plugins: plugins,
 };

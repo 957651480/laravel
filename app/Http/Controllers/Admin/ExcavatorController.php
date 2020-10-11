@@ -258,7 +258,6 @@ class ExcavatorController extends ApiController
             'weight'=>'sometimes',
             'recommend'=>'sometimes',
             'sort'=>'sometimes',
-            'map'=>'sometimes',
         ],[
             'name.required'=>'挖机名称必须',
             'brand_id.required'=>'品牌必须',

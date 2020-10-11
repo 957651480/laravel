@@ -27,6 +27,6 @@ class ExchangeRateCache extends Cache
         $list = self::fetchList();
         //var_dump(json_encode($list));die();
         $japan = $list['data4'];
-        return number_format(100/$japan['bankConversionPri'],2);
+        return number_format(100/$japan['bankConversionPri'],4);
     }
 }

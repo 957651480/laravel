@@ -96,12 +96,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item  label="定位:" prop="map.address">
-          <el-input v-model="form.map.address" placeholder="请在地图上定位地址" disabled style="width:500px"></el-input>
-        </el-form-item>
-        <el-form-item >
-          <gould-map   v-model="form.map" :width="`100%`" :height="`500px`"></gould-map>
-        </el-form-item>
         <div >
           <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default am-no-layout">
             <h2 class="am-titlebar-title">发动机信息</h2>
@@ -226,7 +220,6 @@
   import MultipleImage from "@/components/Upload/MultipleImage";
   import SingleVideo from "@/components/Upload/SingleVideo";
   import {httpSuccess} from "@/utils/message";
-  import GouldMap from "@/components/Map/Gould/index";
 
   const defaultForm = {
   name:'',
@@ -251,13 +244,12 @@
   image_urls:[],
   video_id:undefined,
   video_url:undefined,
-  map:{lng:null,lat:null,address:null},
   costs:[],
 }
 
 export default {
   name: 'ExcavatorDetail',
-  components: {GouldMap, MultipleImage, SingleVideo, Sticky },
+  components: { MultipleImage, SingleVideo, Sticky },
   props: {
     isEdit: {
       type: Boolean,
