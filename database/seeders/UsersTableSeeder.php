@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
 
         $admin = $users->createUser([
             'nickname'=>'admin',
-            'password' => Hash::make('admin123456'),
+            'password' => Hash::make('admin'),
         ],
         ['identify'=>'admin','type'=>'username']
         );

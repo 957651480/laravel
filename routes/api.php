@@ -25,6 +25,7 @@ Route::group(['prefix'=>'admin/','middleware' => 'auth:sanctum'],function()
     Route::any('auth/logout',[\App\Http\Controllers\Admin\AuthController::class,'logout']);
     Route::get('user/wechat/list',[\App\Http\Controllers\Admin\UserController::class,'weChatList']);
     Route::get('user/info',[\App\Http\Controllers\Admin\UserController::class,'info']);
+    Route::post('user/modify/password',[\App\Http\Controllers\Admin\UserController::class,'modifyPassword']);
 
     Route::get('file/list','FileController@index');
     Route::post('file/upload',[\App\Http\Controllers\Admin\FileController::class,'upload']);

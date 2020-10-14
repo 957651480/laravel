@@ -9,6 +9,7 @@ use App\Http\Resources\Admin\WeChatListResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends ApiController
 {
@@ -36,5 +37,14 @@ class UserController extends ApiController
     {
         $user = $request->user();
         return api_response()->success(['data'=>new UserResource($user)]);
+    }
+
+    public function modifyPassword(Request $request)
+    {
+        $password = $request->get('password');
+        $user = $request->user();
+        $user->password=Hash::make($password);
+        $user->save();
+        return api_response()->success();
     }
 }

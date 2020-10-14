@@ -29,3 +29,11 @@ export function fetchWeChatList(query) {
     params:query
   })
 }
+
+export function modifyPassword(data) {
+  return request({
+    url: '/admin/user/modify/password',
+    method: 'post',
+    data
+  })
+}

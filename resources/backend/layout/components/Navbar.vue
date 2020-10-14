@@ -31,12 +31,31 @@
           <router-link to="/">
             <el-dropdown-item>仪表板</el-dropdown-item>
           </router-link>
+          <el-dropdown-item >
+            <span style="display:block;" @click="handlePassword">修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-dialog title="修改密码" :visible.sync="passwordDialog" @close='closeDialog'>
+      <el-form ref="elForm" :rules="rules" :model="psdForm" label-position="left" label-width="150px" style="max-width: 500px;">
+        <el-form-item label="密码:" prop="password">
+          <el-input v-model="psdForm.password" placeholder="请输入新密码"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submit()">
+          保存
+        </el-button>
+        <el-button @click="closeDialog()">
+          取消
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -62,6 +81,15 @@
   data(){
     return {
       defaultAvatar:defaultAvatar,
+      passwordDialog:false,
+      psdForm:{
+        password:'',
+      },
+      rules:{
+        password:[
+          {required: true, message: '请输入新的密码', trigger: 'blur'}
+        ]
+      },
     };
   },
   computed: {
@@ -74,6 +102,28 @@
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
+    },
+    handlePassword(){
+      this.passwordDialog=true
+    },
+    closeDialog(){
+      this.passwordDialog=false;
+      this.$refs['elForm'].resetFields()
+    },
+    submit() {
+      this.$refs['elForm'].validate((valid) => {
+        if (valid) {
+           this.$store.dispatch('user/modifyPassword',this.psdForm).then(response=>{
+            this.$message({
+              message: '密码修改成功',
+              type: 'success',
+            })
+            this.passwordDialog=false;
+          })
+        } else {
+          return false;
+        }
+      });
     },
     async logout() {
       await this.$store.dispatch('user/logout')
