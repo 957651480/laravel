@@ -115,7 +115,7 @@ class ExcavatorController extends ApiController
         if(!$excavator_id = $request->get('excavator_id')){
             return api_response()->fail(['msg'=>'请选择收藏的挖机']);
         }
-        Collect::create([
+        Collect::updateOrCreate([
             'user_id'=>$user->id,
             'excavator_id'=>$excavator_id
         ]);
