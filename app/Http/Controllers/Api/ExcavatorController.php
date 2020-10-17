@@ -126,11 +126,10 @@ class ExcavatorController extends ApiController
     public function mineReserveList(Request $request)
     {
         $user = $request->user();
-        $sub_query = Reserve::select(['excavator_id'])
-            ->where('user_id',$user->id);
-        $paginate = $this->excavators->with(['images','video','region','brand'])
-            ->rightJoinSub($sub_query,'c','c.excavator_id','=','id')
-            ->latest('c.created_at')->paginate($request->get('limit'));
+        $query = Reserve::query();
+        $query->where('user_id',$user->id);
+        $paginate = $query->with(['images','video','region','brand'])
+            ->latest()->paginate($request->get('limit'));
         $data = MyReserveListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }

@@ -15,20 +15,22 @@ class MyReserveListResource extends JsonResource
     public function toArray($request)
     {
 
-        $images = $this->images;
-        $brand = $this->brand?:optional();
-        $region = $this->region?:optional();
+        $excavator = $this->excavator?:optional();
+        $excavator_images = $excavator->images;
+        $excavator_region = $excavator->region?:optional();
+        $excavator_brand = $this->brand?:optional();
+
         return [
             'id'=>(integer)$this->id,
-            'title'=>(string)$this->name,
-            'price'=>$this->price,
-            'date_of_production'=>(string)date('Y',$this->date_of_production),
-            'duration_of_use'=>(integer)$this->duration_of_use,
-            'motor_model'=>(string)$this->motor_model,
-            'image_url'=>(string)$images->first()->url,
-            'total_cost_rmb'=>(float)$this->cost_rmb,
-            'total_cost_jpn'=>(float)$this->cost_jpn,
-            'region_merger_name'=>(string)$region->merger_name,
+            'name'=>(string)$excavator->name,
+            'price'=>$excavator->price,
+            'date_of_production'=>(string)date('Y',$excavator->date_of_production),
+            'duration_of_use'=>(integer)$excavator->duration_of_use,
+            'motor_model'=>(string)$excavator->motor_model,
+            'image_url'=>(string)$excavator_images->first()->url,
+            'total_cost_rmb'=>$excavator->cost_rmb,
+            'total_cost_jpn'=>$excavator->cost_jpn,
+            'region_merger_name'=>(string)$excavator_region->merger_name,
         ];
     }
 }
