@@ -16,7 +16,7 @@ class ExchangeRateCache extends Cache
         if($fresh){
             cache()->forget($key);
         }
-        $ttl = 180;
+        $ttl = 3600;
         return cache()->remember($key,$ttl,function (){
             return ExchangeRate::fetchList();
         });

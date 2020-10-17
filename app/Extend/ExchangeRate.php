@@ -7,7 +7,7 @@ use Http;
 
 class ExchangeRate
 {
-    const EXCHANGE_RATE_API='http://op.juhe.cn/onebox/exchange/query?&key=15e0036283e68cce6bee4847631d39ce';
+    const EXCHANGE_RATE_API='http://op.juhe.cn/onebox/exchange/query?&key=b42a4619055788cb98496ce3173aa472';
 
     public static function fetchList()
     {
