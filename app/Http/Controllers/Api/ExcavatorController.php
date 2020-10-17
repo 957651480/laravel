@@ -128,7 +128,7 @@ class ExcavatorController extends ApiController
         $user = $request->user();
         $query = Reserve::query();
         $query->where('user_id',$user->id);
-        $paginate = $query->with(['images','video','region','brand'])
+        $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
             ->latest()->paginate($request->get('limit'));
         $data = MyReserveListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
