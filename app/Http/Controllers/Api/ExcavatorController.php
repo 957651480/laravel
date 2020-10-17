@@ -79,7 +79,7 @@ class ExcavatorController extends ApiController
         $query->where('user_id',$user->id);
 
         $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
-            ->paginate($request->get('limit'));
+            ->latest()->paginate($request->get('limit'));
         $data = MyVisitListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
@@ -104,7 +104,7 @@ class ExcavatorController extends ApiController
         $query->where('user_id',$user->id);
 
         $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
-            ->paginate($request->get('limit'));
+            ->latest()->paginate($request->get('limit'));
         $data = MyCollectListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
@@ -130,7 +130,7 @@ class ExcavatorController extends ApiController
             ->where('user_id',$user->id);
         $paginate = $this->excavators->with(['images','video','region','brand'])
             ->rightJoinSub($sub_query,'c','c.excavator_id','=','id')
-            ->paginate($request->get('limit'));
+            ->latest('c.created_at')->paginate($request->get('limit'));
         $data = MyReserveListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
     }
