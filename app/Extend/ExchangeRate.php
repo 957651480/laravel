@@ -7,15 +7,14 @@ use Http;
 
 class ExchangeRate
 {
-    const EXCHANGE_RATE_API='http://op.juhe.cn/onebox/exchange/query?&key=b42a4619055788cb98496ce3173aa472';
+    const EXCHANGE_RATE_API='http://web.juhe.cn:8080/finance/exchange/rmbquot?type=&bank=&key=f59b94e132e0ad10e03126d38ff027e7';
 
     public static function fetchList()
     {
         $response = Http::get(self::EXCHANGE_RATE_API)->json();
-        $list = $response['result']['list']??[];
-        if(!$list){
+        if($response['error_code']!=0){
             throw new \Exception('汇率查询失败');
         }
-        return $list;
+        return $response['result'][0];
     }
 }

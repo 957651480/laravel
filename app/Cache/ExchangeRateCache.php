@@ -25,7 +25,8 @@ class ExchangeRateCache extends Cache
     public static function fetchJapan()
     {
         $list = self::fetchList();
-        $japan = $list[5];
-        return $japan[5];
+        //var_dump(json_encode($list));die();
+        $japan = $list['data4'];
+        return $japan['bankConversionPri'];
     }
 }
