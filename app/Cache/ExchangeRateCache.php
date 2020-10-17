@@ -16,7 +16,7 @@ class ExchangeRateCache extends Cache
         if($fresh){
             cache()->forget($key);
         }
-        $ttl = 30;
+        $ttl = 180;
         return cache()->remember($key,$ttl,function (){
             return ExchangeRate::fetchList();
         });
@@ -25,8 +25,7 @@ class ExchangeRateCache extends Cache
     public static function fetchJapan()
     {
         $list = self::fetchList();
-        //var_dump(json_encode($list));die();
-        $japan = $list['data4'];
-        return $japan['bankConversionPri'];
+        $japan = $list[5];
+        return $japan[5];
     }
 }
