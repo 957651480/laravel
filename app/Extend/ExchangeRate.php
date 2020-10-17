@@ -3,6 +3,8 @@
 
 namespace App\Extend;
 
+use Http;
+
 class ExchangeRate
 {
     const EXCHANGE_RATE_API='http://op.juhe.cn/onebox/exchange/query?&key=15e0036283e68cce6bee4847631d39ce';
