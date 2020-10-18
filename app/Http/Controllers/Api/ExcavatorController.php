@@ -60,7 +60,7 @@ class ExcavatorController extends ApiController
             $query->where('weight','<',$weight_end);
         }
 
-        $paginate = $query->with(['images','video','region','brand','collects'])
+        $paginate = $query->with(['images','video','region','brand'])
             ->paginate($request->get('limit'));
         $data = ExcavatorListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
@@ -68,7 +68,7 @@ class ExcavatorController extends ApiController
 
     public function detail(Request $request,$id)
     {
-        $model = $this->excavators->firstModelByIdOrFail($id,['images','video','brand']);
+        $model = $this->excavators->firstModelByIdOrFail($id,['images','video','brand','collects']);
         $data = new ExcavatorDetailResource($model);
         return api_response()->success(['data'=>$data]);
     }

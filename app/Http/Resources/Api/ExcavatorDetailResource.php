@@ -18,6 +18,7 @@ class ExcavatorDetailResource extends JsonResource
         $video = $this->video?:optional();
         $brand = $this->brand?:optional();
         $region = $this->region?:optional();
+        $collects = $this->collects;
 
         return [
             'id'=>$this->id,
@@ -46,6 +47,7 @@ class ExcavatorDetailResource extends JsonResource
             'price'=>$this->price,
             'created_at'=>(string)optional($this->created_at)->toDateTimeString(),
             'updated_at'=>(string)optional($this->updated_at)->toDateTimeString(),
+            'collection_user_list'=>$collects->pluck('user_id')
         ];
     }
 }

@@ -17,7 +17,6 @@ class ExcavatorListResource extends JsonResource
         $images = $this->images;
         $brand = $this->brand?:optional();
         $region = $this->region?:optional();
-        $collects = $this->collects;
         return [
             'id'=>(integer)$this->id,
             'title'=>(string)$this->name,
@@ -29,7 +28,7 @@ class ExcavatorListResource extends JsonResource
             'total_cost_rmb'=>(float)$this->cost_rmb,
             'total_cost_jpn'=>(float)$this->cost_jpn,
             'region_merger_name'=>(string)$region->merger_name,
-            'collection_user_list'=>$collects->pluck('user_id')
+
         ];
     }
 }
