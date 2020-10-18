@@ -93,7 +93,7 @@ class ExcavatorController extends ApiController
         Visit::updateOrCreate([
             'user_id'=>$user->id,
             'excavator_id'=>$excavator_id
-        ]);
+        ],['updated_at'=>date('Y-m-d H:i:s')]);
         return api_response()->success(['msg'=>'成功']);
     }
 
@@ -118,7 +118,7 @@ class ExcavatorController extends ApiController
         Collect::updateOrCreate([
             'user_id'=>$user->id,
             'excavator_id'=>$excavator_id
-        ]);
+        ],['updated_at'=>date('Y-m-d H:i:s')]);
         return api_response()->success();
     }
 
@@ -147,7 +147,7 @@ class ExcavatorController extends ApiController
         Reserve::updateOrCreate([
             'user_id'=>$user->id,
             'excavator_id'=>$excavator_id
-        ],['price'=>$price]);
+        ],['price'=>$price,'updated_at'=>date('Y-m-d H:i:s')]);
         return api_response()->success(['msg'=>'报价成功']);
     }
 }
