@@ -78,7 +78,7 @@ class ExcavatorController extends ApiController
         $query = Visit::query();
         $query->where('user_id',$user->id);
 
-        $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
+        $paginate = $query->has('excavator')->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
             ->latest('updated_at')->latest('created_at')->paginate($request->get('limit'));
         $data = MyVisitListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
@@ -103,7 +103,7 @@ class ExcavatorController extends ApiController
         $query = Collect::query();
         $query->where('user_id',$user->id);
 
-        $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
+        $paginate = $query->has('excavator')->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
             ->latest()->paginate($request->get('limit'));
         $data = MyCollectListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
@@ -128,7 +128,7 @@ class ExcavatorController extends ApiController
         $user = $request->user();
         $query = Reserve::query();
         $query->where('user_id',$user->id);
-        $paginate = $query->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
+        $paginate = $query->has('excavator')->with(['excavator.images','excavator.video','excavator.region','excavator.brand','user'])
             ->latest('updated_at')->latest('created_at')->paginate($request->get('limit'));
         $data = MyReserveListResource::collection($paginate);
         return api_response()->success(['total'=>$paginate->total(),'data'=>$data]);
