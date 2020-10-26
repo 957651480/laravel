@@ -100,6 +100,7 @@ class ExcavatorController extends ApiController
     public function visitList(Request $request)
     {
         $query = Visit::query();
+        $query->has('excavator');
         if($user_nickname = $request->get('user_nickname')){
             $query->whereHas('user',function (Builder$builder) use($user_nickname){
                 $builder->where('nickname','like',"%{$user_nickname}%");
@@ -119,6 +120,7 @@ class ExcavatorController extends ApiController
     public function collectList(Request $request)
     {
         $query = Collect::query();
+        $query->has('excavator');
         if($user_nickname = $request->get('user_nickname')){
             $query->whereHas('user',function (Builder$builder) use($user_nickname){
                 $builder->where('nickname','like',"%{$user_nickname}%");
