@@ -31,6 +31,7 @@ class OrderController extends ApiController
     public function index(Request $request)
     {
         $query = Order::query();
+        $query->has('excavator');
         if($user_nickname = $request->get('user_nickname')){
             $query->whereHas('user',function (Builder$builder) use($user_nickname){
                 $builder->where('nickname','like',"%{$user_nickname}%");
