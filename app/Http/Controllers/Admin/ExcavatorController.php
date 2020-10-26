@@ -137,101 +137,164 @@ class ExcavatorController extends ApiController
 
     public function cost()
     {
-        $costs= [
-            [
+        $common= [
                 'name'=>'代缴税额',
                 'children'=>[
-                    [
-                        'name'=>'申报机价',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'增值税30%',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'关税8%',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
+                    ['name'=>'申报机价', 'rmb'=>''],
+                    ['name'=>'关税8%', 'rmb'=>''],
+                    ['name'=>'增值税30%', 'rmb'=>''],
+                ]
+            ];
+        // 10T以下
+        $lessThanTen=[
+            $common,
+            [
+                'name'=>'香港费用',
+                'children'=>[
+                    ['name'=>'香港仓储费', 'rmb'=>'7000'],
+                    ['name'=>'证书费', 'rmb'=>'5620'],
+                    ['name'=>'入单费', 'rmb'=>'500'],
+                    ['name'=>'影像', 'rmb'=>'300'],
+                    ['name'=>'运输费', 'rmb'=>'1200'],
+                    ['name'=>'过磅费', 'rmb'=>'800'],
+                    ['name'=>'清关费', 'rmb'=>'150'],
+                    ['name'=>'检机行政费', 'rmb'=>'500'],
                 ]
             ],
             [
-                'name'=>'香港中检费',
+                'name'=>'大陆费用',
                 'children'=>[
-                    [
-                        'name'=>'证书费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'入单费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'影像',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'运输费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'过磅费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'清关费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'减产行政费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
+                    ['name'=>'报关费', 'rmb'=>'3120'],
+                    ['name'=>'HK-莲花山', 'rmb'=>'1100'],
+                    ['name'=>'莲花山-机械城', 'rmb'=>'700'],
+                    ['name'=>'代理报关服务费', 'rmb'=>'3000'],
+                ]
+            ],
+        ];
+        $elevenToFifteen=[
+            $common,
+            [
+                'name'=>'香港费用',
+                'children'=>[
+                    ['name'=>'香港仓储费', 'rmb'=>'7000'],
+                    ['name'=>'证书费', 'rmb'=>'5620'],
+                    ['name'=>'入单费', 'rmb'=>'500'],
+                    ['name'=>'影像', 'rmb'=>'300'],
+                    ['name'=>'运输费', 'rmb'=>'1200'],
+                    ['name'=>'过磅费', 'rmb'=>'1000'],
+                    ['name'=>'清关费', 'rmb'=>'150'],
+                    ['name'=>'检机行政费', 'rmb'=>'1000'],
                 ]
             ],
             [
-                'name'=>'运输费',
+                'name'=>'大陆费用',
                 'children'=>[
-                    [
-                        'name'=>'HK-莲花山运输费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'莲花山-机械城运输',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
+                    ['name'=>'报关费', 'rmb'=>'3696'],
+                    ['name'=>'HK-莲花山', 'rmb'=>'1400'],
+                    ['name'=>'莲花山-机械城', 'rmb'=>'1200'],
+                    ['name'=>'代理报关服务费', 'rmb'=>'3000'],
+                ]
+            ],
+        ];
+        $twenty=[
+            $common,
+            [
+                'name'=>'香港费用',
+                'children'=>[
+                    ['name'=>'香港仓储费', 'rmb'=>'8000'],
+                    ['name'=>'证书费', 'rmb'=>'5620'],
+                    ['name'=>'入单费', 'rmb'=>'500'],
+                    ['name'=>'影像', 'rmb'=>'300'],
+                    ['name'=>'运输费', 'rmb'=>'1500'],
+                    ['name'=>'过磅费', 'rmb'=>'1500'],
+                    ['name'=>'清关费', 'rmb'=>'150'],
+                    ['name'=>'检机行政费', 'rmb'=>'1500'],
                 ]
             ],
             [
-                'name'=>'报关服务费',
+                'name'=>'大陆费用',
                 'children'=>[
-                    [
-                        'name'=>'港口包干费用',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
-                    [
-                        'name'=>'渡机费',
-                        'rmb'=>'',
-                        'jpn'=>''
-                    ],
+                    ['name'=>'报关费', 'rmb'=>'3896'],
+                    ['name'=>'HK-莲花山', 'rmb'=>'1550'],
+                    ['name'=>'莲花山-机械城', 'rmb'=>'1800'],
+                    ['name'=>'代理报关服务费', 'rmb'=>'5000'],
                 ]
             ],
-
+        ];
+        $thirtyToThirtyFive=[
+            $common,
+            [
+                'name'=>'香港费用',
+                'children'=>[
+                    ['name'=>'香港仓储费', 'rmb'=>'12000'],
+                    ['name'=>'证书费', 'rmb'=>'6020'],
+                    ['name'=>'入单费', 'rmb'=>'500'],
+                    ['name'=>'影像', 'rmb'=>'300'],
+                    ['name'=>'运输费', 'rmb'=>'2600'],
+                    ['name'=>'过磅费', 'rmb'=>'1800'],
+                    ['name'=>'清关费', 'rmb'=>'200'],
+                    ['name'=>'检机行政费', 'rmb'=>'2000'],
+                ]
+            ],
+            [
+                'name'=>'大陆费用',
+                'children'=>[
+                    ['name'=>'报关费', 'rmb'=>'7970'],
+                    ['name'=>'HK-莲花山', 'rmb'=>'2700'],
+                    ['name'=>'莲花山-机械城', 'rmb'=>'4500'],
+                    ['name'=>'代理报关服务费', 'rmb'=>'10000'],
+                ]
+            ],
+        ];
+        $fortyToFifty=[
+            $common,
+            [
+                'name'=>'香港费用',
+                'children'=>[
+                    ['name'=>'香港仓储费', 'rmb'=>'18000'],
+                    ['name'=>'证书费', 'rmb'=>'6020'],
+                    ['name'=>'入单费', 'rmb'=>'500'],
+                    ['name'=>'影像', 'rmb'=>'300'],
+                    ['name'=>'运输费', 'rmb'=>'7500'],
+                    ['name'=>'过磅费', 'rmb'=>'2500'],
+                    ['name'=>'清关费', 'rmb'=>'300'],
+                    ['name'=>'检机行政费', 'rmb'=>'2500'],
+                ]
+            ],
+            [
+                'name'=>'大陆费用',
+                'children'=>[
+                    ['name'=>'报关费', 'rmb'=>'6700'],
+                    ['name'=>'HK-莲花山', 'rmb'=>'4200'],
+                    ['name'=>'莲花山-机械城', 'rmb'=>'6500'],
+                    ['name'=>'代理报关服务费', 'rmb'=>'16000'],
+                ]
+            ],
+        ];
+        $list=[
+            [
+                'name'=>'10T以下',
+                'costs'=>$lessThanTen
+            ],
+            [
+                'name'=>'11T-15T',
+                'costs'=>$elevenToFifteen
+            ],
+            [
+                'name'=>'20T',
+                'costs'=>$twenty
+            ],
+            [
+                'name'=>'30-35T',
+                'costs'=>$thirtyToThirtyFive
+            ],
+            [
+                'name'=>'40-50T',
+                'costs'=>$fortyToFifty
+            ],
         ];
 
-        return api_response()->success(['data'=>$costs]);
+        return api_response()->success(['data'=>$list]);
    }
 
     protected function validateExcavator(Request $request)

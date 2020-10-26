@@ -171,6 +171,15 @@
           </div>
         </div>
         <el-divider></el-divider>
+        <el-row>
+          <el-col :span="6">
+            <el-form-item  label="吨位" >
+              <el-select  v-model="cost_list_index" @change="handleWeight" placeholder="选择吨位" style="width: 100%;">
+                <el-option v-for="(item,index) in cost_list" :key="index" :label="item.name" :value="index" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row v-for="(cost,index) in form.costs" :key="index">
 
             <el-form-item :prop="'costs.' + index + '.name'" label="明细组名称:"
@@ -268,7 +277,6 @@ export default {
         brand_id: [{ required:true,message:'请选择品牌',trigger: 'blur'}],
         model: [{ required:true,message:'请填写型号',trigger: 'blur' }],
         date_of_production: [{ required:true,message:'请选择出厂日期',trigger: 'blur' }],
-        "map.address": [{ required: true, message: '请确定定位', trigger: 'blur' }],
         region_id: [{ required:true,message:'请选择地址',trigger: 'blur'}],
         image_ids: [{ required:true,message:'请上传图片',trigger: 'blur' }],
       },
@@ -280,6 +288,8 @@ export default {
         emitPath:false
       },
       regionTrees:[],
+      cost_list:[],
+      cost_list_index:null,
     }
   },
   created() {
@@ -355,7 +365,8 @@ export default {
     },
     async getCostList(query) {
       let {data} = await fetchCost();
-      this.form.costs = data;
+      this.cost_list=data;
+      this.form.costs = data[0].costs;
     },
     async getRegionList() {
       const { data } = await fetchTree({need_level:2});
@@ -402,6 +413,10 @@ export default {
       item.push({name:'',children:[
           {name:'',rmb:'',jpn:''}
         ]});
+    },
+    handleWeight(index){
+      let costs= this.cost_list[index].costs;
+      this.form.costs=JSON.parse(JSON.stringify(costs));
     }
   }
 }
