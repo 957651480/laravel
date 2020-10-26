@@ -208,7 +208,7 @@
             },
             handleEdit(index,row){
                 debugger
-                this.newBanner = row;
+                this.newBanner = JSON.parse(JSON.stringify(row));
                 this.isEdit = true;
                 this.dialogFormVisible = true;
             },
@@ -246,6 +246,7 @@
                 updateBanner(id,this.newBanner)
                     .then(response => {
                         httpSuccess(response);
+                        this.handleFilter();
                         this.dialogFormVisible = false;
                     })
                     .catch(error => {

@@ -155,12 +155,12 @@
         <el-row>
           <el-col :span="14">
             <el-form-item label-width="120px" label="图片:" class="postInfo-container-item" prop="image_ids">
-              <multiple-image v-model="form.image_ids" :file-list="form.image_urls" ></multiple-image>
+              <multiple-image v-model="form.image_ids" :file-list="form.image_urls" :limit="6"></multiple-image>
             </el-form-item>
           </el-col>
           <el-col :span="10">
             <el-form-item label-width="120px" label="视频:" class="postInfo-container-item">
-              <single-video v-model="form.video_id" :file_url="form.video_url" :size="2">
+              <single-video v-model="form.video_id" :file_url="form.video_url" :size="2" :limit="6">
               </single-video>
             </el-form-item>
           </el-col>
@@ -194,14 +194,14 @@
             </el-form-item>
 
           <el-form-item label-width="0" v-for="(item,key) in cost.children" :key="key" style="margin-left: 50px;">
-            <el-col :span="8">
+            <el-col :span="6">
               <el-form-item :prop="'costs.' + index + '.children.'+key+'.name'" label="子项名称:"
                             :rules="{required: true, message: '名称不能为空', trigger: 'blur'}">
                 <el-input v-model="item.name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="2"></el-col>
-            <el-col :span="8">
+            <el-col :span="6">
               <el-form-item :prop="'costs.' + index + '.children.'+key+'.rmb'" label="子项价格:"
                             :rules="{required: true, message: '价格不能为空', trigger: 'blur'}">
                 <el-input v-model="item.rmb">
