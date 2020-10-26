@@ -203,7 +203,7 @@
       },
       handleEdit(index,row){
         debugger
-        this.newBrand = row;
+        this.newBrand = JSON.parse(JSON.stringify(row));
         this.isEdit = true;
         this.dialogFormVisible = true;
       },
@@ -241,6 +241,7 @@
         updateBrand(id,this.newBrand)
                 .then(response => {
                   httpSuccess(response);
+                  this.handleFilter();
                   this.dialogFormVisible = false;
                 })
                 .catch(error => {
