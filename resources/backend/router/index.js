@@ -6,7 +6,6 @@ import Layout from '@/layout'
 import settingRouter from "@/router/modules/setting";
 import bannerRouter from "@/router/modules/banner";
 import excavatorRouter from "@/router/modules/excavator";
-import informationRouter from "@/router/modules/information";
 import reserveRouter from "@/router/modules/reserve";
 import orderRouter from "@/router/modules/order";
 import userRouter from "@/router/modules/user";
@@ -152,7 +151,6 @@ export const asyncRoutes = [
   userRouter,
   settingRouter,
   excavatorRouter,
-  informationRouter,
   reserveRouter,
   orderRouter,
   bannerRouter,

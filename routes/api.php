@@ -113,6 +113,7 @@ Route::group(['namespace'=>'Api'],function (){
     Route::any('excavator/brand/list', [\App\Http\Controllers\Api\BrandController::class,'index']);
 
     Route::any('rate',[\App\Http\Controllers\Api\IndexController::class,'rate']);
+    Route::any('setting',[\App\Http\Controllers\Api\IndexController::class,'setting']);
 
 });
 

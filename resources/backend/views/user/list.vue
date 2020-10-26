@@ -12,7 +12,7 @@
 
         <base-table :data="list" :columns="columns" ref="table" v-loading="tableLoading"  border fit highlight-current-row style="width: 100%"
                     >
-            <el-table-column align="center" label="用户头像" slot="visit_user_avatar" >
+            <el-table-column align="center" label="用户头像" slot="avatar" >
                 <template slot-scope="scope">
                     <el-image
                             style="width: 80px; height: 80px"
@@ -54,9 +54,7 @@
                         label: "用户昵称",
                         align:"center"
                     },
-                    {
-                        slot: "avatar",
-                    },
+
                     {
                         prop: "phone",
                         label: "手机号",
@@ -67,9 +65,7 @@
                         label: "微信OPENID"
                     },
                     {
-                        prop: "avatar",
-                        label: "头像",
-                        align:"center"
+                        slot: "avatar",
                     },
                     {
                         prop: "created_at",

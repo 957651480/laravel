@@ -9,6 +9,7 @@ use App\Cache\ExchangeRateCache;
 use App\Http\Controllers\ApiController;
 use App\Http\Resources\Admin\BannerResource;
 use App\Models\Banner;
+use App\Models\SysSetting;
 use Illuminate\Http\Request;
 
 /**
@@ -30,5 +31,18 @@ class IndexController extends ApiController
     {
         $rate = ExchangeRateCache::fetchJapan();
         return api_response()->success(['data'=>$rate]);
+    }
+
+    public function setting()
+    {
+        if(!$model = SysSetting::first()){
+            $data= [
+                'future_desc'=>'',
+                'serviceEnsure'=>[]
+            ];
+        }else{
+            $data=$model->value;
+        }
+        return api_response()->success(['data'=>$data]);
     }
 }
