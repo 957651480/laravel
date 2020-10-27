@@ -41,7 +41,7 @@ class ExcavatorResource extends JsonResource
             'video_url'=>$video->url,
             'costs'=>$this->costs,
             'region_id'=>$this->region_id,
-            'region_merger_name'=>$region->merger_name,
+            'region_merger_name'=>$this->address,
             'weight'=>$this->weight,
             'recommend'=>(integer)$this->recommend,
             'sort'=>$this->sort,

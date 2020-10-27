@@ -40,7 +40,7 @@ class ExcavatorDetailResource extends JsonResource
             'costs'=>$this->costs,
             'total_cost_rmb'=>(float)$this->cost_rmb,
             'total_cost_jpn'=>(float)$this->cost_jpn,
-            'region_merger_name'=>$region->merger_name,
+            'region_merger_name'=>$this->address,
             'weight'=>$this->weight,
             'recommend'=>(integer)$this->recommend,
             'sort'=>$this->sort,

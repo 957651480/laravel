@@ -141,10 +141,11 @@ class ExcavatorController extends ApiController
     {
         $common= [
                 'name'=>'代缴税额',
+                'sum'=>true,
                 'children'=>[
-                    ['name'=>'申报机价', 'rmb'=>''],
-                    ['name'=>'关税8%', 'rmb'=>'','percentage'=>8],
-                    ['name'=>'增值税30%', 'rmb'=>'','percentage'=>30],
+                    ['name'=>'申报机价', 'rmb'=>'','key'=>'quoted_price'],
+                    ['name'=>'关税8%', 'rmb'=>'','key'=>'tax'],
+                    ['name'=>'增值税30%', 'rmb'=>'','key'=>'increment_tax'],
                 ]
             ];
         // 10T以下
@@ -323,6 +324,7 @@ class ExcavatorController extends ApiController
             'weight'=>'sometimes',
             'recommend'=>'sometimes',
             'sort'=>'sometimes',
+            'address'=>'sometimes',
         ],[
             'name.required'=>'挖机名称必须',
             'brand_id.required'=>'品牌必须',

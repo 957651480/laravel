@@ -29,7 +29,7 @@ class OrderListResource extends JsonResource
             'image_url'=>(string)$excavator_images->first()->url,
             'total_cost_rmb'=>(float)number_format($excavator->cost_rmb/10000,2),
             'total_cost_jpn'=>(float)number_format($excavator->cost_jpn/10000,2),
-            'region_merger_name'=>(string)$excavator_region->merger_name,
+            'region_merger_name'=>(string)$excavator->address,
             'visit_user_nickname'=>optional($this->user)->nickname,
             'visit_user_avatar'=>optional($this->user)->avatar,
             'visit_created_at'=>optional($this->created_at)->toDateTimeString(),

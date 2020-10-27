@@ -75,12 +75,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item   label="地址" prop="region_id" >
-              <el-cascader placeholder="请选择挖机所在地" style="width: 100%;"
-                      v-model="form.region_id"
-                      :props="optionProps"
-                      :options="regionTrees"
-              ></el-cascader>
+            <el-form-item   label="地址" prop="address" >
+              <el-input v-model="form.address" placeholder="请填写地址"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -123,31 +119,6 @@
         </el-row>
         <div  >
           <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default am-no-layout">
-            <h2 class="am-titlebar-title">液压泵信息</h2>
-          </div>
-        </div>
-        <el-divider></el-divider>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label-width="120px" label="品牌:" class="postInfo-container-item">
-              <el-input v-model="form.hydraulic_pump_rand" style="width: 217px"></el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="10">
-            <el-form-item label-width="120px" label="型号:" class="postInfo-container-item">
-              <el-input v-model="form.hydraulic_pump_model" style="width: 217px"></el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="6">
-            <el-form-item label-width="90px" label="流量:" class="postInfo-container-item">
-              <el-input-number v-model="form.hydraulic_pump_flow"></el-input-number>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <div  >
-          <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default am-no-layout">
             <h2 class="am-titlebar-title">产品图片</h2>
           </div>
         </div>
@@ -155,7 +126,7 @@
         <el-row>
           <el-col :span="14">
             <el-form-item label-width="120px" label="图片:" class="postInfo-container-item" prop="image_ids">
-              <multiple-image v-model="form.image_ids" :file-list="form.image_urls" :limit="6"></multiple-image>
+              <multiple-image v-model="form.image_ids" :file-list="form.image_urls" :limit="10"></multiple-image>
             </el-form-item>
           </el-col>
           <el-col :span="10">
@@ -177,6 +148,27 @@
               <el-select  v-model="cost_list_index" @change="handleWeight" placeholder="选择吨位" style="width: 100%;">
                 <el-option v-for="(item,index) in cost_list" :key="index" :label="item.name" :value="index" />
               </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item  label="申报机价:" >
+                <el-input v-model="quoted_price"  @input="handleQuoted" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');">
+                  <template slot="append">RMB</template>
+                </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item  label="关税" >
+              <el-input v-model="tax" @input="handleTax" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');">
+                <template slot="append">%</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item  label="增值税" >
+              <el-input v-model="increment_tax" @input="handleIncrementTax" onkeyup="this.value = this.value.replace(/[^\d.]/g,'');">
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -253,6 +245,7 @@
   image_urls:[],
   video_id:undefined,
   video_url:undefined,
+  address:'',
   costs:[],
 }
 
@@ -268,7 +261,7 @@ export default {
   data() {
 
     return {
-      form: Object.assign({}, defaultForm),
+      form: JSON.parse(JSON.stringify(defaultForm)),
       loading: false,
       userListOptions: [],
       rules: {
@@ -277,7 +270,7 @@ export default {
         brand_id: [{ required:true,message:'请选择品牌',trigger: 'blur'}],
         model: [{ required:true,message:'请填写型号',trigger: 'blur' }],
         date_of_production: [{ required:true,message:'请选择出厂日期',trigger: 'blur' }],
-        region_id: [{ required:true,message:'请选择地址',trigger: 'blur'}],
+        address: [{ required:true,message:'请填写地址',trigger: 'blur'}],
         image_ids: [{ required:true,message:'请上传图片',trigger: 'blur' }],
       },
       tempRoute: {},
@@ -290,6 +283,9 @@ export default {
       regionTrees:[],
       cost_list:[],
       cost_list_index:null,
+      quoted_price:null,
+      tax:8,
+      increment_tax:30,
     }
   },
   created() {
@@ -301,20 +297,19 @@ export default {
     }
     this.tempRoute = Object.assign({}, this.$route);
     this.getRemoteBrandList();
-    this.getRegionList();
   },
   methods: {
     fetchData(id) {
       fetchExcavator(id).then(response => {
         this.form = response.data
-        this.setTagsViewTitle()
+        this.setTataxViewTitle()
         this.setPageTitle()
       })
     },
-    setTagsViewTitle() {
+    setTataxViewTitle() {
       const title = '编辑挖机'
       const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.form.id}` })
-      this.$store.dispatch('tagsView/updateVisitedView', route)
+      this.$store.dispatch('tataxView/updateVisitedView', route)
     },
     setPageTitle() {
       const title = '编辑挖机'
@@ -354,7 +349,7 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetFields();
       }
-      this.form = defaultForm;
+      this.form = JSON.parse(JSON.stringify(defaultForm));
     },
     draftForm() {
 
@@ -417,6 +412,109 @@ export default {
     handleWeight(index){
       let costs= this.cost_list[index].costs;
       this.form.costs=JSON.parse(JSON.stringify(costs));
+    },
+    getShuier(){
+      let shuier = this.form.costs.find((item)=>{
+        return item.sum;
+      });
+      return shuier;
+    },
+    handleQuoted(value){
+      if(value==''){
+        return false;
+      }
+      let price= parseInt(value);
+      debugger
+      if(price<=0){
+        return false;
+      }
+      let shuier = this.getShuier();
+      if(!shuier){
+        return false
+      }
+      //设置申报价
+      let quoted_price_item = shuier.children.find((item)=>{
+        return item.key=='quoted_price'
+      })
+      quoted_price_item.rmb=price;
+      //设置关税
+      let tax_price=0;
+      if(this.tax>0){
+        let tax_item = shuier.children.find((item)=>{
+          return item.key=='tax';
+        })
+        tax_item.rmb=price*(this.tax/100).toFixed(2);
+        tax_price=tax_item.rmb;
+      }
+      //设置增值税
+      if(this.tax>0&&this.increment_tax>0){
+        let increment_tax_item = shuier.children.find((item)=>{
+          return item.key=='increment_tax'
+        })
+        increment_tax_item.rmb=((price+tax_price)*(this.increment_tax/100)).toFixed(2)
+      }
+    },
+    handleTax(value){
+      if(value==''){
+        return false;
+      }
+      let tax= parseInt(value);
+      if(tax<=0){
+        return false;
+      }
+      let price= parseInt(this.quoted_price);
+      if(!this.quoted_price){
+        this.$message("请填写申报价");
+        return false;
+      }
+      let shuier = this.getShuier();
+      if(!shuier){
+        return false
+      }
+      let tax_item = shuier.children.find((item)=>{
+        return item.key=='tax'
+      })
+      tax_item.rmb=price*(tax/100).toFixed(2);
+      tax_item.name=tax_item.name.replace(/[0-9]/ig,tax);
+      let tax_price = tax_item.rmb;
+      if(this.increment_tax>0){
+        let increment_tax_item = shuier.children.find((item)=>{
+          return item.key=='increment_tax'
+        })
+        increment_tax_item.rmb=((price+tax_price)*(this.increment_tax/100)).toFixed(2)
+      }
+    },
+    handleIncrementTax(value){
+      if(value==''){
+        return false;
+      }
+      let increment_tax= parseInt(value);
+      if(increment_tax<=0){
+        return false;
+      }
+      let price= parseInt(this.quoted_price);
+      let tax= parseInt(this.tax);
+      if(!price){
+        this.$message("请填写申报价");
+        return false;
+      }
+      if(!tax){
+        this.$message("请填写申报价");
+        return false;
+      }
+      let shuier = this.getShuier();
+      if(!shuier){
+        return false
+      }
+      let tax_item = shuier.children.find((item)=>{
+        return item.key=='tax'
+      })
+
+      let increment_tax_item = shuier.children.find((item)=>{
+        return item.key=='increment_tax'
+      })
+      increment_tax_item.rmb=((price+tax_item.rmb)*(increment_tax/100)).toFixed(2)
+      increment_tax_item.name=increment_tax_item.name.replace(/[0-9]/ig,increment_tax);
     }
   }
 }

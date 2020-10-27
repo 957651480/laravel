@@ -31,7 +31,7 @@ class MyVisitListResource extends JsonResource
             'image_url'=>(string)$excavator_images->first()->url,
             'total_cost_rmb'=>$excavator->cost_rmb,
             'total_cost_jpn'=>$excavator->cost_jpn,
-            'region_merger_name'=>(string)$excavator_region->merger_name,
+            'region_merger_name'=>(string)$excavator->address,
         ];
     }
 }

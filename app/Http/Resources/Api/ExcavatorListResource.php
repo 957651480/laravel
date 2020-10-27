@@ -27,7 +27,7 @@ class ExcavatorListResource extends JsonResource
             'image_url'=>(string)$images->first()->url,
             'total_cost_rmb'=>(float)$this->cost_rmb,
             'total_cost_jpn'=>(float)$this->cost_jpn,
-            'region_merger_name'=>(string)$region->merger_name,
+            'region_merger_name'=>(string)$this->address,
 
         ];
     }
