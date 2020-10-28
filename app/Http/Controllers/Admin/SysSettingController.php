@@ -46,7 +46,7 @@ class SysSettingController extends ApiController
     public function save(Request $request)
     {
         if($model = $this->sysSetting->first()){
-            $model->setRawAttributes($request->all());
+            $model->setRawAttributes(['value'=>$request->all()]);
             $model->save();
         }else{
             $this->sysSetting->create(['key'=>'base','value'=>$request->post()]);
