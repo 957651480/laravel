@@ -285,7 +285,7 @@ export default {
       cost_list_index:null,
       quoted_price:null,
       tax:8,
-      increment_tax:30,
+      increment_tax:13,
     }
   },
   created() {
@@ -475,7 +475,7 @@ export default {
         return item.key=='tax'
       })
       tax_item.rmb=price*(tax/100).toFixed(2);
-      tax_item.name=tax_item.name.replace(/[0-9]/ig,tax);
+      tax_item.name=tax_item.name.replace(/[\d]+/,tax);
       let tax_price = tax_item.rmb;
       if(this.increment_tax>0){
         let increment_tax_item = shuier.children.find((item)=>{
@@ -514,7 +514,7 @@ export default {
         return item.key=='increment_tax'
       })
       increment_tax_item.rmb=((price+tax_item.rmb)*(increment_tax/100)).toFixed(2)
-      increment_tax_item.name=increment_tax_item.name.replace(/[0-9]/ig,increment_tax);
+      increment_tax_item.name=increment_tax_item.name.replace(/[\d]+/,increment_tax);
     }
   }
 }
