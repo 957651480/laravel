@@ -145,7 +145,7 @@ class ExcavatorController extends ApiController
                 'children'=>[
                     ['name'=>'申报机价', 'rmb'=>'','key'=>'quoted_price'],
                     ['name'=>'关税8%', 'rmb'=>'','key'=>'tax'],
-                    ['name'=>'增值税30%', 'rmb'=>'','key'=>'increment_tax'],
+                    ['name'=>'增值税13%', 'rmb'=>'','key'=>'increment_tax'],
                 ]
             ];
         // 10T以下
