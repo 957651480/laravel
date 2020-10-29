@@ -22,7 +22,7 @@ class MyVisitListResource extends JsonResource
 
 
         return [
-            'id'=>(integer)$this->id,
+            'id'=>(integer)$excavator->id,
             'name'=>(string)$excavator->name,
             'price'=>$excavator->price,
             'date_of_production'=>(string)date('Y',$excavator->date_of_production),

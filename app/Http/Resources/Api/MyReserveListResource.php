@@ -21,7 +21,7 @@ class MyReserveListResource extends JsonResource
         $excavator_brand = $this->brand?:optional();
 
         return [
-            'id'=>(integer)$this->id,
+            'id'=>(integer)$excavator->id,
             'name'=>(string)$excavator->name,
             'price'=>$this->price,
             'date_of_production'=>(string)date('Y',$excavator->date_of_production),
