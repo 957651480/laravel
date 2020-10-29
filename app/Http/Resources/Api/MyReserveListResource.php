@@ -23,7 +23,7 @@ class MyReserveListResource extends JsonResource
         return [
             'id'=>(integer)$this->id,
             'name'=>(string)$excavator->name,
-            'price'=>$excavator->price,
+            'price'=>$this->price,
             'date_of_production'=>(string)date('Y',$excavator->date_of_production),
             'duration_of_use'=>(integer)$excavator->duration_of_use,
             'motor_model'=>(string)$excavator->motor_model,
