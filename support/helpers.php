@@ -1,5 +1,15 @@
 <?php
-if (function_exists('uuid')){
+
+if(!function_exists('array_only'))
+{
+    function array_only(array $arr,array $only){
+        $keys = array_fill_keys($only,null);
+        $intersect = array_intersect($arr,$keys);
+        return array_merge($keys,$intersect);
+    }
+}
+
+if (!function_exists('uuid')){
     function uuid(){
         $time_arr = explode(".", microtime(true));
         $time = $time_arr[0];
