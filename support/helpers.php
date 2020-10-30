@@ -1,5 +1,25 @@
 <?php
 
+if(!function_exists('filter_array')){
+    function filter_array(array $arr,array $filters)
+    {
+        array_walk($arr,function (&$value,$key,$filters)
+        {
+            if($filter = $filters[$key]??null){
+                if(is_array($filter)){
+                    array_map(function ($item)use(&$value){
+                        $value=$item($value);
+                    },$filter);
+                }else{
+                    $value = $filter($value);
+                }
+            }
+
+        },$filters);
+        return $arr;
+    }
+}
+
 if(!function_exists('array_only'))
 {
     function array_only(array $arr,array $only){
