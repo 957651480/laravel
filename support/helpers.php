@@ -1,36 +1,43 @@
 <?php
-function guid(){
 
-    if (function_exists('com_create_guid')){
+if(!function_exists('filter_array')){
+    function filter_array(array $arr,array $filters)
+    {
+        array_walk($arr,function (&$value,$key,$filters)
+        {
+            if($filter = $filters[$key]??null){
+                if(is_array($filter)){
+                    array_map(function ($item)use(&$value){
+                        $value=$item($value);
+                    },$filter);
+                }else{
+                    $value = $filter($value);
+                }
+            }
 
-        return com_create_guid();
-
-    }else{
-
-        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
-
-        $charid = strtoupper(md5(uniqid(rand(), true)));
-
-        $hyphen = chr(45);// "-"
-
-        $uuid = chr(123)// "{"
-
-            .substr($charid, 0, 8)
-
-            .substr($charid, 8, 4)
-
-            .substr($charid,12, 4)
-
-            .substr($charid,16, 4)
-
-            .substr($charid,20,12)
-
-            .chr(125);// "}"
-
-        return $uuid;
-
+        },$filters);
+        return $arr;
     }
+}
 
+if(!function_exists('array_only'))
+{
+    function array_only(array $arr,array $only){
+        $keys = array_fill_keys($only,null);
+        $intersect = array_intersect($arr,$keys);
+        return array_merge($keys,$intersect);
+    }
+}
+
+if (!function_exists('uuid')){
+    function uuid(){
+        $time_arr = explode(".", microtime(true));
+        $time = $time_arr[0];
+        $micro = (int)$time_arr[1];
+        $rand = str_pad(mt_rand(0,$micro),4,"0",STR_PAD_LEFT);
+        $micro = str_pad($micro,4,"0",STR_PAD_LEFT);
+        return intval($time.$micro.$rand);
+    }
 }
 if (! function_exists('api_response')) {
 
