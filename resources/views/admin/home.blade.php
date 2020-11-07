@@ -11,6 +11,6 @@
 <div id="app">
     <app></app>
 </div>
-<script src="{{ mix('backend/js/main.js') }}"></script>
+<script src="{{ mix('backend/js/main.js') }}" defer></script>
 </body>
 </html>
