@@ -1,11 +1,13 @@
 <template>
   <pro-layout
+    :title="title"
     :menus="menus"
     :collapsed="collapsed"
     :mediaQuery="query"
     :isMobile="isMobile"
     :handleMediaQuery="handleMediaQuery"
     :handleCollapse="handleCollapse"
+    :logo="logoRender"
     :i18nRender="i18nRender"
     v-bind="settings"
   >
@@ -15,16 +17,6 @@
     -->
     <ads v-if="isProPreviewSite && !collapsed"/>
     <!-- Ads end -->
-
-    <!-- 1.0.0+ 版本 pro-layout 提供 API，
-          我们推荐使用这种方式进行 LOGO 和 title 自定义
-    -->
-    <template v-slot:menuHeaderRender>
-      <div>
-        <logo-svg />
-        <h1>{{ title }}</h1>
-      </div>
-    </template>
 
     <setting-drawer :settings="settings" @change="handleSettingChange" />
     <template v-slot:rightContentRender>
@@ -41,7 +33,7 @@
 import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
-import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
+import { SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
 
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
@@ -55,7 +47,6 @@ export default {
     SettingDrawer,
     RightContent,
     GlobalFooter,
-    LogoSvg,
     Ads
   },
   data () {
@@ -72,8 +63,8 @@ export default {
       settings: {
         // 布局类型
         layout: defaultSettings.layout, // 'sidemenu', 'topmenu'
-        // CONTENT_WIDTH_TYPE
-        contentWidth: defaultSettings.layout === 'sidemenu' ? CONTENT_WIDTH_TYPE.Fluid : defaultSettings.contentWidth,
+        // 定宽: true / 流式: false
+        contentWidth: defaultSettings.layout === 'sidemenu' ? false : defaultSettings.contentWidth === 'Fixed',
         // 主题 'dark' | 'light'
         theme: defaultSettings.navTheme,
         // 主色调
@@ -138,7 +129,7 @@ export default {
       if (!this.isMobile && val['screen-xs']) {
         this.isMobile = true
         this.collapsed = false
-        this.settings.contentWidth = CONTENT_WIDTH_TYPE.Fluid
+        this.settings.contentWidth = false
         // this.settings.fixSiderbar = false
       }
     },
@@ -150,17 +141,20 @@ export default {
       type && (this.settings[type] = value)
       switch (type) {
         case 'contentWidth':
-          this.settings[type] = value
+          this.settings[type] = value === 'Fixed'
           break
         case 'layout':
           if (value === 'sidemenu') {
-            this.settings.contentWidth = CONTENT_WIDTH_TYPE.Fluid
+            this.settings.contentWidth = false
           } else {
             this.settings.fixSiderbar = false
-            this.settings.contentWidth = CONTENT_WIDTH_TYPE.Fixed
+            this.settings.contentWidth = true
           }
           break
       }
+    },
+    logoRender () {
+      return <LogoSvg />
     }
   }
 }

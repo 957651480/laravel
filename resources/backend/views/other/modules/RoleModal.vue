@@ -23,6 +23,7 @@
 
 <script>
 import { getPermissions } from '@/api/manage'
+import { actionToObject } from '@/utils/permissions'
 import pick from 'lodash.pick'
 
 export default {
@@ -122,7 +123,7 @@ export default {
       getPermissions().then(res => {
         const result = res.result
         that.permissions = result.map(permission => {
-          const options = JSON.parse(permission.actionData) || []
+          const options = actionToObject(permission.actionData)
           permission.checkedAll = false
           permission.selected = []
           permission.indeterminate = false
