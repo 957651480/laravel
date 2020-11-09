@@ -17,7 +17,7 @@ class CreateSysRegionTable extends Migration
             $table->integerIncrements('id')->comment('地区id');
             $table->string('name')->default('')->index()->comment('名称');
             $table->integer('parent_id')->default(0)->index()->comment('父id');
-            $table->integer('level')->default(1)->comment('层级');
+            $table->integer('level')->default(0)->comment('层级');
             $table->string('path')->default('')->comment('path');
             $table->softDeletes();
             $table->timestamps();
