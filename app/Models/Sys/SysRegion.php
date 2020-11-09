@@ -2,6 +2,8 @@
 
 namespace App\Models\Sys;
 
+use App\Models\EloquentModel;
+
 class SysRegion extends EloquentModel
 {
     //
