@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
             'email'=>'admin@admin.com',
             'password' => Hash::make('admin123456'),
         ]);*/
-        $this->call(PermissionTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
+        $this->call(PermissionSeeder::class);
+        $this->call(UsersSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(ExcavatorCostSeeder::class);
     }
