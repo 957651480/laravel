@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@ant-design-vue/pro-layout": "^1.0.6",
         "ant-design-vue": "^1.7.2"
     }
 }
