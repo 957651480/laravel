@@ -6,4 +6,15 @@ module.exports = {
             '@': path.resolve('resources/js'),
         },
     },
+    module: {
+        rules: [
+            {
+                test: /\.less$/,
+                loader: 'less-loader',
+                options: {
+                    javascriptEnabled: true
+                }
+            },
+        ],
+    },
 };
