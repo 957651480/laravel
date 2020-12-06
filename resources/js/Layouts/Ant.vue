@@ -22,11 +22,14 @@
                 rightContentRender
             </div>
         </template>
+        <main>
+            <slot></slot>
+        </main>
         <template v-slot:footerRender>
             <div>footerRender</div>
         </template>
         <setting-drawer navTheme="dark" />
-        <router-view />
+
     </pro-layout>
 </template>
 
