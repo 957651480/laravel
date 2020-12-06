@@ -12,6 +12,9 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 Vue.use(Antd);
 
+import ProLayout from '@ant-design-vue/pro-layout'
+Vue.use(ProLayout);
+
 Vue.mixin({ methods: { route } });
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
