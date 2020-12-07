@@ -15,7 +15,7 @@ class SysTree extends Model
      * @param string[] $columns
      * @return mixed
      */
-    public static function path(string $path,array $columns = ['*'])
+    public static function conf(string $path,array $columns = ['id','tag','name','value'])
     {
         return static::where('path',$path)->first($columns);
     }
