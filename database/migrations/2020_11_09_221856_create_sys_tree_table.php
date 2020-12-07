@@ -21,6 +21,7 @@ class CreateSysTreeTable extends Migration
             $table->unsignedInteger('pid')->comment('父id');
             $table->unsignedTinyInteger('deep')->comment('深度');
             $table->string('path',255)->comment('路径');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
