@@ -9,7 +9,6 @@ class SysTree extends Model
 {
     use HasFactory;
 
-
     /**
      * @param  string $path
      * @param string[] $columns
