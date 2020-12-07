@@ -15,5 +15,14 @@ abstract class Cache
      */
     protected $cache;
 
+    /**
+     * Cache constructor.
+     * @param Repository $cache
+     */
+    public function __construct(Repository $cache)
+    {
+        $this->cache = $cache;
+    }
+
 
 }
