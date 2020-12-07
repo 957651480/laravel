@@ -19,34 +19,24 @@ class EloquentModel extends Model
 {
 
 
-    public function batchDelete(array $ids)
+    public static function batchDelete(array $ids)
     {
-        return $this->whereIn('id',$ids)->delete();
+        return static::whereIn('id',$ids)->delete();
     }
 
-    public  function firstModelById(int $id,$with=[],$columns = ['*'])
+    public  static function firstModelById(int $id,$with=[],$columns = ['*'])
     {
         if($with){
-            $this->with($with);
+            static::with($with);
         }
-        return $this->whereKey($id)->first($columns);
+        return static::whereKey($id)->first($columns);
     }
 
-    public  function firstModelByIdOrFail(int $id,$with=[],$columns = ['*'])
+    public static function firstModelByIdOrFail(int $id,$with=[],$columns = ['*'])
     {
         if($with){
-            $this->with($with);
+            static::with($with);
         }
-        return $this->whereKey($id)->firstOrFail($columns);
-    }
-
-    public static function getCacheKey()
-    {
-        return get_called_class();
-    }
-
-    public static function flushCacheKey()
-    {
-        cache()->forget(self::getCacheKey());
+        return static::whereKey($id)->firstOrFail($columns);
     }
 }
