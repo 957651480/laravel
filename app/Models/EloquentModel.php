@@ -24,6 +24,12 @@ class EloquentModel extends Model
         return $this->whereIn('id',$ids)->delete();
     }
 
+    /**
+     * @param integer|string $key
+     * @param array $with
+     * @param string[] $columns
+     * @return EloquentModel|Builder|Model|object|null
+     */
     public  static function firstModelByPrimaryKey($key,$with=[],$columns = ['*'])
     {
         $query = static::query();
@@ -33,19 +39,20 @@ class EloquentModel extends Model
         return $query->whereKey($key)->first($columns);
     }
 
-    public  function firstModelByIdOrFail(int $key,$with=[],$columns = ['*'])
+
+    /**
+     * @param $key
+     * @param array $with
+     * @param string[] $columns
+     * @return EloquentModel|Builder|Model|object|null
+     * @throws @\Exception
+     */
+    public  function firstModelByPrimaryKeyOrException($key,$with=[],$columns = ['*'])
     {
-        self::firstModelByPrimaryKey($key);
-        return $this->whereKey($id)->firstOrFail($columns);
+        if (! is_null($model = static::firstModelByPrimaryKey($key,$with,$columns))) {
+            return $model;
+        }
+        throw new \Exception("dddd");
     }
 
-    public static function getCacheKey()
-    {
-        return get_called_class();
-    }
-
-    public static function flushCacheKey()
-    {
-        cache()->forget(self::getCacheKey());
-    }
 }
