@@ -4,7 +4,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 
 /**
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EloquentModel query()
  * @mixin Builder
  */
-class Eloquent extends Model
+class Model extends Eloquent
 {
 
 
@@ -28,7 +28,7 @@ class Eloquent extends Model
      * @param integer|string $key
      * @param array $with
      * @param string[] $columns
-     * @return Eloquent|Builder|Model|object|null
+     * @return Model|Builder|Model|object|null
      */
     public  static function firstModelByPrimaryKey($key,$with=[],$columns = ['*'])
     {
@@ -44,7 +44,7 @@ class Eloquent extends Model
      * @param $key
      * @param array $with
      * @param string[] $columns
-     * @return Eloquent|Builder|Model|object
+     * @return Model|Builder|Model|object
      * @throws @\Exception
      */
     public  function firstModelByPrimaryKeyOrException($key,$with=[],$columns = ['*'])
