@@ -44,7 +44,7 @@ class EloquentModel extends Model
      * @param $key
      * @param array $with
      * @param string[] $columns
-     * @return EloquentModel|Builder|Model|object|null
+     * @return EloquentModel|Builder|Model|object
      * @throws @\Exception
      */
     public  function firstModelByPrimaryKeyOrException($key,$with=[],$columns = ['*'])
