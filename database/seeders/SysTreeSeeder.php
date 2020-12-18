@@ -16,6 +16,11 @@ class SysTreeSeeder extends Seeder
     {
         //
 
+        $database=[
+          [
+
+          ]
+        ];
         SysTree::create();
     }
 }

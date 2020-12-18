@@ -18,6 +18,7 @@ class CreateSysTreeTable extends Migration
             $table->string('key')->comment('标识');
             $table->string('name')->comment('名称');
             $table->string('value')->comment('值');
+            $table->string('path')->comment('路径');
             $table->softDeletes();
             $table->timestamps();
         });
