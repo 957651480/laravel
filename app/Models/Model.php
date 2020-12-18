@@ -55,4 +55,32 @@ class Model extends Eloquent
         return throw_unless(static::firstModelByPrimaryKey($key,$with,$columns),\Exception::class);
     }
 
+    public static function batchUpdate($model, array $values, $index = null){
+        $final = [];
+        $ids = [];
+        if (!count($values)) {
+            return false;
+        }
+        if (!isset($index) || empty($index)) {
+            $index = $model->getKeyName();
+        }
+        foreach ($values as $key => $val) {
+            $ids[] = $val[$index];
+            foreach (array_keys($val) as $field) {
+                if ($field !== $index) {
+                    $value = (is_null($val[$field]) ? 'NULL' : '"' . $val[$field]) . '"';
+                    $final[$field][] = 'WHEN `' . $index . '` = "' . $val[$index] . '" THEN ' . $value . ' ';
+                }
+            }
+        }
+        $cases = '';
+        foreach ($final as $k => $v) {
+            $cases .= '`' . $k . '` = (CASE ' . implode("\n", $v) . "\n"
+                . 'ELSE `' . $k . '` END), ';
+        }
+        $full_table     =  $model->getConnection()->getTablePrefix() . $model->getTable();
+        $query = "UPDATE `" .$full_table . "` SET " . substr($cases, 0, -2) . " WHERE `$index` IN(" . '"' . implode('","', $ids) . '"' . ");";
+        \DB::update($query);
+        #return $this->db->connection($this->getConnectionName($table))->update($query);
+    }
 }

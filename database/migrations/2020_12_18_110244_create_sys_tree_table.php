@@ -15,10 +15,12 @@ class CreateSysTreeTable extends Migration
     {
         Schema::create('sys_tree', function (Blueprint $table) {
             $table->id();
-            $table->string('key')->comment('标识');
-            $table->string('name')->comment('名称');
-            $table->string('value')->comment('值');
-            $table->string('path')->comment('路径');
+            $table->unsignedInteger('pid')->default(0);
+            $table->unsignedInteger('deep')->default(1);
+            $table->string('key')->default('')->comment('标识');
+            $table->string('name')->default('')->comment('名称');
+            $table->string('value')->default('')->comment('值');
+            $table->string('path')->default('')->comment('路径');
             $table->softDeletes();
             $table->timestamps();
         });
