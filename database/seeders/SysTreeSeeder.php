@@ -16,25 +16,22 @@ class SysTreeSeeder extends Seeder
     public function run()
     {
         //
-
         $data = [
             ['deep'=>1,'key' => 'table', 'name' => '数据表', 'value' => '', 'path' => 'table'],
             ['deep'=>2,'key' => 'user_ident', 'name' => '用户认证表', 'value' => '', 'path' => 'table,user_ident'],
             ['deep'=>3,'key' => 'login_type', 'name' => '登录类型', 'value' => '', 'path' => 'table,user_ident,login_type'],
             ['deep'=>4,'key' => 'phone', 'name' => '手机', 'value' => '', 'path' => 'table,user_ident,login_type,phone'],
+            ['deep'=>4,'key' => 'email', 'name' => '邮箱', 'value' => '', 'path' => 'table,user_ident,login_type,email'],
+            ['deep'=>4,'key' => 'weixin', 'name' => '微信', 'value' => '', 'path' => 'table,user_ident,login_type,weixin'],
         ];
         SysTree::insert($data);
 
         $updateArr=[];
-
-        for($deep=1;$deep<10;$deep++){
-            //上级
-            $prev = SysTree::where('deep',$deep)->pluck('path','id')->toArray();
-            if(!$prev){
-                break;
-            }
-            //下级
-            $next = SysTree::where('deep',$deep+1)->pluck('path','id')->toArray();
+        $deep=1;
+        $prev = SysTree::where('deep',$deep)->pluck('path','id')->toArray();
+        while ($prev){
+            $deep++;
+            $next = SysTree::where('deep',$deep)->pluck('path','id')->toArray();
             if(!$next){
                 break;
             }
@@ -54,6 +51,7 @@ class SysTreeSeeder extends Seeder
                     ];
                 }
             }
+            $prev =$next;
         }
         if($updateArr){
             SysTree::batchUpdate(new SysTree(),$updateArr,'id');
