@@ -10,4 +10,7 @@ class SysTree extends Model
 {
     protected $table='sys_tree';
     use HasFactory;
+
+
+
 }
