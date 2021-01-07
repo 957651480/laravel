@@ -2,10 +2,15 @@
 
 namespace App\Models\Sys;
 
+use App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Tree extends Model
+
+class SysTree extends Model
 {
+    protected $table='sys_tree';
     use HasFactory;
+
+
+
 }
