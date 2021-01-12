@@ -1,6 +1,5 @@
 const mix = require('laravel-mix');
 
-mix.setPublicPath("public/static")
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,8 +11,13 @@ mix.setPublicPath("public/static")
  |
  */
 
-mix.js('resources/js/app.js', 'public/static/js')
-    .postCss('resources/css/app.css', 'public/static/css', [
-        //
+mix.js('resources/js/app.js', 'public/js')
+    .postCss('resources/css/app.css', 'public/css', [
+        require('postcss-import'),
+        require('tailwindcss'),
+        require('autoprefixer'),
     ]);
 
+if (mix.inProduction()) {
+    mix.version();
+}
