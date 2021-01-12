@@ -18,6 +18,10 @@ mix.js('resources/js/app.js', 'public/js')
         require('autoprefixer'),
     ]);
 
+mix.js('resources/js/vue.js','public/js')
+mix.js('resources/js/element-ui.js','public/js')
+
 if (mix.inProduction()) {
     mix.version();
 }
+
