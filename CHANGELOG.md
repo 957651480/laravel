@@ -1,4 +1,4 @@
-# Release Notes
+# Release Notes  
 
 ## [Unreleased](https://github.com/laravel/laravel/compare/v8.4.4...master)
 
