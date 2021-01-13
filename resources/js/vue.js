@@ -1,2 +1,1 @@
-const Vue = require('vue').default;
-window.Vue=Vue
+window.Vue = require('vue');

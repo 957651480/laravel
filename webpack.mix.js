@@ -18,7 +18,7 @@ mix.js('resources/js/app.js', 'public/js')
         require('autoprefixer'),
     ]);
 
-//mix.js('resources/js/vue.js','public/js').vue({ version: 3 })
+mix.js('resources/js/vue.js','public/js').vue({ version: 3 })
 mix.js('resources/js/element-ui.js','public/js').vue({ version: 3 })
 
 if (mix.inProduction()) {
