@@ -19,11 +19,6 @@ class Model extends Eloquent
 {
 
 
-    public function batchDelete(array $ids)
-    {
-        return $this->whereIn('id',$ids)->delete();
-    }
-
     /**
      * @param integer|string $key
      * @param array $with
@@ -32,11 +27,7 @@ class Model extends Eloquent
      */
     public  static function firstModelByPrimaryKey($key,$with=[],$columns = ['*'])
     {
-        $query = static::query();
-        if($with){
-            $query->with($with);
-        }
-        return $query->whereKey($key)->first($columns);
+        return static::query()->with($with)->whereKey($key)->first($columns);
     }
 
 
@@ -47,12 +38,9 @@ class Model extends Eloquent
      * @return Model|Builder|Model|object
      * @throws @\Exception
      */
-    public  function firstModelByPrimaryKeyOrException($key,$with=[],$columns = ['*'])
+    public  function firstModelByPrimaryKeyOrFail($key,$with=[],$columns = ['*'])
     {
-        if (! is_null($model = static::firstModelByPrimaryKey($key,$with,$columns))) {
-            return $model;
-        }
-        return throw_unless(static::firstModelByPrimaryKey($key,$with,$columns),\Exception::class);
+        return static::query()->with($with)->whereKey($key)->firstOrFail($columns);
     }
 
     public static function batchUpdate($model, array $values, $index = null){
@@ -81,6 +69,5 @@ class Model extends Eloquent
         $full_table     =  $model->getConnection()->getTablePrefix() . $model->getTable();
         $query = "UPDATE `" .$full_table . "` SET " . substr($cases, 0, -2) . " WHERE `$index` IN(" . '"' . implode('","', $ids) . '"' . ");";
         \DB::update($query);
-        #return $this->db->connection($this->getConnectionName($table))->update($query);
     }
 }
