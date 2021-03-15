@@ -14,11 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(1)->create([
+        /*\App\Models\User::factory(1)->create([
             'name'=>'admin',
             'email'=>'admin@admin.com',
             'nickname'=>'admin',
             'password' => Hash::make('admin123456'),
-        ]);
+        ]);*/
+        $this->call(SysTreeSeeder::class);
     }
 }

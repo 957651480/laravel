@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSysTreeTable extends Migration
+class CreateSysRegionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateSysTreeTable extends Migration
      */
     public function up()
     {
-        Schema::create('sys_tree', function (Blueprint $table) {
+        Schema::create('sys_region', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('pid')->default(0);
-            $table->unsignedInteger('deep')->default(1);
-            $table->string('key')->default('')->comment('标识');
+            $table->unsignedInteger('pid')->default(0)->comment('父id');
             $table->string('name')->default('')->comment('名称');
-            $table->string('value')->default('')->comment('值');
+            $table->unsignedInteger('deep')->default(1)->comment('层级');
             $table->string('path')->default('')->comment('路径');
             $table->softDeletes();
             $table->timestamps();
@@ -33,6 +31,6 @@ class CreateSysTreeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sys_tree');
+        Schema::dropIfExists('sys_region');
     }
 }
