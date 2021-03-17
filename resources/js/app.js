@@ -7,6 +7,9 @@ import { InertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
 
 
+import "antd/dist/antd.css";
+
+
 InertiaProgress.init({
     color: '#ED8936',
     showSpinner: true

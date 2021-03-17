@@ -1,6 +1,7 @@
 import React from 'react';
+import {Button} from 'antd';
 
 function Test():React.ReactNode {
-    return <h1>My Website Heading</h1>
+    return <Button>Delete</Button>
 }
 export default Test
