@@ -1,18 +1,34 @@
-import React from 'react'
-import ProLayout, { PageContainer } from '@ant-design/pro-layout';
-
-
+import React, { useState } from 'react'
+import ProLayout, {PageContainer,SettingDrawer} from '@ant-design/pro-layout';
+import type { ProSettings } from '@ant-design/pro-layout';
 
 export default ()=>{
+    const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
     return(
-        <ProLayout
-            menuItemRender={
-                false
-            }
+        <div
+            id="test-pro-layout"
+            style={{
+                height: '100vh',
+            }}
         >
-            <PageContainer>
-                00000
-            </PageContainer>
-        </ProLayout>
+            <ProLayout
+
+                menuItemRender={
+                    false
+                }
+
+            >
+                <PageContainer>
+                    00000
+                </PageContainer>
+            </ProLayout>
+            <SettingDrawer
+                pathname='/'
+                getContainer={() => document.getElementById('test-pro-layout')}
+                settings={settings}
+                onSettingChange={(changeSetting) => setSetting(changeSetting)}
+                disableUrlParams
+            />
+        </div>
     )
 }
