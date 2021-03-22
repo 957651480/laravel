@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import ProLayout, {PageContainer,SettingDrawer} from '@ant-design/pro-layout';
 import type { ProSettings } from '@ant-design/pro-layout';
 
-export default function Layout(title:string, children: React.ReactNode) {
+export default function Layout(title:any, children:any) {
 
     const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
     return(
