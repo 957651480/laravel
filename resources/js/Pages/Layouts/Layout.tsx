@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import Helmet from 'react-helmet';
 import ProLayout, {PageContainer,SettingDrawer} from '@ant-design/pro-layout';
 import type { ProSettings } from '@ant-design/pro-layout';
-
+// @ts-ignore
+import defaultProps from '@/Pages/route';
 
 // @ts-ignore
 //todo 暂不知道ts里带{}的参数怎么定义类型
@@ -21,11 +22,7 @@ export default function Layout({title, children}) {
                 <title>Welcome {title}</title>
             </Helmet>
             <ProLayout
-
-                menuItemRender={
-                    false
-                }
-
+                {...defaultProps}
             >
                 <PageContainer>
                     {children}
