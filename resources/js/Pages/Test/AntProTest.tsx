@@ -7,11 +7,8 @@ import Layout from '@/Pages/Layouts/Layout';
 const Index = () => {
 
     // @ts-ignore
-    const { users } = usePage().props;
-    const {
-        data,
-        meta: { links }
-    } = users;
+
+
     return (
         <div>
             0000
