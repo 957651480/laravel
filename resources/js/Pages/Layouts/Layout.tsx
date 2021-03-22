@@ -5,6 +5,7 @@ import type { ProSettings } from '@ant-design/pro-layout';
 
 
 // @ts-ignore
+//todo 暂不知道ts里带{}的参数怎么定义类型
 export default function Layout({title, children}) {
 
     const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
