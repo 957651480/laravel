@@ -17,4 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('test/test',[\App\Http\Controllers\TestController::class,'test']);
-Route::get('test/antprotest',[\App\Http\Controllers\TestController::class,'antProTest']);
+Route::get('test/antprotestone',[\App\Http\Controllers\TestController::class,'antProTestOne']);
+Route::get('test/antprotesttwo',[\App\Http\Controllers\TestController::class,'antProTestTwo']);

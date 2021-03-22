@@ -4,18 +4,18 @@ import { InertiaLink, usePage } from '@inertiajs/inertia-react';
 import Layout from '@/Pages/Layouts/Layout';
 
 
-const Index = () => {
+const AntProTestOne = () => {
 
     // @ts-ignore
 
 
     return (
         <div>
-            0000
+            testOne
         </div>
     );
 };
 
-Index.layout = (page: any) => <Layout title="Users" children={page} />;
+AntProTestOne.layout = (page: any) => <Layout title="Users" children={page} />;
 
-export default Index;
+export default AntProTestOne;

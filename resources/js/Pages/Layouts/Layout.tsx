@@ -1,15 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Helmet from 'react-helmet';
+import { InertiaLink } from '@inertiajs/inertia-react';
+import type { MenuDataItem } from '@ant-design/pro-layout';
 import ProLayout, {PageContainer,SettingDrawer} from '@ant-design/pro-layout';
 import type { ProSettings } from '@ant-design/pro-layout';
 // @ts-ignore
-import defaultProps from '@/Pages/route';
+import route from '@/Pages/route';
 
 // @ts-ignore
 //todo 暂不知道ts里带{}的参数怎么定义类型
 export default function Layout({title, children}) {
 
     const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({ fixSiderbar: true });
+    const [menuData, setMenuData] = useState<MenuDataItem[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [index, setIndex] = useState(0);
+    useEffect(() => {
+        setMenuData([]);
+        setLoading(true);
+        setTimeout(() => {
+            setMenuData(route);
+            setLoading(false);
+        }, 2000);
+    }, [index]);
     return(
 
         <div
@@ -22,7 +35,20 @@ export default function Layout({title, children}) {
                 <title>Welcome {title}</title>
             </Helmet>
             <ProLayout
-                {...defaultProps}
+
+                title="后台管理系统"
+                logo="https://gw.alipayobjects.com/mdn/rms_b5fcc5/afts/img/A*1NHAQYduQiQAAAAAAAAAAABkARQnAQ"
+                menu={{
+                    loading,
+                }}
+                location={{
+                    pathname: '/',
+                }}
+                menuDataRender={() => menuData}
+                menuItemRender={(item, dom) => <InertiaLink href={item.path as string}>
+                    <div>{dom}</div>
+                </InertiaLink>}
+                subMenuItemRender={(_:any, dom:any) => <div>pre {dom}</div>}
             >
                 <PageContainer>
                     {children}

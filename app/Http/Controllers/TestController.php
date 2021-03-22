@@ -14,9 +14,16 @@ class TestController extends Controller
         return  Inertia::render('Test/Test');
     }
 
-    public function antProTest()
+    public function antProTestOne()
     {
-        return  Inertia::render('Test/AntProTest',[
+        return  Inertia::render('Test/AntProTestOne',[
+            'event'=>['title'=>'jkdshkhk']
+        ]);
+    }
+
+    public function antProTestTwo()
+    {
+        return  Inertia::render('Test/AntProTestTwo',[
             'event'=>['title'=>'jkdshkhk']
         ]);
     }
