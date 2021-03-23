@@ -1,6 +1,15 @@
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
+const rawArgv = process.argv.slice(2);
+const report = rawArgv.includes('--report');
+let plugins = [];
+if (report) {
+    plugins.push(new BundleAnalyzerPlugin({
+        openAnalyzer: true,
+    }));
+}
 module.exports = {
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
     resolve: {
@@ -20,4 +29,5 @@ module.exports = {
             },
         ],
     },
+    plugins: plugins,
 };
