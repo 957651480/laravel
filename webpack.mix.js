@@ -17,7 +17,12 @@ mix.ts('resources/js/app.js', 'public/js').react()
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-    .webpackConfig(require('./webpack.config'));
+    .webpackConfig(require('./webpack.config'))
+    .babelConfig({
+        "plugins": [
+            ["import", { libraryName: "antd", style: "css" }]
+        ]
+    });
 
 if (mix.inProduction()) {
     mix.version();
