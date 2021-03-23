@@ -10,6 +10,11 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.babelConfig({
+    "plugins": [
+        ["import", { libraryName: "antd", style: "css" }]
+    ]
+})
 mix.extract();
 mix.ts('resources/js/app.js', 'public/js').react()
     .postCss('resources/css/app.css', 'public/css', [
@@ -17,12 +22,7 @@ mix.ts('resources/js/app.js', 'public/js').react()
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-    .webpackConfig(require('./webpack.config'))
-    .babelConfig({
-        "plugins": [
-            ["import", { libraryName: "antd", style: "css" }]
-        ]
-    });
+    .webpackConfig(require('./webpack.config'));
 
 if (mix.inProduction()) {
     mix.version();
