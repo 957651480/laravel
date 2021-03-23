@@ -7,7 +7,7 @@ import { InertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
 
 
-import "antd/dist/antd.css";
+//import "antd/dist/antd.css";
 
 
 InertiaProgress.init({
