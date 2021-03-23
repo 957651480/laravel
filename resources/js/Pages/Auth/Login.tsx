@@ -18,6 +18,10 @@ const Login = () => {
             style={{
                 width: 330,
                 margin: 'auto',
+                position: 'absolute',
+                top: '30%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
             }}
         >
             <ProForm
