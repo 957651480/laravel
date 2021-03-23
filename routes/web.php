@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('test/test',[\App\Http\Controllers\TestController::class,'test']);
-Route::get('test/antprotestone',[\App\Http\Controllers\TestController::class,'antProTestOne']);
-Route::get('test/antprotesttwo',[\App\Http\Controllers\TestController::class,'antProTestTwo']);
+
+Route::group(['prefix'=>'admin/'],function (){
+    Route::get('auth/login',[\App\Http\Controllers\Admin\Auth\AuthController::class,'login']);
+
+
+    Route::get('test/test',[\App\Http\Controllers\TestController::class,'test']);
+    Route::get('test/antprotestone',[\App\Http\Controllers\TestController::class,'antProTestOne']);
+    Route::get('test/antprotesttwo',[\App\Http\Controllers\TestController::class,'antProTestTwo']);
+
+
+});
+
