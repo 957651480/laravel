@@ -22,7 +22,7 @@ export default [
         ],
     },
     {
-        path: '/file',
+        path: '/admin/file',
         name: '文件管理',
         children: [
             {

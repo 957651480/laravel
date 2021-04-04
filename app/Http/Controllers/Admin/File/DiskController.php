@@ -11,7 +11,7 @@ class DiskController extends \App\Http\Controllers\Admin\AdminController
 
     public function index()
     {
-        return  Inertia::render('Test/AntProTestOne',[
+        return  Inertia::render('File/Disk/List',[
             'event'=>['title'=>'jkdshkhk']
         ]);
     }
