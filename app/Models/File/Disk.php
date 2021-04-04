@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Disk extends Model
 {
     use HasFactory;
+    protected $table='file_disk';
 }
