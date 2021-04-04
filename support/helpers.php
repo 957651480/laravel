@@ -35,18 +35,12 @@ function guid(){
 if (! function_exists('api_response')) {
 
     /**
-     * @param int $code
-     * @param string $msg
      * @param array $data
-     * @return \App\Http\Response\ApiResponse|\Illuminate\Http\JsonResponse
+     * @return \App\Library\ApiResponse
      */
-    function api_response(array $response=[])
+    function api_response(array $data=[])
     {
-        $factory = app(\App\Http\Response\ApiResponse::class);
-        if (func_num_args() === 0) {
-            return $factory;
-        }
-        return $factory->json($response);
+        return app(\App\Library\ApiResponse::class);
     }
 }
 if (! function_exists('get_sons')) {

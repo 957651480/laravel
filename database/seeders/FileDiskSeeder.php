@@ -22,6 +22,8 @@ class FileDiskSeeder extends Seeder
             ['key' => 'qiniu', 'name' => '七牛云'],
             ['key' => 'alioss', 'name' => '阿里云'],
         ];
-        Disk::insert($data);
+        foreach ($data as $index => $datum) {
+            Disk::create($datum);
+        }
     }
 }

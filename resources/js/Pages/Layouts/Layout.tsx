@@ -23,7 +23,7 @@ export default function Layout({title, children}) {
         setTimeout(() => {
             setMenuData(route);
             setLoading(false);
-        }, 2000);
+        }, 100);
     }, [index]);
     return(
 
