@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\File;
 
 
 use App\Models\File\Disk;
+use App\Http\Requests\Request;
 use Inertia\Inertia;
 
 class DiskController extends \App\Http\Controllers\Admin\AdminController
@@ -16,12 +17,15 @@ class DiskController extends \App\Http\Controllers\Admin\AdminController
         ]);
     }
 
-    public function indexApi()
+    public function indexApi(Request $request)
     {
-        $paginate =Disk::latest()->paginate(15);
+        list($page,$size,$offset)= $request->getFilterAntiPageParam();
+        $query = Disk::query();
+        $total =$query->count();
+        $collection = $query->oldest()->skip($offset)->take($size)->get();
         return api_response()->antiSuccess([
-            'total'=>$paginate->total(),
-            'data'=>$paginate->items()
+            'total'=>$total,
+            'data'=>$collection
         ]);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c7f033d9867acc3627cc87cdcf3591e",
+    "content-hash": "24b73e19a9fcaadfefd1bee158cd3121",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1897,6 +1897,102 @@
             "time": "2020-11-07T02:01:34+00:00"
         },
         {
+            "name": "overtrue/flysystem-qiniu",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/flysystem-qiniu.git",
+                "reference": "642731719ecba8826e095e2395e379c2a4910c80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/flysystem-qiniu/zipball/642731719ecba8826e095e2395e379c2a4910c80",
+                "reference": "642731719ecba8826e095e2395e379c2a4910c80",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^1.0",
+                "php": ">=5.5.9",
+                "qiniu/php-sdk": "^7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "1.3.1",
+                "php": ">=5.6.0",
+                "phpunit/phpunit": "~8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\Flysystem\\Qiniu\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "i@overtrue.me"
+                }
+            ],
+            "description": "Flysystem adapter for the Qiniu storage.",
+            "support": {
+                "issues": "https://github.com/overtrue/flysystem-qiniu/issues",
+                "source": "https://github.com/overtrue/flysystem-qiniu/tree/master"
+            },
+            "time": "2020-02-21T10:46:56+00:00"
+        },
+        {
+            "name": "overtrue/laravel-filesystem-qiniu",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/laravel-filesystem-qiniu.git",
+                "reference": "73e8346de9e892f9e42f17f781e1878e981b75d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/laravel-filesystem-qiniu/zipball/73e8346de9e892f9e42f17f781e1878e981b75d6",
+                "reference": "73e8346de9e892f9e42f17f781e1878e981b75d6",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^1.0",
+                "overtrue/flysystem-qiniu": "^1.0.2",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Overtrue\\LaravelFilesystem\\Qiniu\\QiniuStorageServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\LaravelFilesystem\\Qiniu\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "i@overtrue.me"
+                }
+            ],
+            "description": "A Qiniu storage filesystem for Laravel.",
+            "support": {
+                "issues": "https://github.com/overtrue/laravel-filesystem-qiniu/issues",
+                "source": "https://github.com/overtrue/laravel-filesystem-qiniu/tree/master"
+            },
+            "time": "2018-12-06T04:06:18+00:00"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.7.5",
             "source": {
@@ -2392,6 +2488,61 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.10.7"
             },
             "time": "2021-03-14T02:14:56+00:00"
+        },
+        {
+            "name": "qiniu/php-sdk",
+            "version": "v7.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qiniu/php-sdk.git",
+                "reference": "0a461e13b09545b23df361843c6a65fdd3a26426"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/0a461e13b09545b23df361843c6a65fdd3a26426",
+                "reference": "0a461e13b09545b23df361843c6a65fdd3a26426",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Qiniu\\": "src/Qiniu"
+                },
+                "files": [
+                    "src/Qiniu/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Qiniu",
+                    "email": "sdk@qiniu.com",
+                    "homepage": "http://www.qiniu.com"
+                }
+            ],
+            "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
+            "homepage": "http://developer.qiniu.com/",
+            "keywords": [
+                "cloud",
+                "qiniu",
+                "sdk",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/qiniu/php-sdk/issues",
+                "source": "https://github.com/qiniu/php-sdk/tree/v7.3.0"
+            },
+            "time": "2020-09-24T07:31:29+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

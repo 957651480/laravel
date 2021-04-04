@@ -32,24 +32,24 @@ return [
 
         'local' => [
             'driver' => 'local',
+            'name'  =>'服务本地(私有)',
             'root' => storage_path('app'),
         ],
 
         'public' => [
             'driver' => 'local',
+            'name'  =>'服务本地(公开)',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
+        'qiniu' => [
+            'driver'     => 'qiniu',
+            'name'       =>'七牛云',
+            'access_key' => env('QINIU_ACCESS_KEY', 'xxxxxxxxxxxxxxxx'),
+            'secret_key' => env('QINIU_SECRET_KEY', 'xxxxxxxxxxxxxxxx'),
+            'bucket'     => env('QINIU_BUCKET', 'test'),
+            'domain'     => env('QINIU_DOMAIN', 'xxx.clouddn.com'), // or host: https://xxxx.clouddn.com
         ],
 
     ],

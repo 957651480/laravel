@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.5",
         "inertiajs/inertia-laravel": "^0.4.0",
         "tightenco/ziggy": "^1.0",
-        "spatie/laravel-permission": "^4.0"
+        "spatie/laravel-permission": "^4.0",
+        "overtrue/laravel-filesystem-qiniu": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
