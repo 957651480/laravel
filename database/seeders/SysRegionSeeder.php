@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Sys\SysRegion;
+use App\Models\Sys\FileDisk;
 use Illuminate\Database\Seeder;
 
 class SysRegionSeeder extends Seeder
@@ -22,14 +22,14 @@ class SysRegionSeeder extends Seeder
             ['deep'=>4,'key' => 'email', 'name' => '邮箱', 'value' => '', 'path' => 'table,user_ident,login_type,email'],
             ['deep'=>4,'key' => 'weixin', 'name' => '微信', 'value' => '', 'path' => 'table,user_ident,login_type,weixin'],
         ];
-        SysRegion::insert($data);
+        FileDisk::insert($data);
 
         $updateArr=[];
         $deep=1;
-        $prev = SysRegion::where('deep',$deep)->pluck('path','id')->toArray();
+        $prev = FileDisk::where('deep',$deep)->pluck('path','id')->toArray();
         while ($prev){
             $deep++;
-            $next = SysRegion::where('deep',$deep)->pluck('path','id')->toArray();
+            $next = FileDisk::where('deep',$deep)->pluck('path','id')->toArray();
             if(!$next){
                 break;
             }
@@ -52,7 +52,7 @@ class SysRegionSeeder extends Seeder
             $prev =$next;
         }
         if($updateArr){
-            SysRegion::batchUpdate(new SysRegion(),$updateArr,'id');
+            FileDisk::batchUpdate(new FileDisk(),$updateArr,'id');
         }
     }
 }

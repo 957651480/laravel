@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123456'),
         ]);*/
         $this->call(SysTreeSeeder::class);
+        $this->call(FileDiskSeeder::class);
+
     }
 }
