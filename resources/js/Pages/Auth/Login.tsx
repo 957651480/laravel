@@ -3,6 +3,7 @@ import { message } from 'antd';
 import ProForm, { ProFormText,  } from '@ant-design/pro-form';
 import { IdcardTwoTone, LockTwoTone } from '@ant-design/icons';
 
+
 const waitTime = (time: number = 100) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -21,8 +22,8 @@ const Login = () => {
                 position: 'absolute',
                 top: '30%',
                 left: '50%',
-                transform: 'translate(-50%, -50%)'
-            }}
+                transform: 'translate(-50%, -50%)',
+             }}
         >
             <ProForm
                 onFinish={async () => {
