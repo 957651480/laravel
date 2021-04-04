@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix'=>'admin/'],function (){
+
+    Route::get('/',[\App\Http\Controllers\Admin\DashboardController::class,'index']);
     Route::get('auth/login',[\App\Http\Controllers\Admin\Auth\AuthController::class,'login']);
 
 
