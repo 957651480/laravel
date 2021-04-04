@@ -25,7 +25,7 @@ module.exports = {
                 options: {
                     javascriptEnabled: true
                 }
-            },
+            }
         ],
     },
     plugins: plugins,

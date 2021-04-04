@@ -10,11 +10,6 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.babelConfig({
-    "plugins": [
-        ["import", { libraryName: "antd", style: "css" }]
-    ]
-})
 mix.extract();
 mix.ts('resources/js/app.js', 'public/js').react()
     .postCss('resources/css/app.css', 'public/css', [
