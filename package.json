@@ -28,7 +28,8 @@
         "postcss": "^8.2.8",
         "postcss-import": "^14.0.0",
         "ts-loader": "^8.0.18",
-        "webpack-bundle-analyzer": "^4.4.0"
+        "webpack-bundle-analyzer": "^4.4.0",
+        "antd-dayjs-webpack-plugin": "^1.0.6"
     },
     "dependencies": {
         "@ant-design/pro-form": "^1.18.4",

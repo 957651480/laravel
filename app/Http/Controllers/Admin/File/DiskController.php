@@ -28,4 +28,10 @@ class DiskController extends \App\Http\Controllers\Admin\AdminController
             'data'=>$collection
         ]);
     }
+
+    public function setting()
+    {
+        return  Inertia::render('File/Disk/Setting',[
+        ]);
+    }
 }

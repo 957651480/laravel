@@ -28,6 +28,7 @@ Route::group(['prefix'=>'admin/'],function (){
     Route::get('test/antprotesttwo',[\App\Http\Controllers\TestController::class,'antProTestTwo']);
 
     Route::get('file/disk',[\App\Http\Controllers\Admin\File\DiskController::class,'index']);
+    Route::get('file/disk/setting',[\App\Http\Controllers\Admin\File\DiskController::class,'setting']);
     Route::get('file/diskapi',[\App\Http\Controllers\Admin\File\DiskController::class,'indexApi']);
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { message } from 'antd';
-import ProForm, { ProFormText, ProFormCaptcha } from '@ant-design/pro-form';
-import { MobileOutlined, MailOutlined } from '@ant-design/icons';
+import ProForm, { ProFormText,  } from '@ant-design/pro-form';
+import { IdcardTwoTone, LockTwoTone } from '@ant-design/icons';
 
 const waitTime = (time: number = 100) => {
     return new Promise((resolve) => {
@@ -69,42 +69,30 @@ const Login = () => {
                 <ProFormText
                     fieldProps={{
                         size: 'large',
-                        prefix: <MobileOutlined />,
+                        prefix: <IdcardTwoTone />,
                     }}
                     name="phone"
-                    placeholder="请输入手机号"
+                    placeholder="请输入账号"
                     rules={[
                         {
                             required: true,
-                            message: '请输入手机号!',
-                        },
-                        {
-                            pattern: /^1\d{10}$/,
-                            message: '不合法的手机号格式!',
+                            message: '请输入账号!',
                         },
                     ]}
                 />
-                <ProFormCaptcha
+                <ProFormText.Password
                     fieldProps={{
                         size: 'large',
-                        prefix: <MailOutlined />,
+                        prefix: <LockTwoTone />,
                     }}
-                    captchaProps={{
-                        size: 'large',
-                    }}
-                    phoneName="phone"
-                    name="captcha"
+                    name="password"
                     rules={[
                         {
                             required: true,
-                            message: '请输入验证码',
+                            message: '请输入密码',
                         },
                     ]}
-                    placeholder="请输入验证码"
-                    onGetCaptcha={async (phone) => {
-                        await waitTime(1000);
-                        message.success(`手机号 ${phone} 验证码发送成功!`);
-                    }}
+                    placeholder="请输入密码"
                 />
             </ProForm>
         </div>

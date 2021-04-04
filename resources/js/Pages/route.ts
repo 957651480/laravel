@@ -26,6 +26,10 @@ export default [
         name: '文件管理',
         children: [
             {
+                path: 'disk/setting',
+                name: '存储设置',
+            },
+            {
                 path: 'file',
                 name: '文件列表',
             },

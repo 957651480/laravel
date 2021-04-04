@@ -34,7 +34,7 @@ export default function Layout({title, children}) {
             }}
         >
             <Helmet>
-                <title>Welcome {title}</title>
+                <title>{title}</title>
             </Helmet>
             <ProLayout
 
