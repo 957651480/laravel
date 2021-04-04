@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\File\Disk;
 use App\Models\Sys\SysTree;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -17,13 +18,10 @@ class FileDiskSeeder extends Seeder
     {
         //
         $data = [
-            ['deep'=>1,'key' => 'table', 'name' => '数据表', 'value' => '', 'path' => 'table'],
-            ['deep'=>2,'key' => 'user_ident', 'name' => '用户认证表', 'value' => '', 'path' => 'table,user_ident'],
-            ['deep'=>3,'key' => 'login_type', 'name' => '登录类型', 'value' => '', 'path' => 'table,user_ident,login_type'],
+            ['key' => 'local', 'name' => '本地磁盘'],
+            ['key' => 'qiniu', 'name' => '七牛云'],
+            ['key' => 'alioss', 'name' => '阿里云'],
         ];
-        SysTree::insert($data);
-
-        $updateArr=[];
-        $deep=1;
+        Disk::insert($data);
     }
 }

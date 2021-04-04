@@ -15,6 +15,8 @@ class CreateFileDiskTable extends Migration
     {
         Schema::create('file_disk', function (Blueprint $table) {
             $table->id();
+            $table->string('key')->comment('唯一key');
+            $table->string('name')->comment('名称');
             $table->timestamps();
         });
     }

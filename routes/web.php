@@ -27,6 +27,6 @@ Route::group(['prefix'=>'admin/'],function (){
     Route::get('test/antprotestone',[\App\Http\Controllers\TestController::class,'antProTestOne']);
     Route::get('test/antprotesttwo',[\App\Http\Controllers\TestController::class,'antProTestTwo']);
 
-
+    Route::get('file/disk',[\App\Http\Controllers\Admin\File\DiskController::class,'index']);
 });
 
