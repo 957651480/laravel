@@ -14,3 +14,20 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .react()
     .sass('resources/sass/app.scss', 'public/css');
+
+
+
+mix.webpackConfig(require('./webpack.config'));
+if (mix.inProduction()) {
+    mix.version();
+} else {
+
+    //mix.eslint();
+
+    // Development settings
+    mix
+        .sourceMaps()
+        .webpackConfig({
+            devtool: 'eval-source-map', // Fastest for development
+        });
+}
