@@ -1,6 +1,24 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/laravel/compare/v8.5.13...8.x)
+## [Unreleased](https://github.com/laravel/laravel/compare/v8.5.15...8.x)
+
+
+## [v8.5.15 (2021-03-23)](https://github.com/laravel/laravel/compare/v8.5.14...v8.5.15)
+
+### Changed
+- Add prohibited validation rule ([#5569](https://github.com/laravel/laravel/pull/5569))
+- Re-order composer.json ([#5570](https://github.com/laravel/laravel/pull/5570))
+
+
+## [v8.5.14 (2021-03-16)](https://github.com/laravel/laravel/compare/v8.5.13...v8.5.14)
+
+### Changed
+- Add language for prohibited_if and prohibited_unless validation rules ([#5557](https://github.com/laravel/laravel/pull/5557))
+- Add date facade alias ([#5556](https://github.com/laravel/laravel/pull/5556))
+
+### Fixed
+- Add log level config value to stderr channel ([#5558](https://github.com/laravel/laravel/pull/5558))
+- Fix footer on mobile ([#5561](https://github.com/laravel/laravel/pull/5561))
 
 
 ## [v8.5.13 (2021-03-09)](https://github.com/laravel/laravel/compare/v8.5.12...v8.5.13)
