@@ -129,11 +129,17 @@
             </div>
         </div>
         <div id="example"></div>
+        <div id="ant"></div>
     </body>
     <!-- Scripts -->
+    <link rel="https://unpkg.com/antd@3.9.3/dist/antd.min.css" />
     <script src="/js/manifest.js"></script>
     <script src="/js/vendor.js"></script>
     <script src="/js/app.js"></script>
-<script>
+<script >
+    ReactDOM.render(
+
+        <Button type="primary">Primary Button</Button>
+        ,document.getElementById('ant'))
 </script>
 </html>
