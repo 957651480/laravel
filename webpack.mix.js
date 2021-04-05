@@ -10,11 +10,20 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.extract(['lodash'], 'js/lodash.js');
+mix.extract(['axios'], 'js/axios.js');
+mix.extract(['dayjs'], 'js/dayjs.js');
+mix.extract(['popper.js', 'jquery'], 'js/jquery.js');
+mix.extract(['bootstrap'], 'js/bootstrap.js');
+mix.extract(['react'], 'js/react.js');
+mix.extract(['react-dom'], 'js/react-dom.js');
+
+
+mix.extract();
 
 mix.js('resources/js/app.js', 'public/js')
     .react()
     .sass('resources/sass/app.scss', 'public/css');
-
 
 
 mix.webpackConfig(require('./webpack.config'));
