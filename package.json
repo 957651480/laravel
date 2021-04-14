@@ -60,8 +60,6 @@
     "laravel-mix": "^5.0.1",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "opencollective": "^1.0.3",
-    "opencollective-postinstall": "^2.0.2",
     "resolve-url-loader": "^3.1.0",
     "sass": "^1.26.11",
     "sass-loader": "^8.0.2",
