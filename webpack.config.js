@@ -23,6 +23,7 @@ if(!isProd){
   plugins.push(createThemeColorReplacerPlugin);
 }
 module.exports = {
+  output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
