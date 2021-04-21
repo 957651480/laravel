@@ -134,3 +134,10 @@
     </body>
 </html>
 <script src="/js/app.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/and-design-vue.js"></script>
+<script>
+    const app=new Vue({
+        el:'#app'
+    })
+</script>

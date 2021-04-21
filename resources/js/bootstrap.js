@@ -10,11 +10,7 @@ window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-import Vue from 'vue'
-import Antd from 'ant-design-vue'
-Vue.config.productionTip = false
 
-Vue.use(Antd)
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -31,6 +27,3 @@ Vue.use(Antd)
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-const app=new Vue({
-    el:'#app'
-})
