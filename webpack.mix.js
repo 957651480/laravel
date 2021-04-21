@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+const config = require('./webpack.config.js');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -10,6 +10,8 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.webpackConfig(config);
+
 mix.styles(['node_modules/ant-design-vue/dist/antd.css'],'public/css/antd.css');
 mix.js('resources/js/lodash.js', 'public/js');
 mix.js('resources/js/vue.js', 'public/js').vue({ version: 2 });
