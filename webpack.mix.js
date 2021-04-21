@@ -11,6 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 mix.styles(['node_modules/ant-design-vue/dist/antd.css'],'public/css/antd.css');
+mix.js('resources/js/lodash.js', 'public/js');
 mix.js('resources/js/vue.js', 'public/js').vue({ version: 2 });
 mix.js('resources/js/and-design-vue.js', 'public/js').vue({ version: 2 });
 mix.js('resources/js/app.js', 'public/js').vue({ version: 2 })
