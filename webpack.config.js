@@ -3,7 +3,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const rawArgv = process.argv.slice(2);
 const report = rawArgv.includes('--report');
-let plugins = [];
+let plugins = [
+
+];
 if (report) {
     plugins.push(new BundleAnalyzerPlugin({
         openAnalyzer: true,
