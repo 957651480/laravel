@@ -134,6 +134,7 @@
     </body>
 </html>
 <script src="/js/app.js"></script>
+<script src="/js/lodash.js"></script>
 <script src="/js/vue.js"></script>
 <script src="/js/and-design-vue.js"></script>
 <script>

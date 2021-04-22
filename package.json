@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "ant-design-vue": "^1.7.4",
+        "element-ui": "^2.15.1",
         "vue": "^2.6.12"
     }
 }
