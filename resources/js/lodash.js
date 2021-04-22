@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import lodash from 'lodash';
 
-window._=_;
-export default _
+window.lodash=lodash;
+export default lodash
