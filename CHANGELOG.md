@@ -1,6 +1,50 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/laravel/compare/v8.5.7...master)
+## [Unreleased](https://github.com/laravel/laravel/compare/v8.5.13...master)
+
+
+## [v8.5.13 (2021-03-09)](https://github.com/laravel/laravel/compare/v8.5.12...v8.5.13)
+
+### Changed
+- Use same default queue name for all drivers ([#5549](https://github.com/laravel/laravel/pull/5549))
+- Standardise "must" and "may" language in validation ([#5552](https://github.com/laravel/laravel/pull/5552))
+- Add missing 'after_commit' key to queue config ([#5554](https://github.com/laravel/laravel/pull/5554))
+
+
+## [v8.5.12 (2021-03-02)](https://github.com/laravel/laravel/compare/v8.5.11...v8.5.12)
+
+### Fixed
+- Added sans-serif as Fallback Font ([#5543](https://github.com/laravel/laravel/pull/5543))
+- Don't trim `current_password` ([#5546](https://github.com/laravel/laravel/pull/5546))
+
+
+## [v8.5.11 (2021-02-23)](https://github.com/laravel/laravel/compare/v8.5.10...v8.5.11)
+
+### Fixed
+- Don't flash 'current_password' input ([#5541](https://github.com/laravel/laravel/pull/5541))
+
+
+## [v8.5.10 (2021-02-16)](https://github.com/laravel/laravel/compare/v8.5.9...v8.5.10)
+
+### Changed
+- Add "ably" in comment as a broadcast connection ([#5531](https://github.com/laravel/laravel/pull/5531))
+- Add unverified state to UserFactory ([#5533](https://github.com/laravel/laravel/pull/5533))
+- Update login wording ([9a56a60](https://github.com/laravel/laravel/commit/9a56a60cc9e3785683e256d511ee1fb533025a0a))
+
+### Fixed
+- Fix dead link in web.config ([#5528](https://github.com/laravel/laravel/pull/5528))
+
+
+## [v8.5.9 (2021-01-19)](https://github.com/laravel/laravel/compare/v8.5.8...v8.5.9)
+
+### Removed
+- Delete `docker-compose.yml` ([#5522](https://github.com/laravel/laravel/pull/5522))
+
+
+## [v8.5.8 (2021-01-12)](https://github.com/laravel/laravel/compare/v8.5.7...v8.5.8)
+
+### Fixed
+- Update `TrustProxies.php` ([#5514](https://github.com/laravel/laravel/pull/5514))
 
 
 ## [v8.5.7 (2021-01-05)](https://github.com/laravel/laravel/compare/v8.5.6...v8.5.7)
