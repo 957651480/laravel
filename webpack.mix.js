@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 const config = require('./webpack.config.js');
 //require('laravel-mix-eslint');
 
