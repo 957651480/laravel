@@ -28,8 +28,6 @@
         "nprogress": "^0.2.0",
         "popper.js": "^1.12",
         "postcss": "^8.2.13",
-        "sass": "^1.26.11",
-        "sass-loader": "8.*",
         "store": "^2.0.12",
         "viser-vue": "^2.4.6",
         "vue": "^2.6.10",
