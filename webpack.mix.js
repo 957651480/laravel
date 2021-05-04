@@ -80,11 +80,13 @@ mix.options({
     //extractVueStyles: true,
     //globalVueStyles: __dirname+'/resources/backend/styles/element-variables.scss',
 })
-mix.js('resources/backend/main.js', 'public/backend/js')
-
+mix.js('resources/backend/main.js', 'public/backend/js').vue({ version: 2 })
+    .postCss('resources/css/app.css', 'public/css', [
+        //
+    ])
 //todo 不要提取,否则npm run prod css 打包出来是空文件
-mix.js('resources/frontend/frontend.js', 'public/js')
-    .sass('resources/frontend/sass/frontend.scss', 'public/css');
+/*mix.js('resources/frontend/frontend.js', 'public/js')
+    .sass('resources/frontend/sass/frontend.scss', 'public/css');*/
 
 
 if (mix.inProduction()) {
