@@ -20,7 +20,7 @@ import './core/lazy_use'
 import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less'
-
+import img from './assets/logo.png';
 Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`
