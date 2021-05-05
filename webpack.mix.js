@@ -21,8 +21,7 @@ mix.extract(['react-dom'], 'js/react-dom.js');*/
 
 mix.extract();
 
-mix.js('resources/js/app.js', 'public/js')
-    .react()
+mix.js('resources/backend/main.js', 'public/js').react()
 
 mix.webpackConfig(require('./webpack.config'));
 if (mix.inProduction()) {

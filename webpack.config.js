@@ -1,10 +1,10 @@
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const AntdDayjsWebpackPlugin =require('antd-dayjs-webpack-plugin');
+
 
 const rawArgv = process.argv.slice(2);
 const report = rawArgv.includes('--report');
-let plugins = [new AntdDayjsWebpackPlugin()];
+let plugins = [];
 if (report) {
     plugins.push(new BundleAnalyzerPlugin({
         openAnalyzer: true,
