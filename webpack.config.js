@@ -16,7 +16,8 @@ module.exports = {
     resolve: {
         extensions: ['.ts','.tsx','.js', '.jsx', '.json'],
         alias: {
-            '@': path.resolve('resources/js'),
+            '@': path.resolve('resources'),
+            '@backend': path.resolve('resources/backend'),
         },
     },
     module: {
