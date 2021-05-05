@@ -3,7 +3,7 @@ import React from 'react';
 import {
     Link
 } from "react-router-dom";
-import { Layout as ALayout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -11,7 +11,7 @@ import {
     VideoCameraOutlined,
     UploadOutlined,
 } from '@ant-design/icons';
-const { Header, Sider, Content,Footer } = ALayout;
+const { Header, Sider, Content,Footer } = Layout;
 
 
 
@@ -29,7 +29,7 @@ class Layouts extends React.Component {
 
     render() {
         return (
-            <ALayout style={{height:'100%'}}>
+            <Layout style={{height:'100%'}}>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className="logo" />
                     <Menu  mode="inline" defaultSelectedKeys={['1']}>
@@ -44,7 +44,7 @@ class Layouts extends React.Component {
                         </Menu.Item>
                     </Menu>
                 </Sider>
-                <ALayout className="site-layout">
+                <Layout className="site-layout">
                     <Header className="site-layout-background" style={{ padding: 0 }}>
                         {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
@@ -61,8 +61,8 @@ class Layouts extends React.Component {
                     >
                         Content
                     </Content>
-                </ALayout>
-            </ALayout>
+                </Layout>
+            </Layout>
         );
     }
 }
