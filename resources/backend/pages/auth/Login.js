@@ -1,67 +1,110 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { message } from 'antd';
+import ProForm, { ProFormText, ProFormCaptcha } from '@ant-design/pro-form';
+import { MobileOutlined, MailOutlined } from '@ant-design/icons';
 
+const waitTime = (time = 100) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(true);
+        }, time);
+    });
+};
 
 function Login() {
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-    };
+
   return (
-    <div className="login">
-        <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-                remember: true,
-            }}
-            onFinish={onFinish}
-        >
-            <Form.Item
-                name="username"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your Username!',
-                    },
-                ]}
-            >
-                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            </Form.Item>
-            <Form.Item
-                name="password"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your Password!',
-                    },
-                ]}
-            >
-                <Input
-                    prefix={<LockOutlined className="site-form-item-icon" />}
-                    type="password"
-                    placeholder="Password"
-                />
-            </Form.Item>
-            <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <a className="login-form-forgot" href="">
-                    Forgot password
-                </a>
-            </Form.Item>
-
-            <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
-                </Button>
-                Or <a href="">register now!</a>
-            </Form.Item>
-        </Form>
-    </div>
+      <div
+          style={{
+              width: 330,
+              margin: 'auto',
+          }}
+      >
+          <ProForm
+              onFinish={async () => {
+                  await waitTime(2000);
+                  message.success('提交成功');
+              }}
+              submitter={{
+                  searchConfig: {
+                      submitText: '登录',
+                  },
+                  render: (_, dom) => dom.pop(),
+                  submitButtonProps: {
+                      size: 'large',
+                      style: {
+                          width: '100%',
+                      },
+                  },
+              }}
+          >
+              <h1
+                  style={{
+                      textAlign: 'center',
+                  }}
+              >
+                  <img
+                      style={{
+                          height: '44px',
+                          marginRight: 16,
+                      }}
+                      alt="logo"
+                      src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+                  />
+                  Ant Design
+              </h1>
+              <div
+                  style={{
+                      marginTop: 12,
+                      textAlign: 'center',
+                      marginBottom: 40,
+                  }}
+              >
+                  Ant Design 是西湖区最具影响力的 Web 设计规范
+              </div>
+              <ProFormText
+                  fieldProps={{
+                      size: 'large',
+                      prefix: <MobileOutlined />,
+                  }}
+                  name="phone"
+                  placeholder="请输入手机号"
+                  rules={[
+                      {
+                          required: true,
+                          message: '请输入手机号!',
+                      },
+                      {
+                          pattern: /^1\d{10}$/,
+                          message: '不合法的手机号格式!',
+                      },
+                  ]}
+              />
+              <ProFormCaptcha
+                  fieldProps={{
+                      size: 'large',
+                      prefix: <MailOutlined />,
+                  }}
+                  captchaProps={{
+                      size: 'large',
+                  }}
+                  phoneName="phone"
+                  name="captcha"
+                  rules={[
+                      {
+                          required: true,
+                          message: '请输入验证码',
+                      },
+                  ]}
+                  placeholder="请输入验证码"
+                  onGetCaptcha={async (phone) => {
+                      await waitTime(1000);
+                      message.success(`手机号 ${phone} 验证码发送成功!`);
+                  }}
+              />
+          </ProForm>
+      </div>
   );
 }
 export default Login;
