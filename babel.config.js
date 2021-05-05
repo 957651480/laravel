@@ -6,7 +6,7 @@ plugins.push([
   {
     "libraryName": "antd",
     "libraryDirectory": "es",
-    "style": "css"
+    "style": "less"
   }
 ],)
 

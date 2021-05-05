@@ -8,24 +8,43 @@ function Login() {
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
     };
+    let loginFormStyle={
+        position: 'absolute',
+        left:'50%',
+        top:'30%',
+        transform: 'translate(-50%, -50%)',
+        maxWidth:'300px'
+    }
   return (
     <div className="login">
         <Form
             name="normal_login"
             className="login-form"
-            initialValues={{ remember: true }}
+            initialValues={{
+                remember: true,
+            }}
             onFinish={onFinish}
-            style={{maxWidth: '300px'}}
+            style={loginFormStyle}
         >
             <Form.Item
                 name="username"
-                rules={[{ required: true, message: 'Please input your Username!' }]}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your Username!',
+                    },
+                ]}
             >
                 <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
             </Form.Item>
             <Form.Item
                 name="password"
-                rules={[{ required: true, message: 'Please input your Password!' }]}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your Password!',
+                    },
+                ]}
             >
                 <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}

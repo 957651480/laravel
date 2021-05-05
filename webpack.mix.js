@@ -22,7 +22,7 @@ mix.extract(['react-dom'], 'js/react-dom.js');*/
 mix.extract();
 
 mix.js('resources/backend/main.js', 'public/js').react()
-mix.css('node_modules/antd/dist/antd.css', 'public/css')
+/*mix.css('node_modules/antd/dist/antd.css', 'public/css')*/
 
 mix.webpackConfig(require('./webpack.config'));
 if (mix.inProduction()) {
