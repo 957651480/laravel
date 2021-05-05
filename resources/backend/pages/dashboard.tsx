@@ -1,13 +1,13 @@
 import React from 'react';
+import Layouts from "./layouts/layouts";
 
 
 
 function Dashboard() {
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>dasss
-    </div>
+      <Layouts>
+          000000
+      </Layouts>
   );
 }
 
