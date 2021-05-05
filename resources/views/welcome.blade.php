@@ -16,7 +16,9 @@
     </head>
     <body >
 
-        <div id="app"></div>
+        <div id="app" style="height: 100%">
+
+        </div>
     </body>
     <!-- Scripts -->
     <script src="/js/manifest.js"></script>

@@ -29,7 +29,7 @@ class Layouts extends React.Component {
 
     render() {
         return (
-            <ALayout >
+            <ALayout style={{height:'100%'}}>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className="logo" />
                     <Menu  mode="inline" defaultSelectedKeys={['1']}>
