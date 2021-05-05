@@ -8,13 +8,6 @@ function Login() {
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
     };
-    let loginFormStyle={
-        position: 'absolute',
-        left:'50%',
-        top:'30%',
-        transform: 'translate(-50%, -50%)',
-        maxWidth:'300px'
-    }
   return (
     <div className="login">
         <Form
@@ -24,7 +17,6 @@ function Login() {
                 remember: true,
             }}
             onFinish={onFinish}
-            style={loginFormStyle}
         >
             <Form.Item
                 name="username"

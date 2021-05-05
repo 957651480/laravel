@@ -23,7 +23,11 @@ mix.extract();
 
 mix.js('resources/backend/main.js', 'public/js').react()
 /*mix.css('node_modules/antd/dist/antd.css', 'public/css')*/
-
+    .postCss('resources/css/app.css', 'public/css', [
+        require('postcss-import'),
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ])
 mix.webpackConfig(require('./webpack.config'));
 if (mix.inProduction()) {
     mix.version();
