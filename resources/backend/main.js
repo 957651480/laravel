@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 
+import 'antd/dist/antd.css';
+
 import * as dayjs from 'dayjs'
 import * as isLeapYear from 'dayjs/plugin/isLeapYear' // import plugin
 import 'dayjs/locale/zh-cn' // import locale
