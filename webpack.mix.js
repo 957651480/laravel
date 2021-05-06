@@ -80,7 +80,8 @@ mix.options({
     //extractVueStyles: true,
     //globalVueStyles: __dirname+'/resources/backend/styles/element-variables.scss',
 })
-mix.js('resources/backend/main.js', 'public/backend/js').vue({ version: 2 })
+mix.extract();
+mix.js('resources/backend/main.js', 'public/js').vue({ version: 2,/*extractStyles: 'css/ant.css'*/ })
     .postCss('resources/css/app.css', 'public/css', [
         //
     ])
