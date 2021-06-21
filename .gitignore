@@ -11,7 +11,8 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/.idea
+/.vscode
 
-.idea/*
 composer.lock
 public/static/*
