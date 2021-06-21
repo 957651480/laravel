@@ -1,6 +1,40 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/laravel/compare/v8.5.15...8.x)
+## [Unreleased](https://github.com/laravel/laravel/compare/v8.5.20...8.x)
+
+
+## [v8.5.20 (2021-06-15)](https://github.com/laravel/laravel/compare/v8.5.19...v8.5.20)
+
+### Changed
+- Add translation for current_password rule ([#5628](https://github.com/laravel/laravel/pull/5628))
+
+
+## [v8.5.19 (2021-06-01)](https://github.com/laravel/laravel/compare/v8.5.18...v8.5.19)
+
+### Changed
+- Update skeleton for filesystem tweaks to make sail usage easier ([c5d38d4](https://github.com/laravel/laravel/commit/c5d38d469a447d6831c3cf56d193be7941d6586f))
+
+
+## [v8.5.18 (2021-05-18)](https://github.com/laravel/laravel/compare/v8.5.17...v8.5.18)
+
+### Changed
+- Add Octane cache store ([#5610](https://github.com/laravel/laravel/pull/5610), [637c85d](https://github.com/laravel/laravel/commit/637c85d624bf19355025b68aaa90e6cadf8a2881))
+
+
+## [v8.5.17 (2021-05-11)](https://github.com/laravel/laravel/compare/v8.5.16...v8.5.17)
+
+### Security
+- Bump framework version to include SQL server security fix ([#5601](https://github.com/laravel/laravel/pull/5601))
+
+
+## [v8.5.16 (2021-04-20)](https://github.com/laravel/laravel/compare/v8.5.15...v8.5.16)
+
+### Changed
+- Rename test methods ([#5574](https://github.com/laravel/laravel/pull/5574))
+- Using faker method instead of properties ([#5583](https://github.com/laravel/laravel/pull/5583))
+
+### Fixed
+- Ignore SQLite files generated on parallel testing ([#5593](https://github.com/laravel/laravel/pull/5593))
 
 
 ## [v8.5.15 (2021-03-23)](https://github.com/laravel/laravel/compare/v8.5.14...v8.5.15)
