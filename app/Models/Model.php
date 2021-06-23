@@ -43,6 +43,49 @@ class Model extends Eloquent
         return static::query()->with($with)->whereKey($key)->firstOrFail($columns);
     }
 
+    /**
+     * 虚拟表查询
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param $values
+     * @return string
+     */
+    public static function dualSelect( \Illuminate\Database\Query\Builder $query,$values)
+    {
+        $grammar = $query->getGrammar();
+        $values = $grammar->quoteString($values);
+        $sql = $grammar->compileSelect($query);
+        return sprintf("select %s form dual WHERE NOT EXISTS (%s)",implode(",",$values),$sql);
+    }
+
+
+    /**
+     * 并发插入数据
+     * @param $data
+     * @param $where
+     * @return int
+     */
+    public static function insertNotExist($data,$where)
+    {
+        $query = static::query()->getQuery();
+        $query->where($where);
+        $connection = $query->getConnection();
+        $grammar = $query->getGrammar();
+        $field_keys=array_keys($data);
+        $select_sql = static::dualSelect($query,array_values($data));
+        $insertQuery = sprintf("INSERT into  %s (%s) %s",$grammar->wrapTable($query->from),$grammar->columnize($field_keys),$select_sql);
+        return $connection->affectingStatement(
+            $insertQuery,
+            $query->cleanBindings($query->getBindings())
+        );
+    }
+
+    /**
+     * 批量更新
+     * @param $model
+     * @param array $values
+     * @param null $index
+     * @return bool
+     */
     public static function batchUpdate($model, array $values, $index = null){
         $final = [];
         $ids = [];
