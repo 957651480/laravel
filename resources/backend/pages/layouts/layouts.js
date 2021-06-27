@@ -20,6 +20,8 @@ import ProLayout, { PageContainer } from '@ant-design/pro-layout';
 function Layouts({children}){
     const [collapsed, setCollapsed] = useState(false);
     const [keyWord, setKeyWord] = useState('');
+    const [pathname, setPathname] = useState('/');
+
     return (
         <div
             style={{
@@ -28,10 +30,10 @@ function Layouts({children}){
         >
             <ProLayout
                 location={{
-                    pathname: '/',
+                    pathname: pathname?pathname:'/',
                 }}
-                route={
-                    [
+                route={{
+                    routes:[
                         {
                             path: '/login',
                             name: '欢迎',
@@ -45,13 +47,9 @@ function Layouts({children}){
                             component: Demo,
                         },
                     ]
-                }
+                }}
                 collapsedButtonRender={false}
                 collapsed={collapsed}
-                collapsedButtonRender={false}
-                /*menuDataRender={false}
-                menuItemRender={false}*/
-                subMenuItemRender={false}
                 headerContentRender={() => {
                     return (
                         <div
@@ -65,6 +63,15 @@ function Layouts({children}){
                         </div>
                     );
                 }}
+                menuItemRender={(item, dom) => (
+                    <a
+                        onClick={() => {
+                            setPathname(item.path || '/');
+                        }}
+                    >
+                        {dom}
+                    </a>
+                )}
             >
                 <PageContainer >
                     {children}
