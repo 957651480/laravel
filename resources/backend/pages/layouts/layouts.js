@@ -40,18 +40,49 @@ function Layouts({children}){
                             name: '欢迎',
                             icon: <CrownOutlined />,
                             component: Login,
+                            children:[
+
+                            ]
                         },
                         {
                             path: '/form',
                             name: '表单',
                             icon: <UserOutlined />,
                             component: Form,
+                            children: [
+                                {
+                                    path: '/form/form',
+                                    name: '表单',
+                                    icon: <UserOutlined />,
+                                    component: Form,
+                                },
+                            ]
                         },
                         {
                             path: '/table',
                             name: '表格',
                             icon: <UserOutlined />,
                             component: Table,
+                            children: [
+                                {
+                                    path: '/table/table1',
+                                    name: '表格1',
+                                    icon: <UserOutlined />,
+                                    component: Table,
+                                },
+                                {
+                                    path: '/table/table2',
+                                    name: '表格2',
+                                    icon: <UserOutlined />,
+                                    component: Table,
+                                },
+                                {
+                                    path: '/table/table3',
+                                    name: '表格3',
+                                    icon: <UserOutlined />,
+                                    component: Table,
+                                },
+                            ]
                         },
                     ]
                 }}
