@@ -1,5 +1,6 @@
 import React,{ useState } from 'react';
-import Demo from "@backend/pages/demo";
+import Form from "@backend/pages/form";
+import Table from "@backend/pages/table";
 import Login from "@backend/pages/auth/Login";
 import {
     Link
@@ -41,10 +42,16 @@ function Layouts({children}){
                             component: Login,
                         },
                         {
-                            path: '/demo',
-                            name: '二级页面',
+                            path: '/form',
+                            name: '表单',
                             icon: <UserOutlined />,
-                            component: Demo,
+                            component: Form,
+                        },
+                        {
+                            path: '/table',
+                            name: '表格',
+                            icon: <UserOutlined />,
+                            component: Table,
                         },
                     ]
                 }}
@@ -64,10 +71,7 @@ function Layouts({children}){
                     );
                 }}
                 menuItemRender={(item, dom) => (
-                    <a
-                        onClick={() => {
-                            setPathname(item.path || '/');
-                        }}
+                    <a href={`#${item.path}`}
                     >
                         {dom}
                     </a>
